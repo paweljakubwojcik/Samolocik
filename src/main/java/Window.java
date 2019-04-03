@@ -1,7 +1,5 @@
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.JFrame;
 
@@ -18,6 +16,25 @@ public class Window implements KeyListener {
 		okno.setSize(size_x, size_y);
 		okno.setVisible(true);
 		okno.addKeyListener(this);
+
+		Thread watek = new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				while (true) {
+
+					try {
+						Thread.sleep(1000 / 60);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+
+			}
+		});
+
+		watek.start();
 	}
 
 	synchronized void draw() {
