@@ -5,15 +5,13 @@ import java.util.List;
 
 import javax.swing.JFrame;
 
-public class Window implements KeyListener{
+public class Window implements KeyListener {
 
 	JFrame okno;
-	int size_x=800, size_y=600;
-	
-	
-	Window()
-	{
-		okno=new JFrame("space invider");
+	int size_x = 800, size_y = 600;
+
+	Window() {
+		okno = new JFrame("space invider");
 		okno.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		okno.setResizable(false);
 		okno.setLocationRelativeTo(null);
@@ -21,45 +19,35 @@ public class Window implements KeyListener{
 		okno.setVisible(true);
 		okno.addKeyListener(this);
 	}
-	
-	
-	
-	synchronized void draw()
-	{
-		
+
+	synchronized void draw() {
+
 	}
 
-	void strzal()
-	{
-		
+	void strzal() {
+
 	}
 
 	@Override
 	public void keyPressed(KeyEvent arg0) {
-		
-		
-		if(arg0.getKeyCode()==KeyEvent.VK_SPACE)
-		{
+
+		if (arg0.getKeyCode() == KeyEvent.VK_SPACE) {
 			System.out.println("strzal");
-			
+
 		}
-		
+
 	}
-
-
 
 	@Override
 	public void keyReleased(KeyEvent arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
-
-
 
 	@Override
 	public void keyTyped(KeyEvent arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 }
