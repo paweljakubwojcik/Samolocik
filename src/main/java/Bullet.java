@@ -1,0 +1,60 @@
+
+public class Bullet {
+
+	int x,y;
+	static int velocity = 1;
+	Window win=Samolotoszczalec.win;
+	
+	/**
+	 * 
+	 * @param pos_x: pozycja rakiety w momencie SZCZAUU
+	 * @param pos_y pozycja rakiety w momencie SZCZAUU
+	 */
+	Bullet(int pos_x, int pos_y)
+	{
+		this.x=pos_x;
+		this.y=pos_y;
+		
+		Thread ruch= new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				while(true)
+				{
+					motion();
+				}
+				
+			}
+		});
+		ruch.start();
+	}
+	
+	
+	/**
+	 * opisuje ruch pocisku
+	 * @author pafeu
+	 */
+	private void motion()
+	{
+		if(y>0) y-=velocity;
+		else
+			try {
+				this.finalize();
+			} catch (Throwable e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+	}
+	/**
+	 * @author pafeu
+	 * @return true jesli pocisk jest w oknie, false jesli poza
+	 */
+	public boolean doesExist()
+	{
+		if(y<=0)
+		return true;
+		else return false;
+	}
+	
+}
