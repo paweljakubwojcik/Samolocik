@@ -13,9 +13,9 @@ public class Window implements KeyListener {
 
 	JFrame okno;
 	int size_x = 800, size_y = 600;
-	BufferedImage klatka = new BufferedImage(size_x, size_y, BufferedImage.TYPE_INT_RGB);
+	BufferedImage klatka = new BufferedImage(size_x, size_y, BufferedImage.TYPE_INT_ARGB);
 	BufferedImage statek;
-	Player statek1 = new Player(400, 500);
+	Player statek1;
 	boolean ruch1L = false;
 	boolean ruch1P = false;
 
@@ -28,6 +28,8 @@ public class Window implements KeyListener {
 		okno.setLayout(null);
 		okno.setVisible(true);
 		okno.addKeyListener(this);
+		
+		statek1 = new Player(400, 500);
 
 		URL url = getClass().getResource("samolot.png");
 		try {
@@ -42,7 +44,7 @@ public class Window implements KeyListener {
 			public void run() {
 				while (true) {
 					draw();
-
+					
 					if (ruch1L)
 						statek1.moveLeft();
 					if (ruch1P)
@@ -65,7 +67,8 @@ public class Window implements KeyListener {
 	synchronized void draw() {
 		Graphics2D g = (Graphics2D) klatka.getGraphics();
 		g.setColor(Color.BLACK);
-		g.drawRect(0, 0, size_x, size_y);
+		g.fillRect(0, 0, size_x, size_y);
+		statek1.drawBullets();
 		g.drawImage(statek, statek1.x, statek1.y, null);
 		g.dispose();
 		drawklatka();
@@ -77,15 +80,12 @@ public class Window implements KeyListener {
 		g2d.dispose();
 	}
 
-	void strzal() {
-
-	}
 
 	@Override
 	public void keyPressed(KeyEvent key) {
 
 		if (key.getKeyCode() == KeyEvent.VK_SPACE) {
-			System.out.println("strzal");
+			statek1.strzal();
 		} else if (key.getKeyCode() == KeyEvent.VK_LEFT) {
 			ruch1L = true;
 		} else if (key.getKeyCode() == KeyEvent.VK_RIGHT) {

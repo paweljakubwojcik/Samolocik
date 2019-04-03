@@ -1,3 +1,5 @@
+import java.awt.Color;
+import java.awt.Graphics2D;
 
 public class Bullet {
 
@@ -20,6 +22,12 @@ public class Bullet {
 			public void run() {
 				while (true) {
 					motion();
+					try {
+						Thread.sleep(100/60);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 
 			}
@@ -45,6 +53,14 @@ public class Bullet {
 
 	}
 
+	void draw()
+	{
+		Graphics2D g = (Graphics2D) win.klatka.getGraphics();
+		g.setColor(Color.red);
+		g.fillOval(x+win.statek.getWidth()/2-2, y, 5, 5);
+	}
+	
+	
 	/**
 	 * @author pafeu
 	 * @return true jesli pocisk jest w oknie, false jesli poza
