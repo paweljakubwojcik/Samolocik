@@ -2,14 +2,9 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-<<<<<<< HEAD
-=======
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
->>>>>>> branch 'master' of https://github.com/7Adrian/Samolocik.git
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
@@ -20,7 +15,9 @@ public class Window implements KeyListener {
 	int size_x = 800, size_y = 600;
 	BufferedImage klatka = new BufferedImage(size_x, size_y, BufferedImage.TYPE_INT_RGB);
 	BufferedImage statek;
-	Player statek1 = new Player();
+	Player statek1 = new Player(400, 500);
+	boolean ruch1L = false;
+	boolean ruch1P = false;
 
 	Window() {
 		okno = new JFrame("space invider");
@@ -32,12 +29,24 @@ public class Window implements KeyListener {
 		okno.setVisible(true);
 		okno.addKeyListener(this);
 
-<<<<<<< HEAD
+		URL url = getClass().getResource("samolot.png");
+		try {
+			statek = ImageIO.read(url);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 		Thread watek = new Thread(new Runnable() {
 
 			@Override
 			public void run() {
 				while (true) {
+					draw();
+
+					if (ruch1L)
+						statek1.moveLeft();
+					if (ruch1P)
+						statek1.moveRight();
 
 					try {
 						Thread.sleep(1000 / 60);
@@ -51,35 +60,21 @@ public class Window implements KeyListener {
 		});
 
 		watek.start();
-=======
-		URL url = getClass().getResource("samolot.png");
-		try {
-			statek = ImageIO.read(url);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		draw();
-
->>>>>>> branch 'master' of https://github.com/7Adrian/Samolocik.git
 	}
 
 	synchronized void draw() {
-		while (true) {
-			Graphics2D g = (Graphics2D) klatka.getGraphics();
-			g.setColor(Color.BLACK);
-			g.drawRect(0, 0, size_x, size_y);
-			g.drawImage(statek, statek1.x, statek1.y, null);
-			g.dispose();
-			drawklatka();
-		}
+		Graphics2D g = (Graphics2D) klatka.getGraphics();
+		g.setColor(Color.BLACK);
+		g.drawRect(0, 0, size_x, size_y);
+		g.drawImage(statek, statek1.x, statek1.y, null);
+		g.dispose();
+		drawklatka();
 	}
 
 	void drawklatka() {
 		Graphics2D g2d = (Graphics2D) okno.getGraphics();
 		g2d.drawImage(klatka, 0, 0, null);
 		g2d.dispose();
-
 	}
 
 	void strzal() {
@@ -87,24 +82,30 @@ public class Window implements KeyListener {
 	}
 
 	@Override
-	public void keyPressed(KeyEvent arg0) {
+	public void keyPressed(KeyEvent key) {
 
-		if (arg0.getKeyCode() == KeyEvent.VK_SPACE) {
+		if (key.getKeyCode() == KeyEvent.VK_SPACE) {
 			System.out.println("strzal");
-
+		} else if (key.getKeyCode() == KeyEvent.VK_LEFT) {
+			ruch1L = true;
+		} else if (key.getKeyCode() == KeyEvent.VK_RIGHT) {
+			ruch1P = true;
 		}
 
 	}
 
 	@Override
-	public void keyReleased(KeyEvent arg0) {
-		// TODO Auto-generated method stub
+	public void keyReleased(KeyEvent key) {
 
+		if (key.getKeyCode() == KeyEvent.VK_LEFT) {
+			ruch1L = false;
+		} else if (key.getKeyCode() == KeyEvent.VK_RIGHT) {
+			ruch1P = false;
+		}
 	}
 
 	@Override
-	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stub
+	public void keyTyped(KeyEvent key) {
 
 	}
 
