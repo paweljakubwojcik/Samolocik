@@ -1,9 +1,4 @@
-import java.util.ArrayList;
-import java.util.List;
-
 public class Player {
-
-	List<Bullet> bullets = new ArrayList<>();
 
 	int velocity = 5; // predkosc samolotu
 	int x, y;
@@ -12,17 +7,9 @@ public class Player {
 		this.x = x;
 		this.y = y;
 	}
-	
-	public void drawBullets()
-	{
-		for(int i=0; i<bullets.size(); i++)
-		{
-			bullets.get(i).draw();
-		}
-	}
 
 	public void strzal() {
-		bullets.add(new Bullet(x, y));
+		AllBullets.add(new Bullet(x, y));
 	}
 
 	public void moveRight() {

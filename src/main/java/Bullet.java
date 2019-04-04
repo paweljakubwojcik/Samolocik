@@ -3,36 +3,21 @@ import java.awt.Graphics2D;
 
 public class Bullet {
 
-	int x, y;
-	static int velocity = 1;
-	Window win = Samolotoszczalec.win;
+	protected int x, y;
+	protected int size = 10;
+	protected int velocity = 10;
+	protected static Window win = Samolotoszczalec.win;
 
 	/**
 	 * 
-	 * @param       pos_x: pozycja rakiety w momencie SZCZAUU
-	 * @param pos_y pozycja rakiety w momencie SZCZAUU
+	 * @param pos_x:
+	 *            pozycja rakiety w momencie SZCZAUU
+	 * @param pos_y
+	 *            pozycja rakiety w momencie SZCZAUU
 	 */
 	Bullet(int pos_x, int pos_y) {
 		this.x = pos_x;
 		this.y = pos_y;
-
-		Thread ruch = new Thread(new Runnable() {
-
-			@Override
-			public void run() {
-				while (true) {
-					motion();
-					try {
-						Thread.sleep(100/60);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-
-			}
-		});
-		ruch.start();
 	}
 
 	/**
@@ -40,7 +25,7 @@ public class Bullet {
 	 * 
 	 * @author pafeu
 	 */
-	private void motion() {
+	void motion() {
 		if (y > 0)
 			y -= velocity;
 		else
@@ -53,14 +38,12 @@ public class Bullet {
 
 	}
 
-	void draw()
-	{
+	void draw() {
 		Graphics2D g = (Graphics2D) win.klatka.getGraphics();
 		g.setColor(Color.red);
-		g.fillOval(x+win.statek.getWidth()/2-2, y, 5, 5);
+		g.fillOval(x + win.statek.getWidth() / 2 - size / 2, y, size, size);
 	}
-	
-	
+
 	/**
 	 * @author pafeu
 	 * @return true jesli pocisk jest w oknie, false jesli poza

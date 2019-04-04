@@ -44,6 +44,7 @@ public class Window implements KeyListener {
 			public void run() {
 				while (true) {
 					draw();
+					AllBullets.motion();
 					
 					if (ruch1L)
 						statek1.moveLeft();
@@ -68,7 +69,7 @@ public class Window implements KeyListener {
 		Graphics2D g = (Graphics2D) klatka.getGraphics();
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, size_x, size_y);
-		statek1.drawBullets();
+		AllBullets.drawBullets();
 		g.drawImage(statek, statek1.x, statek1.y, null);
 		g.dispose();
 		drawklatka();
