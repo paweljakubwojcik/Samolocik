@@ -13,6 +13,14 @@ public class Player {
 		this.x = x;
 		this.y = y;
 	}
+	
+	public void drawBullets()
+	{
+		for(int i=0; i<bullets.size(); i++)
+		{
+			bullets.get(i).draw();
+		}
+	}
 
 	public void strzal() {
 		bullets.add(new Bullet(x, y));
