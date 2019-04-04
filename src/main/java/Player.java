@@ -4,6 +4,7 @@ import java.util.List;
 public class Player {
 
 	List<Bullet> bullets = new ArrayList<>();
+	Window win = Samolotoszczalec.win;
 
 	int velocity = 5; // predkosc samolotu
 	int x, y;
@@ -18,11 +19,15 @@ public class Player {
 	}
 
 	public void moveRight() {
-		x += velocity;
+		if (x + win.statek.getWidth() < win.size_x) {
+			x += velocity;
+		}
 	}
 
 	public void moveLeft() {
-		x -= velocity;
+		if (x > 0) {
+			x -= velocity;
+		}
 	}
 
 }

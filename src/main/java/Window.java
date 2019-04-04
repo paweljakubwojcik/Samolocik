@@ -13,7 +13,7 @@ public class Window implements KeyListener {
 
 	JFrame okno;
 	int size_x = 800, size_y = 600;
-	BufferedImage klatka = new BufferedImage(size_x, size_y, BufferedImage.TYPE_INT_RGB);
+	BufferedImage klatka = new BufferedImage(size_x, size_y, BufferedImage.TYPE_INT_ARGB);
 	BufferedImage statek;
 	Player statek1 = new Player(400, 500);
 	boolean ruch1L = false;
@@ -65,7 +65,7 @@ public class Window implements KeyListener {
 	synchronized void draw() {
 		Graphics2D g = (Graphics2D) klatka.getGraphics();
 		g.setColor(Color.BLACK);
-		g.drawRect(0, 0, size_x, size_y);
+		g.fillRect(0, 0, size_x, size_y);
 		g.drawImage(statek, statek1.x, statek1.y, null);
 		g.dispose();
 		drawklatka();
