@@ -3,19 +3,17 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.net.URL;
 
-import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
 public class Window implements KeyListener {
 
 	JFrame okno;
 	int size_x = 800, size_y = 600;
-	BufferedImage klatka = new BufferedImage(size_x, size_y, BufferedImage.TYPE_INT_ARGB);
-	BufferedImage statek;
+	BufferedImage klatka;
+
 	Player statek1;
+	Thread Game;
 	boolean ruch1L = false;
 	boolean ruch1P = false;
 
@@ -28,24 +26,17 @@ public class Window implements KeyListener {
 		okno.setLayout(null);
 		okno.setVisible(true);
 		okno.addKeyListener(this);
-		
-		statek1 = new Player(400, 500);
+		klatka = new BufferedImage(size_x, size_y, BufferedImage.TYPE_INT_ARGB);
+		statek1 = new Player(this, 400, 500);
 
-		URL url = getClass().getResource("samolot.png");
-		try {
-			statek = ImageIO.read(url);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		Thread watek = new Thread(new Runnable() {
+		Game = new Thread(new Runnable() {
 
 			@Override
 			public void run() {
 				while (true) {
 					draw();
 					AllBullets.motion();
-					
+
 					if (ruch1L)
 						statek1.moveLeft();
 					if (ruch1P)
@@ -60,17 +51,15 @@ public class Window implements KeyListener {
 				}
 
 			}
-		});
-
-		watek.start();
+		}, "watek-1");
 	}
 
 	synchronized void draw() {
 		Graphics2D g = (Graphics2D) klatka.getGraphics();
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, size_x, size_y);
-		AllBullets.drawBullets();
-		g.drawImage(statek, statek1.x, statek1.y, null);
+		AllBullets.drawBullets(g);
+		statek1.draw(g);
 		g.dispose();
 		drawklatka();
 	}
@@ -80,7 +69,6 @@ public class Window implements KeyListener {
 		g2d.drawImage(klatka, 0, 0, null);
 		g2d.dispose();
 	}
-
 
 	@Override
 	public void keyPressed(KeyEvent key) {

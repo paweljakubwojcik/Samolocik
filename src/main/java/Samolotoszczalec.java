@@ -5,6 +5,7 @@ public class Samolotoszczalec {
 
 	public static void main(String[] args) {
 		win = new Window();
+		win.Game.start();
 	}
 
 }

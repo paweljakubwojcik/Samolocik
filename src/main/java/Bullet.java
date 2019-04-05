@@ -38,10 +38,9 @@ public class Bullet {
 
 	}
 
-	void draw() {
-		Graphics2D g = (Graphics2D) win.klatka.getGraphics();
+	synchronized void draw(Graphics2D g) {
 		g.setColor(Color.red);
-		g.fillOval(x + win.statek.getWidth() / 2 - size / 2, y, size, size);
+		g.fillOval(x + win.statek1.statek.getWidth() / 2 - size / 2, y, size, size);
 	}
 
 	/**
