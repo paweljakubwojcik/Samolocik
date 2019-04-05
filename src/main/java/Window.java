@@ -28,6 +28,7 @@ public class Window implements KeyListener {
 		okno.addKeyListener(this);
 		klatka = new BufferedImage(size_x, size_y, BufferedImage.TYPE_INT_ARGB);
 		statek1 = new Player(this, 400, 500);
+		EnemyList.add(new Asteroid(400, 20, this));
 
 		Game = new Thread(new Runnable() {
 
@@ -36,6 +37,7 @@ public class Window implements KeyListener {
 				while (true) {
 					draw();
 					AllBullets.motion();
+					EnemyList.motion();
 
 					if (ruch1L)
 						statek1.moveLeft();
@@ -59,6 +61,7 @@ public class Window implements KeyListener {
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, size_x, size_y);
 		AllBullets.drawBullets(g);
+		EnemyList.draw(g);
 		statek1.draw(g);
 		g.dispose();
 		drawklatka();
