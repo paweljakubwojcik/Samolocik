@@ -1,7 +1,7 @@
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-public class Asteroid extends Enemy {
+public class Asteroid extends Enemy implements IEnemy {
 
 	
 
@@ -11,7 +11,7 @@ public class Asteroid extends Enemy {
 	 * @param y
 	 * @param win
 	 */
-	Asteroid(int x, int y, Window win) {
+	Asteroid(Window win, int x, int y) {
 		super(x, y);
 		this.win = win;
 		this.health = 100;
@@ -23,13 +23,13 @@ public class Asteroid extends Enemy {
 	}
 
 	@Override
-	void draw(Graphics2D g) {
+	public void drawMe(Graphics2D g) {
 		g.setColor(Color.orange);
 		g.fillOval(x, y, width, height);
 	}
 
 	@Override
-	void motion() {
+	public void myMotion() {
 
 		x += velocity_x;
 		y += velocity_y;

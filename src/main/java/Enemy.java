@@ -1,4 +1,3 @@
-import java.awt.Graphics2D;
 import java.util.Random;
 
 public class Enemy {
@@ -15,15 +14,5 @@ public class Enemy {
 	{
 		this.x=x;
 		this.y=y;
-	}
-	
-	void draw(Graphics2D g)
-	{
-		
-	}
-	
-	void motion()
-	{
-		
 	}
 }
