@@ -31,7 +31,7 @@ public class Player {
 	}
 
 	public void strzal() {
-		AllBullets.add(new Bullet(x, y));
+		new Bullet(x, y);
 	}
 
 	public void moveRight() {

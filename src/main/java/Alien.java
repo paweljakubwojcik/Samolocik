@@ -22,13 +22,13 @@ public class Alien extends Enemy {
 	}
 
 	@Override
-	void draw(Graphics2D g) {
+	public void drawMe(Graphics2D g) {
 		g.setColor(Color.orange);
 		g.fillOval(x, y, width, height);
 	}
 
 	@Override
-	void motion() {
+	public void myMotion() {
 
 		x += velocity_x;
 		y += velocity_y;

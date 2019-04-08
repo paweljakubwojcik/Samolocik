@@ -1,3 +1,4 @@
+
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,11 +26,23 @@ public class Enemy implements IEnemy {
 			enemies.get(i).drawMe(g);
 		}
 	}
-	
+
 	static void motion() {
 		for (int i = 0; i < enemies.size(); i++) {
 			enemies.get(i).myMotion();
 		}
 	}
-	
+
+	@Override
+	public void drawMe(Graphics2D g) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void myMotion() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
