@@ -2,7 +2,6 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 public class Alien extends Enemy {
-	
 
 	/**
 	 * 
@@ -35,7 +34,7 @@ public class Alien extends Enemy {
 
 		if (x > zakresRuchu && velocity_x > 0) {
 			velocity_x = -velocity_x;
-			zakresRuchu = win.size_x - generator.nextInt( x);
+			zakresRuchu = win.size_x - generator.nextInt(x);
 		}
 
 		if (x < zakresRuchu && velocity_x < 0) {

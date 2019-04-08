@@ -36,7 +36,7 @@ public class Bullet {
 			try {
 				bullets.remove(this);
 				this.finalize();
-				
+
 			} catch (Throwable e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -65,7 +65,7 @@ public class Bullet {
 			bullets.get(i).MyMotion();
 		}
 	}
-	
+
 	static void drawBullets(Graphics2D g) {
 		for (int i = 0; i < bullets.size(); i++) {
 			bullets.get(i).draw(g);

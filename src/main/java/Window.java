@@ -28,7 +28,7 @@ public class Window implements KeyListener {
 		okno.addKeyListener(this);
 		klatka = new BufferedImage(size_x, size_y, BufferedImage.TYPE_INT_ARGB);
 		statek1 = new Player(this, 400, 500);
-		Enemy.enemies.add(new Asteroid(this,400, 20));
+		Enemy.enemies.add(new Asteroid(this, 400, 20));
 
 		Game = new Thread(new Runnable() {
 

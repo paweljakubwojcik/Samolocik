@@ -3,8 +3,6 @@ import java.awt.Graphics2D;
 
 public class Asteroid extends Enemy implements IEnemy {
 
-	
-
 	/**
 	 * @param window
 	 * @param x
@@ -36,7 +34,7 @@ public class Asteroid extends Enemy implements IEnemy {
 
 		if (x > zakresRuchu && velocity_x > 0) {
 			velocity_x = -velocity_x;
-			zakresRuchu = win.size_x - generator.nextInt( x);
+			zakresRuchu = win.size_x - generator.nextInt(x);
 		}
 
 		if (x < zakresRuchu && velocity_x < 0) {

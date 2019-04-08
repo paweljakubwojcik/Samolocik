@@ -36,13 +36,13 @@ public class Enemy implements IEnemy {
 	@Override
 	public void drawMe(Graphics2D g) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void myMotion() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }
