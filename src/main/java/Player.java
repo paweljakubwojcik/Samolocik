@@ -18,7 +18,7 @@ public class Player {
 	long delay = 200;
 	int health;
 	final int DefaultHealth= 10;
-	String nazwa="player";
+	String nazwa="PLAYER";
 
 	Player(Window win, int x, int y) {
 		this.win = win;
