@@ -16,6 +16,9 @@ public class Window implements KeyListener {
 	Thread Game;
 	boolean ruch1L = false;
 	boolean ruch1P = false;
+	boolean ruch1D = false;
+	boolean ruch1U = false;
+	boolean strzal = false;
 
 	Window() {
 		okno = new JFrame("space invider");
@@ -43,6 +46,12 @@ public class Window implements KeyListener {
 						statek1.moveLeft();
 					if (ruch1P)
 						statek1.moveRight();
+					if (ruch1U)
+						statek1.moveUp();
+					if (ruch1D)
+						statek1.moveDown();
+					if(strzal)
+						statek1.strzal();
 
 					try {
 						Thread.sleep(1000 / 60);
@@ -76,23 +85,32 @@ public class Window implements KeyListener {
 	@Override
 	public void keyPressed(KeyEvent key) {
 
-		if (key.getKeyCode() == KeyEvent.VK_SPACE) {
-			statek1.strzal();
+		if (key.getKeyCode() == KeyEvent.VK_Z) {
+			strzal = true;
 		} else if (key.getKeyCode() == KeyEvent.VK_LEFT) {
 			ruch1L = true;
 		} else if (key.getKeyCode() == KeyEvent.VK_RIGHT) {
 			ruch1P = true;
+		} else if (key.getKeyCode() == KeyEvent.VK_UP) {
+			ruch1U = true;
+		} else if (key.getKeyCode() == KeyEvent.VK_DOWN) {
+			ruch1D = true;
 		}
 
 	}
 
 	@Override
 	public void keyReleased(KeyEvent key) {
-
-		if (key.getKeyCode() == KeyEvent.VK_LEFT) {
+		if (key.getKeyCode() == KeyEvent.VK_Z) {
+			strzal = false;
+		} else if (key.getKeyCode() == KeyEvent.VK_LEFT) {
 			ruch1L = false;
 		} else if (key.getKeyCode() == KeyEvent.VK_RIGHT) {
 			ruch1P = false;
+		} else if (key.getKeyCode() == KeyEvent.VK_UP) {
+			ruch1U = false;
+		} else if (key.getKeyCode() == KeyEvent.VK_DOWN) {
+			ruch1D = false;
 		}
 	}
 
