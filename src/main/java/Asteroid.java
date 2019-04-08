@@ -9,9 +9,7 @@ public class Asteroid extends Enemy implements IEnemy {
 	
 	/**
 	 * @param window
-	 * @param x
-	 * @param y
-	 * 
+	
 	 */
 	Asteroid(Window win) {
 		super(generator.nextInt(win.size_x), -10);

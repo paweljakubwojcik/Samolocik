@@ -15,7 +15,7 @@ public class EnemyGenerator {
 
 		if (!check(Alien.class)) {
 			for (int i = 0; i < 5; i++) {
-				Enemy.enemies.add(new Alien(i * 800 / 5 - 20, -50, win));
+				Enemy.enemies.add(new Alien(i * 800 / 5 + 20, 0, win));
 			}
 		}
 		

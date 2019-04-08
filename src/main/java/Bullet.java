@@ -39,7 +39,7 @@ public class Bullet {
 	 * @author pafeu
 	 */
 	void MyMotion() {
-		if (y > 0)
+		if (y > 0 && y<win.size_y)
 			y -= velocity;
 		else
 			try {
