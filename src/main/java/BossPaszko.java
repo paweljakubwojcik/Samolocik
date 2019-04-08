@@ -8,6 +8,7 @@ import javax.imageio.ImageIO;
 public class BossPaszko extends Enemy implements IEnemyBoss {
 
 	BufferedImage paszko;
+	long czasAtak;
 
 	BossPaszko(Window win, int x, int y) {
 		super(x, y);
@@ -16,6 +17,7 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 		this.y = y;
 		this.velocity_x = 4;
 		this.velocity_y = 2;
+		czasAtak = System.currentTimeMillis();
 
 		URL url = getClass().getResource("paszko.png");
 		try {
@@ -38,28 +40,35 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 			y += velocity_y;
 		else
 			y -= velocity_y;
-		
-		if(y<20) {
-			y=20;
-			velocity_y=-velocity_y;
-		} else if(y>400) {
-			y=400;
-			velocity_y=-velocity_y;
+
+		if (y < 20) {
+			y = 20;
+			velocity_y = -velocity_y;
+		} else if (y > 400) {
+			y = 400;
+			velocity_y = -velocity_y;
 		}
-		
-		if(x<0) {
-			x=0;
-			velocity_x=-velocity_x;
-		} else if(x+paszko.getWidth()>win.size_x) {
-			velocity_x=-velocity_x;
+
+		if (x < 0) {
+			x = 0;
+			velocity_x = -velocity_x;
+		} else if (x + paszko.getWidth() > win.size_x) {
+			velocity_x = -velocity_x;
 		}
-		
+
 	}
 
 	@Override
 	public void strzal(String rodzaj) {
-		
-		
+
+	}
+
+	@Override
+	public void AI() {
+		if (System.currentTimeMillis() - czasAtak > generator.nextInt(1000) + 500) {
+			czasAtak = System.currentTimeMillis();
+			new Bullet(x, y, -10);
+		}
 	}
 
 }

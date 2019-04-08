@@ -4,7 +4,7 @@ import java.awt.Graphics2D;
 public class Asteroid extends Enemy implements IEnemy {
 
 	
-	static final int defaultHealth=2;
+	static final int defaultHealth=4;
 	
 	
 	/**
@@ -29,9 +29,7 @@ public class Asteroid extends Enemy implements IEnemy {
 		g.setColor(Color.orange);
 		g.fillOval(x, y, width, height);
 		
-		g.setColor(Color.red);
-		g.drawRect(x, y+win.size_y/400, win.size_x/15, win.size_y/300);
-		g.fillRect(x, y+win.size_y/400, (win.size_x/15)*health/defaultHealth, win.size_y/300 );
+		
 		
 	}
 

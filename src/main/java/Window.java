@@ -20,6 +20,8 @@ public class Window implements KeyListener {
 	boolean ruch1U = false;
 	boolean strzal = false;
 
+	BossPaszko paszkow;
+
 	Window() {
 		okno = new JFrame("space invider");
 		okno.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -31,8 +33,10 @@ public class Window implements KeyListener {
 		okno.addKeyListener(this);
 		klatka = new BufferedImage(size_x, size_y, BufferedImage.TYPE_INT_ARGB);
 		statek1 = new Player(this, 400, 500);
+
 		Enemy.enemies.add(new Asteroid(this));
-		Enemy.enemies.add(new BossPaszko(this, 400, 20));
+
+		Enemy.enemies.add(paszkow = new BossPaszko(this, 400, 20));
 
 		Game = new Thread(new Runnable() {
 
@@ -51,7 +55,7 @@ public class Window implements KeyListener {
 						statek1.moveUp();
 					if (ruch1D)
 						statek1.moveDown();
-					if(strzal)
+					if (strzal)
 						statek1.strzal();
 
 					try {
@@ -60,6 +64,8 @@ public class Window implements KeyListener {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+
+					paszkow.AI();
 				}
 
 			}
