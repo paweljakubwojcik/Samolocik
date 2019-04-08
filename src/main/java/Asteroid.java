@@ -21,7 +21,7 @@ public class Asteroid extends Enemy implements IEnemy {
 		height = generator.nextInt(70) + 30;
 		velocity_x = generator.nextInt(2) + 1;
 		velocity_y = generator.nextInt(2) + 1;
-		zakresRuchu = x + generator.nextInt(win.size_x - x);
+		
 	}
 
 	@Override

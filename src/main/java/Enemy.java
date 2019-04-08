@@ -10,7 +10,6 @@ public class Enemy implements IEnemy {
 	int health;
 	int width, height;
 	int velocity_x, velocity_y;
-	protected int zakresRuchu;
 	Window win;
 	static Random generator = new Random();
 	static List<Enemy> enemies = new ArrayList<>();
