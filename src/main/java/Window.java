@@ -28,7 +28,7 @@ public class Window implements KeyListener {
 		okno.addKeyListener(this);
 		klatka = new BufferedImage(size_x, size_y, BufferedImage.TYPE_INT_ARGB);
 		statek1 = new Player(this, 400, 500);
-		EnemyList.add(new Asteroid(400, 20, this));
+		Enemy.enemies.add(new Asteroid(this, 400, 20));
 
 		Game = new Thread(new Runnable() {
 
@@ -36,8 +36,8 @@ public class Window implements KeyListener {
 			public void run() {
 				while (true) {
 					draw();
-					AllBullets.motion();
-					EnemyList.motion();
+					Bullet.motion();
+					Enemy.motion();
 
 					if (ruch1L)
 						statek1.moveLeft();
@@ -60,8 +60,8 @@ public class Window implements KeyListener {
 		Graphics2D g = (Graphics2D) klatka.getGraphics();
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, size_x, size_y);
-		AllBullets.drawBullets(g);
-		EnemyList.draw(g);
+		Bullet.drawBullets(g);
+		Enemy.draw(g);
 		statek1.draw(g);
 		g.dispose();
 		drawklatka();

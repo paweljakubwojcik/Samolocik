@@ -1,5 +1,7 @@
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Bullet {
 
@@ -7,6 +9,7 @@ public class Bullet {
 	protected int size = 10;
 	protected int velocity = 10;
 	protected static Window win = Samolotoszczalec.win;
+	static List<Bullet> bullets = new ArrayList<>();
 
 	/**
 	 * 
@@ -18,6 +21,7 @@ public class Bullet {
 	Bullet(int pos_x, int pos_y) {
 		this.x = pos_x;
 		this.y = pos_y;
+		bullets.add(this);
 	}
 
 	/**
@@ -25,12 +29,14 @@ public class Bullet {
 	 * 
 	 * @author pafeu
 	 */
-	void motion() {
+	void MyMotion() {
 		if (y > 0)
 			y -= velocity;
 		else
 			try {
+				bullets.remove(this);
 				this.finalize();
+
 			} catch (Throwable e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -54,4 +60,15 @@ public class Bullet {
 			return false;
 	}
 
+	static void motion() {
+		for (int i = 0; i < bullets.size(); i++) {
+			bullets.get(i).MyMotion();
+		}
+	}
+
+	static void drawBullets(Graphics2D g) {
+		for (int i = 0; i < bullets.size(); i++) {
+			bullets.get(i).draw(g);
+		}
+	}
 }
