@@ -75,9 +75,9 @@ public class Alien extends Enemy {
 			if (velocity_x > 0)
 				zakresRuchuX = x + generator.nextInt(Math.abs(win.size_x - x) + 1);
 			if (velocity_y < 0)
-				zakresRuchuY = generator.nextInt(Math.abs(y)+1);
+				zakresRuchuY = generator.nextInt(Math.abs(y) + 1);
 			if (velocity_x < 0)
-				zakresRuchuX = generator.nextInt(Math.abs(x)+1);
+				zakresRuchuX = generator.nextInt(Math.abs(x) + 1);
 		}
 		x += velocity_x;
 		y += velocity_y;

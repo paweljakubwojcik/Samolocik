@@ -13,17 +13,19 @@ public class Bullet {
 
 	/**
 	 * 
-	 * @param       pos_x: pozycja rakiety w momencie SZCZAUU
-	 * @param pos_y pozycja rakiety w momencie SZCZAUU
+	 * @param pos_x:
+	 *            pozycja rakiety w momencie SZCZAUU
+	 * @param pos_y
+	 *            pozycja rakiety w momencie SZCZAUU
 	 */
 	Bullet(int pos_x, int pos_y) {
 		this.x = pos_x;
 		this.y = pos_y;
 		bullets.add(this);
 	}
-	
-	Bullet(){
-		
+
+	Bullet() {
+
 	}
 
 	Bullet(int pos_x, int pos_y, int velocity) {
@@ -39,7 +41,7 @@ public class Bullet {
 	 * @author pafeu
 	 */
 	void MyMotion() {
-		if (y > 0 && y<win.size_y)
+		if (y > 0 && y < win.size_y)
 			y -= velocity;
 		else
 			try {

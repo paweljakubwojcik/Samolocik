@@ -17,8 +17,8 @@ public class Player {
 	long CzasSzczau;
 	long delay = 200;
 	int health;
-	final int DefaultHealth= 10;
-	String nazwa="PLAYER";
+	final int DefaultHealth = 10;
+	String nazwa = "PLAYER";
 
 	Player(Window win, int x, int y) {
 		this.win = win;
@@ -33,6 +33,7 @@ public class Player {
 			e.printStackTrace();
 		}
 	}
+
 	/**
 	 * 
 	 * @param Graphics2D
@@ -40,10 +41,10 @@ public class Player {
 	public void draw(Graphics2D g) {
 		g.drawImage(statek, x, y, null);
 		g.setColor(Color.red);
-		g.drawRect(win.size_x/80, win.size_y/10, win.size_x/3, win.size_y/20);
-		g.fillRect(win.size_x/80, win.size_y/10, (win.size_x/3)*health/DefaultHealth, win.size_y/20 );
+		g.drawRect(win.size_x / 80, win.size_y / 10, win.size_x / 3, win.size_y / 20);
+		g.fillRect(win.size_x / 80, win.size_y / 10, (win.size_x / 3) * health / DefaultHealth, win.size_y / 20);
 		g.setFont(new Font(null, Font.PLAIN, 25));
-		g.drawString(nazwa, win.size_x/80, win.size_y/12);
+		g.drawString(nazwa, win.size_x / 80, win.size_y / 12);
 	}
 
 	public void strzal() {
@@ -74,11 +75,9 @@ public class Player {
 
 	// do predkosci odjac lub dodac predkosc planszy gdy bedzie
 	public void moveDown() {
-		if (y+statek.getHeight() < win.size_y) {
+		if (y + statek.getHeight() < win.size_y) {
 			y += velocity;
 		}
 	}
-	
-	
 
 }

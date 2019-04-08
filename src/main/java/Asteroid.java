@@ -10,10 +10,14 @@ public class Asteroid extends Enemy implements IEnemy {
 
 	static final int defaultHealth = 4;
 	BufferedImage Image;
-	static String obrazy[][] = { { "images//Asteroida1.png", "images//Asteroida1Damage1.png","images//Asteroida1Damage2.png","images//Asteroida1Damage3.png" },
-								{ "images//Asteroida2.png","images//Asteroida2Damage2.png","images//Asteroida2Damage2.png","images//Asteroida2Damage3.png" },
-								{"images//Asteroida3.png"}};
-	int index =generator.nextInt(3);
+	static String obrazy[][] = {
+			{ "images//Asteroida1.png", "images//Asteroida1Damage1.png", "images//Asteroida1Damage2.png",
+					"images//Asteroida1Damage3.png" },
+			{ "images//Asteroida2.png", "images//Asteroida2Damage2.png", "images//Asteroida2Damage2.png",
+					"images//Asteroida2Damage3.png" },
+			{ "images//Asteroida3.png" } };
+	int index = generator.nextInt(3);
+
 	/**
 	 * @param window
 	 * 
@@ -34,19 +38,19 @@ public class Asteroid extends Enemy implements IEnemy {
 	@Override
 	public void drawMe(Graphics2D g) {
 		g.drawImage(Image, x, y, null);
-		
+
 	}
 
 	@Override
 	public void myMotion() {
 
 		y += velocity_y;
-		if(y>win.size_y) Enemy.enemies.remove(this);
+		if (y > win.size_y)
+			Enemy.enemies.remove(this);
 	}
-	
-	void loadGraphic()
-	{
-		URL url = getClass().getResource(obrazy[index][defaultHealth-health]);
+
+	void loadGraphic() {
+		URL url = getClass().getResource(obrazy[index][defaultHealth - health]);
 		try {
 			Image = ImageIO.read(url);
 		} catch (IOException e) {

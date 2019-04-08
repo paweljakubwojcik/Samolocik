@@ -17,13 +17,12 @@ public class EnemyGenerator {
 				Enemy.enemies.add(new Alien(i * 800 / 5 + 20, 1, win));
 			}
 		}
-		
-		if(System.currentTimeMillis()-time>interval)
-		{
-			time= System.currentTimeMillis();
-			interval=(long)Enemy.generator.nextInt(10000);
+
+		if (System.currentTimeMillis() - time > interval) {
+			time = System.currentTimeMillis();
+			interval = (long) Enemy.generator.nextInt(10000);
 			Enemy.enemies.add(new Asteroid(win));
-			
+
 		}
 	}
 
