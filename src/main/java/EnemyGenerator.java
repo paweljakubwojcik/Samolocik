@@ -1,4 +1,3 @@
-
 public class EnemyGenerator {
 
 	static long time;
@@ -15,7 +14,7 @@ public class EnemyGenerator {
 
 		if (!check(Alien.class)) {
 			for (int i = 0; i < 5; i++) {
-				Enemy.enemies.add(new Alien(i * 800 / 5 + 20, 0, win));
+				Enemy.enemies.add(new Alien(i * 800 / 5 + 20, 1, win));
 			}
 		}
 		
