@@ -21,6 +21,10 @@ public class Bullet {
 		this.y = pos_y;
 		bullets.add(this);
 	}
+	
+	Bullet(){
+		
+	}
 
 	Bullet(int pos_x, int pos_y, int velocity) {
 		this.x = pos_x;

@@ -92,16 +92,16 @@ public class Window implements KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent key) {
-
-		if (key.getKeyCode() == KeyEvent.VK_Z) {
+		int klucz = key.getKeyCode();
+		if (klucz == KeyEvent.VK_Z) {
 			strzal = true;
-		} else if (key.getKeyCode() == KeyEvent.VK_LEFT) {
+		} else if (klucz == KeyEvent.VK_LEFT) {
 			ruch1L = true;
-		} else if (key.getKeyCode() == KeyEvent.VK_RIGHT) {
+		} else if (klucz == KeyEvent.VK_RIGHT) {
 			ruch1P = true;
-		} else if (key.getKeyCode() == KeyEvent.VK_UP) {
+		} else if (klucz == KeyEvent.VK_UP) {
 			ruch1U = true;
-		} else if (key.getKeyCode() == KeyEvent.VK_DOWN) {
+		} else if (klucz == KeyEvent.VK_DOWN) {
 			ruch1D = true;
 		}
 
@@ -109,15 +109,16 @@ public class Window implements KeyListener {
 
 	@Override
 	public void keyReleased(KeyEvent key) {
-		if (key.getKeyCode() == KeyEvent.VK_Z) {
+		int klucz = key.getKeyCode();
+		if (klucz == KeyEvent.VK_Z) {
 			strzal = false;
-		} else if (key.getKeyCode() == KeyEvent.VK_LEFT) {
+		} else if (klucz == KeyEvent.VK_LEFT) {
 			ruch1L = false;
-		} else if (key.getKeyCode() == KeyEvent.VK_RIGHT) {
+		} else if (klucz == KeyEvent.VK_RIGHT) {
 			ruch1P = false;
-		} else if (key.getKeyCode() == KeyEvent.VK_UP) {
+		} else if (klucz == KeyEvent.VK_UP) {
 			ruch1U = false;
-		} else if (key.getKeyCode() == KeyEvent.VK_DOWN) {
+		} else if (klucz == KeyEvent.VK_DOWN) {
 			ruch1D = false;
 		}
 	}
