@@ -13,14 +13,19 @@ public class Bullet {
 
 	/**
 	 * 
-	 * @param pos_x:
-	 *            pozycja rakiety w momencie SZCZAUU
-	 * @param pos_y
-	 *            pozycja rakiety w momencie SZCZAUU
+	 * @param       pos_x: pozycja rakiety w momencie SZCZAUU
+	 * @param pos_y pozycja rakiety w momencie SZCZAUU
 	 */
 	Bullet(int pos_x, int pos_y) {
 		this.x = pos_x;
 		this.y = pos_y;
+		bullets.add(this);
+	}
+
+	Bullet(int pos_x, int pos_y, int velocity) {
+		this.x = pos_x;
+		this.y = pos_y;
+		this.velocity = velocity;
 		bullets.add(this);
 	}
 
