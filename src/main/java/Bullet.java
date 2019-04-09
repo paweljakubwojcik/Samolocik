@@ -28,6 +28,12 @@ public class Bullet {
 
 	}
 
+	/**
+	 * 
+	 * @param pos_x
+	 * @param pos_y
+	 * @param velocity
+	 */
 	Bullet(int pos_x, int pos_y, int velocity) {
 		this.x = pos_x;
 		this.y = pos_y;

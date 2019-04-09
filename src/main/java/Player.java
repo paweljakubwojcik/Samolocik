@@ -17,7 +17,7 @@ public class Player {
 	long CzasSzczau;
 	long delay = 200;
 	int health;
-	final int DefaultHealth = 10;
+	final int DefaultHealth = 100;
 	String nazwa = "PLAYER";
 
 	Player(Window win, int x, int y) {

@@ -9,10 +9,10 @@ import javax.imageio.ImageIO;
 public class Alien extends Enemy {
 
 	static final int defaultHealth = 4;
-	int zakresRuchuX, zakresRuchuY;
+	private int zakresRuchuX, zakresRuchuY;
 	int velocity;
-	BufferedImage Image[] = new BufferedImage[4];
-	int i = 0;
+	private BufferedImage Image[] = new BufferedImage[4];
+	private int i = 0;
 	long time = System.currentTimeMillis();
 
 	/**
@@ -50,6 +50,7 @@ public class Alien extends Enemy {
 
 	@Override
 	public void drawMe(Graphics2D g) {
+		
 		if (System.currentTimeMillis() - time > 1000 / 20) {
 			if (i < 3)
 				i++;
@@ -57,8 +58,8 @@ public class Alien extends Enemy {
 				i = 0;
 			time = System.currentTimeMillis();
 		}
-
-		g.drawImage(Image[i], x, y, null);
+		
+		g.drawImage(Image[i], x, y, 40, 40, null);
 		g.setColor(Color.red);
 		g.drawRect(x, y + win.size_y / 400, win.size_x / 20, win.size_y / 300);
 		g.fillRect(x, y + win.size_y / 400, (win.size_x / 20) * health / defaultHealth, win.size_y / 300);

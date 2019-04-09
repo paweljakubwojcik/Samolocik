@@ -4,7 +4,13 @@ public class EnemyGenerator {
 	static long interval = 5000;
 	static long maxInterval = 10000;
 	Window win;
+	static int numberOfAliens=10;
 
+	
+	/**
+	 * 
+	 * @param window
+	 */
 	EnemyGenerator(Window win) {
 		this.win = win;
 		time = System.currentTimeMillis();
@@ -13,8 +19,8 @@ public class EnemyGenerator {
 	void generate() {
 
 		if (!check(Alien.class)) {
-			for (int i = 0; i < 5; i++) {
-				Enemy.enemies.add(new Alien(i * 800 / 5 + 20, 1, win));
+			for (int i = 0; i < numberOfAliens; i++) {
+				Enemy.enemies.add(new Alien(i * win.size_x / numberOfAliens + 20, 1, win));
 			}
 		}
 
@@ -27,11 +33,11 @@ public class EnemyGenerator {
 	}
 
 	/**
-	 * 
-	 * @return true if there is at least 1 alien
+	 * @param Class c
+	 * @return true if there is at least 1 object of Class c
 	 */
 	@SuppressWarnings("rawtypes")
-	boolean check(Class c) {
+	private boolean check(Class c) {
 		for (int i = 0; i < Enemy.enemies.size(); i++) {
 			if (Enemy.enemies.get(i).getClass() == c)
 				return true;

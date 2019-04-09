@@ -21,7 +21,7 @@ public class Enemy implements IEnemy {
 	}
 
 	static void draw(Graphics2D g) {
-		for (int i = 0; i < enemies.size(); i++) {
+		for (int i = enemies.size()-1; i >=0; i--) {
 			enemies.get(i).drawMe(g);
 		}
 	}
