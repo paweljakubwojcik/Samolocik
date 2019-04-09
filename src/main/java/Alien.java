@@ -2,7 +2,6 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.net.URL;
 
 import javax.imageio.ImageIO;
 
@@ -33,15 +32,11 @@ public class Alien extends Enemy {
 		velocity_x = 0;
 		zakresRuchuY = y + generator.nextInt(win.size_y / 2 - y);
 
-		URL url1 = getClass().getResource("images\\Alien2Klatka1.png");
-		URL url2 = getClass().getResource("images\\Alien2Klatka2.png");
-		URL url3 = getClass().getResource("images\\Alien2Klatka3.png");
-		URL url4 = getClass().getResource("images\\Alien2Klatka4.png");
 		try {
-			Image[0] = ImageIO.read(url1);
-			Image[1] = ImageIO.read(url2);
-			Image[2] = ImageIO.read(url3);
-			Image[3] = ImageIO.read(url4);
+			Image[0] = ImageIO.read(getClass().getResource("images\\Alien2Klatka1.png"));
+			Image[1] = ImageIO.read(getClass().getResource("images\\Alien2Klatka2.png"));
+			Image[2] = ImageIO.read(getClass().getResource("images\\Alien2Klatka3.png"));
+			Image[3] = ImageIO.read(getClass().getResource("images\\Alien2Klatka4.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -50,7 +45,7 @@ public class Alien extends Enemy {
 
 	@Override
 	public void drawMe(Graphics2D g) {
-		
+		// animacja
 		if (System.currentTimeMillis() - time > 1000 / 20) {
 			if (i < 3)
 				i++;
@@ -58,7 +53,7 @@ public class Alien extends Enemy {
 				i = 0;
 			time = System.currentTimeMillis();
 		}
-		
+
 		g.drawImage(Image[i], x, y, 40, 40, null);
 		g.setColor(Color.red);
 		g.drawRect(x, y + win.size_y / 400, win.size_x / 20, win.size_y / 300);

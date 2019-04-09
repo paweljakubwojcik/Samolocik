@@ -14,14 +14,23 @@ public class Enemy implements IEnemy {
 	static Random generator = new Random();
 	static List<Enemy> enemies = new ArrayList<>();
 
+	/**
+	 * 
+	 * @param x
+	 * @param y
+	 */
 	Enemy(int x, int y) {
 		this.x = x;
 		this.y = y;
 		enemies.add(this);
 	}
 
+	/**
+	 * 
+	 * @param g
+	 */
 	static void draw(Graphics2D g) {
-		for (int i = enemies.size()-1; i >=0; i--) {
+		for (int i = enemies.size() - 1; i >= 0; i--) {
 			enemies.get(i).drawMe(g);
 		}
 	}

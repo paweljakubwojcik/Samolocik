@@ -4,9 +4,8 @@ public class EnemyGenerator {
 	static long interval = 5000;
 	static long maxInterval = 10000;
 	Window win;
-	static int numberOfAliens=10;
+	static int numberOfAliens = 10;
 
-	
 	/**
 	 * 
 	 * @param window
@@ -33,7 +32,7 @@ public class EnemyGenerator {
 	}
 
 	/**
-	 * @param Class c
+	 * @param Class
 	 * @return true if there is at least 1 object of Class c
 	 */
 	@SuppressWarnings("rawtypes")

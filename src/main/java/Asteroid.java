@@ -15,15 +15,19 @@ public class Asteroid extends Enemy implements IEnemy {
 					"images//Asteroida1Damage3.png" },
 			{ "images//Asteroida2.png", "images//Asteroida2Damage2.png", "images//Asteroida2Damage2.png",
 					"images//Asteroida2Damage3.png" },
-			{ "images//Asteroida3.png" } };
-	private int index = generator.nextInt(3);
+			{ "images//Asteroida3.png", "images//Asteroida3Damage2.png", "images//Asteroida3Damage2.png",
+					"images//Asteroida3Damage3.png" },
+			{ "images//Asteroida4.png", "images//Asteroida4Damage2.png", "images//Asteroida4Damage2.png",
+					"images//Asteroida4Damage3.png" } };
+	private int index = generator.nextInt(4);
 
 	/**
 	 * @param window
 	 * 
 	 */
 	Asteroid(Window win) {
-		super(generator.nextInt(win.size_x), -40);
+
+		super(generator.nextInt(win.size_x - 50), -100);
 		this.win = win;
 		this.health = defaultHealth;
 		width = generator.nextInt(70) + 60;
@@ -50,7 +54,7 @@ public class Asteroid extends Enemy implements IEnemy {
 	}
 
 	private void loadGraphic() {
-		URL url = getClass().getResource(obrazy[index][defaultHealth - health]);
+		URL url = getClass().getResource(obrazy[index][generator.nextInt(4)]);
 		try {
 			Image = ImageIO.read(url);
 		} catch (IOException e) {
