@@ -3,7 +3,7 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Bullet implements IColision{
+public class Bullet extends Collisionable{
 
 	protected int x, y;
 	protected int size = 10;
