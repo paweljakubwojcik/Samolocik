@@ -40,7 +40,7 @@ public class Window implements KeyListener {
 		klatka = new BufferedImage(size_x, size_y, BufferedImage.TYPE_INT_ARGB);
 		statek1 = new Player(this, 400, 500);
 
-		Enemy.enemies.add(new Asteroid(this));
+		EnemyGenerator generator = new EnemyGenerator(this);
 
 		// Enemy.enemies.add(paszkow = new BossPaszko(this, 400, 20));
 
@@ -56,6 +56,7 @@ public class Window implements KeyListener {
 					draw();
 					Bullet.motion();
 					Enemy.motion();
+					generator.generate();
 
 					if (ruch1L)
 						statek1.moveLeft();

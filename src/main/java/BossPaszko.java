@@ -1,3 +1,5 @@
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -8,8 +10,17 @@ import javax.imageio.ImageIO;
 public class BossPaszko extends Enemy implements IEnemyBoss {
 
 	BufferedImage paszko;
-	long czasAtak;
+	private long czasAtak;
+	private final int defaultHealth=100;
+	String nazwa="FINAL BOSS"; //nie psuj¹æ niespodziaki xd
 
+	
+	/**
+	 * 
+	 * @param win
+	 * @param x
+	 * @param y
+	 */
 	BossPaszko(Window win, int x, int y) {
 		super(x, y);
 		this.win = win;
@@ -17,6 +28,7 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 		this.y = y;
 		this.velocity_x = 4;
 		this.velocity_y = 2;
+		health=defaultHealth;
 		czasAtak = System.currentTimeMillis();
 
 		URL url = getClass().getResource("paszko.png");
@@ -31,6 +43,12 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 	@Override
 	public void drawMe(Graphics2D g) {
 		g.drawImage(paszko, x, y, null);
+		
+		g.setColor(Color.green);
+		g.drawRect(win.size_x *79/ 80 - win.size_x / 3, win.size_y / 10, win.size_x / 3, win.size_y / 20);
+		g.fillRect(win.size_x *79/ 80 -win.size_x / 3 * health / defaultHealth, win.size_y / 10, (win.size_x / 3) * health / defaultHealth, win.size_y / 20);
+		g.setFont(new Font(null, Font.PLAIN, 25));
+		g.drawString(nazwa, win.size_x *64/ 80 , win.size_y / 12);
 	}
 
 	@Override

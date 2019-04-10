@@ -10,19 +10,27 @@ public class Enemy implements IEnemy {
 	int health;
 	int width, height;
 	int velocity_x, velocity_y;
-	protected int zakresRuchu;
 	Window win;
 	static Random generator = new Random();
 	static List<Enemy> enemies = new ArrayList<>();
 
+	/**
+	 * 
+	 * @param x
+	 * @param y
+	 */
 	Enemy(int x, int y) {
 		this.x = x;
 		this.y = y;
 		enemies.add(this);
 	}
 
+	/**
+	 * 
+	 * @param g
+	 */
 	static void draw(Graphics2D g) {
-		for (int i = 0; i < enemies.size(); i++) {
+		for (int i = enemies.size() - 1; i >= 0; i--) {
 			enemies.get(i).drawMe(g);
 		}
 	}
