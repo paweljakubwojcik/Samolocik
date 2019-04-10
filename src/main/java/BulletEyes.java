@@ -10,7 +10,7 @@ public class BulletEyes extends Bullet {
 		this.velocity = velocity;
 		this.size = 10;
 		sizeX = -(win.paszkow.paszko.getWidth() / 2 - size / 2)
-				+ (x + win.statek1.statek.getWidth() / 2 + 5 * size / 2);
+				+ (x + win.paszkow.paszko.getWidth() / 2 + 5 * size / 2);
 		sizeY = size * 5 - size / 3;
 
 		bullets.add(this);
@@ -19,8 +19,8 @@ public class BulletEyes extends Bullet {
 	@Override
 	synchronized void draw(Graphics2D g) {
 		g.setColor(Color.GREEN);
-		g.fillRect(x + win.statek1.statek.getWidth() / 2 - size / 2, y, size / 3, size * 5);
-		g.fillRect(x + win.statek1.statek.getWidth() / 2 + 5 * size / 2, y, size / 3, size * 5);
+		g.fillRect(x + win.paszkow.paszko.getWidth() / 2 - size / 2, y, size / 3, size * 5);
+		g.fillRect(x + win.paszkow.paszko.getWidth() / 2 + 5 * size / 2, y, size / 3, size * 5);
 	}
 
 }

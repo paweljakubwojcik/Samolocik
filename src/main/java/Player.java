@@ -40,6 +40,7 @@ public class Player {
 	public void draw(Graphics2D g) {
 		g.drawImage(statek, x, y, null);
 		g.setColor(Color.red);
+		g.setColor(new Color(255, 0, 0, 200));
 		g.drawRect(win.size_x/80, win.size_y/10, win.size_x/3, win.size_y/20);
 		g.fillRect(win.size_x/80, win.size_y/10, (win.size_x/3)*health/DefaultHealth, win.size_y/20 );
 		g.setFont(new Font(null, Font.PLAIN, 25));

@@ -64,6 +64,8 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 			new Bullet(x, y, -10);
 		} else if (rodzaj == "BulletEyes") {
 			new BulletEyes(x, y, -10);
+		} else if (rodzaj == "BulletExtra") {
+			new BulletExtra(x, y, -8);
 		}
 
 	}
@@ -71,11 +73,13 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 	@Override
 	public void AI() {
 		int rszczalu = generator.nextInt(4);
-		if (System.currentTimeMillis() - czasAtak > generator.nextInt(1000) + 500) {
+		if (System.currentTimeMillis() - czasAtak > generator.nextInt(1000) + 500) { // 1000 500
 			if (rszczalu == 0)
 				strzal("Bullet");
 			else if (rszczalu == 1)
 				strzal("BulletEyes");
+			else if (rszczalu == 2)
+				strzal("BulletExtra");
 			czasAtak = System.currentTimeMillis();
 		}
 
