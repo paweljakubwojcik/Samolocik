@@ -15,7 +15,7 @@ public class Collisions {
 			
 		} else if (tab1[0].length == 4) {
 			checkRectRect(o1,o2);
-		} else {
+		} else {\
 			checkOvalOval(o1,o2);
 		}
 
