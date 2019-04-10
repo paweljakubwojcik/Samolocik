@@ -103,4 +103,11 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 
 	}
 
+	
+	@Override
+	public int[][] getPole()
+	{
+		int[][] tab= {{x,y,width}};
+		return tab;
+	}
 }

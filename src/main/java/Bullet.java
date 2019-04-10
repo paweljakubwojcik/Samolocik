@@ -3,7 +3,7 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Bullet {
+public class Bullet implements IColision{
 
 	protected int x, y;
 	protected int size = 10;
@@ -87,5 +87,19 @@ public class Bullet {
 		for (int i = 0; i < bullets.size(); i++) {
 			bullets.get(i).draw(g);
 		}
+	}
+
+	@Override
+	public int[][] getPole() {
+		
+		int[][] tab= {{x,y,size}};
+		return tab;
+	}
+
+	@Override
+	public void collision(Object o) {
+		
+		bullets.remove(this);
+		
 	}
 }

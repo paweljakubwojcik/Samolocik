@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Enemy implements IEnemy {
+public class Enemy extends Collisionable implements IEnemy {
 
 	int x, y;
 	int health;
@@ -51,6 +51,18 @@ public class Enemy implements IEnemy {
 	public void myMotion() {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public int[][] getPole() {
+		int[][] tab= {{x,y,width,height}};
+		return tab;
+	}
+
+	@Override
+	public void collision(Object o) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
