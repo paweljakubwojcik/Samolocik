@@ -10,8 +10,8 @@ import javax.swing.JFrame;
 public class Window implements KeyListener {
 
 	JFrame okno;
-	int size_x = 800, size_y = 600;
-	int tloY = -size_y;
+	public static final int size_x = 800, size_y = 600;
+	private int tloY = -size_y, pozycjatla = 0;;
 	BufferedImage klatka;
 
 	Player statek1;
@@ -24,12 +24,12 @@ public class Window implements KeyListener {
 
 	BossPaszko paszkow;
 
-	BufferedImage imc = new BufferedImage(size_x , size_y*2, BufferedImage.TYPE_INT_ARGB);
-	BufferedImage im1 = new BufferedImage(size_x, size_y, BufferedImage.TYPE_INT_ARGB);
-	BufferedImage im2 = new BufferedImage(size_x, size_y, BufferedImage.TYPE_INT_ARGB);
+	BufferedImage imc = new BufferedImage(size_x, size_y * 2, BufferedImage.TYPE_INT_ARGB);
+	BufferedImage im1 = new BufferedImage(size_x, size_y, BufferedImage.TYPE_INT_ARGB); // obrazek tla1
+	BufferedImage im2 = new BufferedImage(size_x, size_y, BufferedImage.TYPE_INT_ARGB); // obrazek tla2
 
 	Window() {
-		okno = new JFrame("space invider");
+		okno = new JFrame("Niewdzieczna przestrzen");
 		okno.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		okno.setResizable(false);
 		okno.setLocationRelativeTo(null);
@@ -72,23 +72,36 @@ public class Window implements KeyListener {
 					try {
 						Thread.sleep(1000 / 60);
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 
-					tloY++;
+					tloY += 5;
+					pozycjatla += 5;
+
+					if (tloY >= 0) {
+						if (pozycjatla == size_y) {
+							losujtlo(im2);
+							scaltla(im2, im1);
+						} else if (pozycjatla >= size_y * 2) {
+							losujtlo(im1);
+							scaltla(im1, im2);
+							pozycjatla = 0;
+						}
+						tloY = -size_y;
+					}
+
 					// paszkow.AI();
 				}
 
 			}
-		}, "watek-1");
+		}, "GameWhile");
 	}
 
 	synchronized void draw() {
 		Graphics2D g = (Graphics2D) klatka.getGraphics();
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, size_x, size_y);
-		g.drawImage(imc, null, 0, tloY);
+		g.drawImage(imc, 0, tloY, null);
 		Bullet.drawBullets(g);
 		Enemy.draw(g);
 		statek1.draw(g);
@@ -106,13 +119,13 @@ public class Window implements KeyListener {
 		Random los = new Random();
 		Graphics2D g2d = (Graphics2D) im.getGraphics();
 		g2d.setColor(new Color(0, 0, 0, 255));
-		g2d.fillRect(0, 0, 1280, 720);
+		g2d.fillRect(0, 0, size_x, size_y);
 		g2d.setColor(Color.WHITE);
 		int wielkosc = 0, xxx = 0, yyy = 0;
-		for (int i = 0; i < 40; i++) { // 20
-			wielkosc = los.nextInt(15); // 20
-			xxx = los.nextInt(1280);
-			yyy = los.nextInt(720);
+		for (int i = 0; i < 20; i++) { // 20
+			wielkosc = los.nextInt(10); // 10
+			xxx = los.nextInt(size_x);
+			yyy = los.nextInt(size_y);
 
 			g2d.fillOval(xxx, yyy, wielkosc, wielkosc);
 		}
@@ -123,6 +136,7 @@ public class Window implements KeyListener {
 		Graphics2D g2d = (Graphics2D) imc.getGraphics();
 		g2d.drawImage(i1, 0, 0, null);
 		g2d.drawImage(i2, 0, size_y, null);
+		g2d.dispose();
 	}
 
 	@Override
