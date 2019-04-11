@@ -7,7 +7,7 @@ import java.net.URL;
 
 import javax.imageio.ImageIO;
 
-public class Player {
+public class Player extends Collisionable{
 
 	Window win;
 	BufferedImage statek;
@@ -41,8 +41,10 @@ public class Player {
 	public void draw(Graphics2D g) {
 		g.drawImage(statek, x, y, null);
 		g.setColor(Color.red);
+		g.setColor(new Color(255, 0, 0, 200));
 		g.drawRect(win.size_x / 80, win.size_y / 10, win.size_x / 3, win.size_y / 20);
 		g.fillRect(win.size_x / 80, win.size_y / 10, (win.size_x / 3) * health / DefaultHealth, win.size_y / 20);
+
 		g.setFont(new Font(null, Font.PLAIN, 25));
 		g.drawString(nazwa, win.size_x / 80, win.size_y / 12);
 	}
@@ -78,6 +80,18 @@ public class Player {
 		if (y + statek.getHeight() < win.size_y) {
 			y += velocity;
 		}
+	}
+
+	@Override
+	public int[][] getPole() {
+		int[][] tab = {{x,y,statek.getWidth(),statek.getHeight()}};
+		return tab;
+	}
+
+	@Override
+	public void collision(Object o) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
