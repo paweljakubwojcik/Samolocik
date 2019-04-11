@@ -41,6 +41,15 @@ public class Enemy implements IEnemy {
 		}
 	}
 
+	/**
+	 * 
+	 * @return {x,y,width,height}
+	 */
+	int[] getObszar() {
+		int[] ret = { x, y, width, height };
+		return ret;
+	}
+
 	@Override
 	public void drawMe(Graphics2D g) {
 		// TODO Auto-generated method stub

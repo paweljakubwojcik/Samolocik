@@ -8,6 +8,7 @@ public class Bullet {
 	protected int x, y;
 	protected int size = 10;
 	protected int velocity = 10;
+	int damage;
 	protected static Window win = Samolotoszczalec.win;
 	static List<Bullet> bullets = new ArrayList<>();
 
@@ -67,14 +68,12 @@ public class Bullet {
 	}
 
 	/**
-	 * @author pafeu
-	 * @return true jesli pocisk jest w oknie, false jesli poza
+	 * 
+	 * @return {x,y,width,height}
 	 */
-	public boolean doesExist() {
-		if (y <= 0)
-			return true;
-		else
-			return false;
+	int[] getObszar() {
+		int[] ret = { x, y, size, size };
+		return ret;
 	}
 
 	static void motion() {
