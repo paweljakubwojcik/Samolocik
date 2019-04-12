@@ -6,18 +6,18 @@ import java.net.URL;
 
 import javax.imageio.ImageIO;
 
-public class Asteroid extends Enemy implements IEnemy {
+public class Asteroid extends Enemy {
 
 	static final int defaultHealth = 4;
 	private BufferedImage Image;
 	static String obrazy[][] = {
 			{ "images//Asteroida1.png", "images//Asteroida1Damage1.png", "images//Asteroida1Damage2.png",
 					"images//Asteroida1Damage3.png" },
-			{ "images//Asteroida2.png", "images//Asteroida2Damage2.png", "images//Asteroida2Damage2.png",
+			{ "images//Asteroida2.png", "images//Asteroida2Damage1.png", "images//Asteroida2Damage2.png",
 					"images//Asteroida2Damage3.png" },
-			{ "images//Asteroida3.png", "images//Asteroida3Damage2.png", "images//Asteroida3Damage2.png",
+			{ "images//Asteroida3.png", "images//Asteroida3Damage1.png", "images//Asteroida3Damage2.png",
 					"images//Asteroida3Damage3.png" },
-			{ "images//Asteroida4.png", "images//Asteroida4Damage2.png", "images//Asteroida4Damage2.png",
+			{ "images//Asteroida4.png", "images//Asteroida4Damage1.png", "images//Asteroida4Damage2.png",
 					"images//Asteroida4Damage3.png" } };
 	private int index = generator.nextInt(4);
 
@@ -56,12 +56,19 @@ public class Asteroid extends Enemy implements IEnemy {
 	}
 
 	private void loadGraphic() {
-		URL url = getClass().getResource(obrazy[index][generator.nextInt(4)]);
+		URL url = getClass().getResource(obrazy[index][(defaultHealth - health)]);
 		try {
 			Image = ImageIO.read(url);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public void collision(Object o) {
+		super.collision(o);
+		if (health > 0)
+			loadGraphic();
 	}
 }

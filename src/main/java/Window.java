@@ -25,8 +25,10 @@ public class Window implements KeyListener {
 	BossPaszko paszkow;
 
 	BufferedImage imc = new BufferedImage(size_x, size_y * 2, BufferedImage.TYPE_INT_ARGB);
-	BufferedImage im1 = new BufferedImage(size_x, size_y, BufferedImage.TYPE_INT_ARGB); // obrazek tla1
-	BufferedImage im2 = new BufferedImage(size_x, size_y, BufferedImage.TYPE_INT_ARGB); // obrazek tla2
+	BufferedImage im1 = new BufferedImage(size_x, size_y, BufferedImage.TYPE_INT_ARGB); // obrazek
+																						// tla1
+	BufferedImage im2 = new BufferedImage(size_x, size_y, BufferedImage.TYPE_INT_ARGB); // obrazek
+																						// tla2
 
 	Window() {
 		okno = new JFrame("Niewdzieczna przestrzen");
@@ -57,13 +59,8 @@ public class Window implements KeyListener {
 					Bullet.motion();
 					Enemy.motion();
 					generator.generate();
-					//tylko do testów 
-					//////////////////////////////////
-					for(int i=0;i<Bullet.bullets.size();i++){
-					//Collisions.checkCollision(statek1, Enemy.enemies.get(0));
-					Collisions.checkCollision(Enemy.enemies.get(0), Bullet.bullets.get(i));
-					}
-					////////////////////////////
+					sprawdzKolizje();
+
 					if (ruch1L)
 						statek1.moveLeft();
 					if (ruch1P)
@@ -180,6 +177,27 @@ public class Window implements KeyListener {
 
 	@Override
 	public void keyTyped(KeyEvent key) {
+
+	}
+
+	private void sprawdzKolizje() {
+
+		for (int i = 0; i < Bullet.bullets.size(); i++) {
+			for (int j = 0; j < Enemy.enemies.size(); j++) {
+				Collisions.checkCollision(statek1, Enemy.enemies.get(j));
+				if (Enemy.enemies.size() <= j)
+					break;
+				Collisions.checkCollision(Enemy.enemies.get(j), Bullet.bullets.get(i));
+				if (Enemy.enemies.size() <= j)
+					break;
+				if (Bullet.bullets.size() <= i)
+					break;
+				// Collisions.checkCollision(statek1, Bullet.bullets.get(i));
+
+			}
+			if (Bullet.bullets.size() <= i)
+				break;
+		}
 
 	}
 

@@ -7,7 +7,7 @@ import java.net.URL;
 
 import javax.imageio.ImageIO;
 
-public class Player extends Collisionable{
+public class Player extends Collisionable {
 
 	Window win;
 	BufferedImage statek;
@@ -88,13 +88,13 @@ public class Player extends Collisionable{
 
 	@Override
 	public int[][] getPole() {
-		int[][] tab = {{x,y,statek.getWidth(),statek.getHeight()}};
+		int[][] tab = { { x, y, statek.getWidth(), statek.getHeight() } };
 		return tab;
 	}
 
 	@Override
 	public void collision(Object o) {
-		
+
 	}
 
 }

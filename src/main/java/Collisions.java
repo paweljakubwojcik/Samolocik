@@ -12,6 +12,7 @@ public class Collisions {
 			if (checkRectOval(tab1, tab2)) {
 				o1.collision(o2);
 				o2.collision(o1);
+				// System.out.println("kolizja");
 			}
 
 		} else if (tab1[0].length == 4) {
@@ -19,11 +20,13 @@ public class Collisions {
 			if (checkRectRect(tab1, tab2) || checkRectRect(tab2, tab1)) {
 				o1.collision(o2);
 				o2.collision(o1);
+				// System.out.println("kolizja");
 			}
 		} else {
 			if (checkOvalOval(tab1, tab2) || checkOvalOval(tab2, tab1)) {
 				o1.collision(o2);
 				o2.collision(o1);
+				System.out.println("kolizja");
 			}
 		}
 		/*
@@ -73,10 +76,10 @@ public class Collisions {
 						|| (Math.sqrt((x_0 - x_1 - x) * (x_0 - x_1 - x) + (y_0 - y_1) * (y_0 - y_1)) <= r_1)
 						|| (Math.sqrt((x_0 - x_1) * (x_0 - x_1) + (y_0 - y_1 - y) * (y_0 - y_1 - y)) <= r_1)
 						|| (Math.sqrt((x_0 - x_1 - x) * (x_0 - x_1 - x) + (y_0 - y_1 - y) * (y_0 - y_1 - y)) <= r_1)) {
-					
-					if((x_0-r_1-x<=x_1&&x_1<=x_0+r_1)&&(y_0-r_1-y<=y_1&&y_1<=y_0+r_1))
-					
-					return true;
+
+					if ((x_0 - r_1 - x <= x_1 && x_1 <= x_0 + r_1) && (y_0 - r_1 - y <= y_1 && y_1 <= y_0 + r_1))
+
+						return true;
 				}
 			}
 		}

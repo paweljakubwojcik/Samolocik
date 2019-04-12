@@ -41,6 +41,7 @@ public class Alien extends Enemy {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
 	}
 
 	@SuppressWarnings("static-access")
@@ -109,6 +110,5 @@ public class Alien extends Enemy {
 			}
 		}
 	}
-	
-	
+
 }

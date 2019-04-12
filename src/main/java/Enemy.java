@@ -41,15 +41,6 @@ public class Enemy extends Collisionable implements IEnemy {
 		}
 	}
 
-	/**
-	 * 
-	 * @return {x,y,width,height}
-	 */
-	int[] getObszar() {
-		int[] ret = { x, y, width, height };
-		return ret;
-	}
-
 	@Override
 	public void drawMe(Graphics2D g) {
 		// TODO Auto-generated method stub
@@ -64,14 +55,29 @@ public class Enemy extends Collisionable implements IEnemy {
 
 	@Override
 	public int[][] getPole() {
-		int[][] tab= {{x,y,width,height}};
+		int[][] tab = { { x, y, width, height } };
 		return tab;
 	}
 
 	@Override
 	public void collision(Object o) {
-		System.out.println("dziaua");
-		
+
+		if (o.getClass() == Bullet.class) {
+			Bullet bullet = (Bullet) o;
+			this.health -= bullet.damage;
+			System.out.println(Enemy.enemies.size());
+			if (this.health == 0) {
+				Enemy.enemies.remove(this);
+				System.out.println("umar³em");
+				try {
+					this.finalize();
+				} catch (Throwable e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+
 	}
 
 }

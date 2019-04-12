@@ -3,12 +3,12 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Bullet extends Collisionable{
+public class Bullet extends Collisionable {
 
 	protected int x, y;
 	protected int size = 10;
 	protected int velocity = 10;
-	int damage;
+	int damage = 1;
 	protected static Window win = Samolotoszczalec.win;
 	static List<Bullet> bullets = new ArrayList<>();
 
@@ -82,15 +82,21 @@ public class Bullet extends Collisionable{
 
 	@Override
 	public int[][] getPole() {
-		
-		int[][] tab= {{x,y,size}};
+
+		int[][] tab = { { x, y, size } };
 		return tab;
 	}
 
 	@Override
 	public void collision(Object o) {
-		
+
 		bullets.remove(this);
-		
+		try {
+			this.finalize();
+		} catch (Throwable e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 }
