@@ -38,6 +38,7 @@ public class Player extends Collisionable{
 	 * 
 	 * @param Graphics2D
 	 */
+	@SuppressWarnings("static-access")
 	public void draw(Graphics2D g) {
 		g.drawImage(statek, x, y, null);
 		g.setColor(Color.red);
@@ -57,6 +58,7 @@ public class Player extends Collisionable{
 		}
 	}
 
+	@SuppressWarnings("static-access")
 	public void moveRight() {
 		if (x + statek.getWidth() < win.size_x) {
 			x += velocity;
@@ -69,6 +71,7 @@ public class Player extends Collisionable{
 		}
 	}
 
+	@SuppressWarnings("static-access")
 	public void moveUp() {
 		if (y > win.size_y / 2) {
 			y -= velocity / 2;
@@ -76,6 +79,7 @@ public class Player extends Collisionable{
 	}
 
 	// do predkosci odjac lub dodac predkosc planszy gdy bedzie
+	@SuppressWarnings("static-access")
 	public void moveDown() {
 		if (y + statek.getHeight() < win.size_y) {
 			y += velocity;
@@ -90,7 +94,6 @@ public class Player extends Collisionable{
 
 	@Override
 	public void collision(Object o) {
-		// TODO Auto-generated method stub
 		
 	}
 

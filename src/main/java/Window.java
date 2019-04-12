@@ -10,7 +10,7 @@ import javax.swing.JFrame;
 public class Window implements KeyListener {
 
 	JFrame okno;
-	public final int size_x = 800, size_y = 600;
+	public static final int size_x = 800, size_y = 600;
 	private int tloY = -size_y, pozycjatla = 0;;
 	BufferedImage klatka;
 
@@ -57,7 +57,13 @@ public class Window implements KeyListener {
 					Bullet.motion();
 					Enemy.motion();
 					generator.generate();
-
+					//tylko do testów 
+					//////////////////////////////////
+					for(int i=0;i<Bullet.bullets.size();i++){
+					//Collisions.checkCollision(statek1, Enemy.enemies.get(0));
+					Collisions.checkCollision(Enemy.enemies.get(0), Bullet.bullets.get(i));
+					}
+					////////////////////////////
 					if (ruch1L)
 						statek1.moveLeft();
 					if (ruch1P)

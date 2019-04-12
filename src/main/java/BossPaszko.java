@@ -12,7 +12,7 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 	BufferedImage paszko;
 	private long czasAtak;
 	private final int defaultHealth=100;
-	String nazwa="FINAL BOSS"; //nie psuj¹æ niespodziaki xd
+	String nazwa="FINAL BOSS"; //nie psujï¿½ï¿½ niespodziaki xd
 
 	
 	/**
@@ -40,6 +40,7 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 
 	}
 
+	@SuppressWarnings("static-access")
 	@Override
 	public void drawMe(Graphics2D g) {
 		g.drawImage(paszko, x, y, null);
@@ -51,6 +52,7 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 		g.drawString(nazwa, win.size_x *64/ 80 , win.size_y / 12);
 	}
 
+	@SuppressWarnings("static-access")
 	@Override
 	public void myMotion() {
 		x += velocity_x;

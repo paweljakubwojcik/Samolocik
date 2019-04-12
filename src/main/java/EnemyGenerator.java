@@ -4,7 +4,7 @@ public class EnemyGenerator {
 	static long interval = 5000;
 	static long maxInterval = 10000;
 	Window win;
-	static int numberOfAliens = 10;
+	static int numberOfAliens = 1;
 
 	/**
 	 * 
@@ -15,6 +15,7 @@ public class EnemyGenerator {
 		time = System.currentTimeMillis();
 	}
 
+	@SuppressWarnings("static-access")
 	void generate() {
 
 		if (!check(Alien.class)) {

@@ -47,6 +47,7 @@ public class Bullet extends Collisionable{
 	 * 
 	 * @author pafeu
 	 */
+	@SuppressWarnings("static-access")
 	void MyMotion() {
 		if (y > 0 && y < win.size_y)
 			y -= velocity;
