@@ -20,6 +20,7 @@ public class Alien extends Enemy {
 	 * @param y
 	 * @param win
 	 */
+	@SuppressWarnings("static-access")
 	Alien(int x, int y, Window win) {
 		super(x, y);
 		this.win = win;
@@ -33,16 +34,16 @@ public class Alien extends Enemy {
 		zakresRuchuY = y + generator.nextInt(win.size_y / 2 - y);
 
 		try {
-			Image[0] = ImageIO.read(getClass().getResource("images\\Alien2Klatka1.png"));
-			Image[1] = ImageIO.read(getClass().getResource("images\\Alien2Klatka2.png"));
-			Image[2] = ImageIO.read(getClass().getResource("images\\Alien2Klatka3.png"));
-			Image[3] = ImageIO.read(getClass().getResource("images\\Alien2Klatka4.png"));
+			Image[0] = ImageIO.read(getClass().getResource("images//Alien2Klatka1.png"));
+			Image[1] = ImageIO.read(getClass().getResource("images//Alien2Klatka2.png"));
+			Image[2] = ImageIO.read(getClass().getResource("images//Alien2Klatka3.png"));
+			Image[3] = ImageIO.read(getClass().getResource("images//Alien2Klatka4.png"));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
+	@SuppressWarnings("static-access")
 	@Override
 	public void drawMe(Graphics2D g) {
 		// animacja
@@ -60,6 +61,7 @@ public class Alien extends Enemy {
 		g.fillRect(x, y + win.size_y / 400, (win.size_x / 20) * health / defaultHealth, win.size_y / 300);
 	}
 
+	@SuppressWarnings("static-access")
 	@Override
 	public void myMotion() {
 

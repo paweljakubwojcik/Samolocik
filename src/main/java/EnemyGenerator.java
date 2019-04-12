@@ -15,6 +15,7 @@ public class EnemyGenerator {
 		time = System.currentTimeMillis();
 	}
 
+	@SuppressWarnings("static-access")
 	void generate() {
 
 		if (!check(Alien.class)) {
