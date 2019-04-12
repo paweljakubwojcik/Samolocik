@@ -10,7 +10,7 @@ import javax.swing.JFrame;
 public class Window implements KeyListener {
 
 	JFrame okno;
-	public static final int size_x = 800, size_y = 600;
+	public final int size_x = 800, size_y = 600;
 	private int tloY = -size_y, pozycjatla = 0;;
 	BufferedImage klatka;
 

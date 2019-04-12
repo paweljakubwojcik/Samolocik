@@ -67,15 +67,6 @@ public class Bullet extends Collisionable{
 		g.fillOval(x + win.statek1.statek.getWidth() / 2 - size / 2, y, size, size);
 	}
 
-	/**
-	 * 
-	 * @return {x,y,width,height}
-	 */
-	int[] getObszar() {
-		int[] ret = { x, y, size, size };
-		return ret;
-	}
-
 	static void motion() {
 		for (int i = 0; i < bullets.size(); i++) {
 			bullets.get(i).MyMotion();

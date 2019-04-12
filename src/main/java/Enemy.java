@@ -70,7 +70,7 @@ public class Enemy extends Collisionable implements IEnemy {
 
 	@Override
 	public void collision(Object o) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
