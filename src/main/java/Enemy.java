@@ -65,7 +65,7 @@ public class Enemy extends Collisionable implements IEnemy {
 		if (o.getClass() == Bullet.class) {
 			Bullet bullet = (Bullet) o;
 			this.health -= bullet.damage;
-			System.out.println(Enemy.enemies.size());
+			System.out.println(this.getPole()[0][2]);
 			if (this.health == 0) {
 				Enemy.enemies.remove(this);
 				System.out.println("umar³em");

@@ -181,24 +181,31 @@ public class Window implements KeyListener {
 	}
 
 	private void sprawdzKolizje() {
+		
+		for (int j = 0; j < Enemy.enemies.size(); j++) {
+			for (int i = 0; i < Bullet.bullets.size(); i++) {
 
-		for (int i = 0; i < Bullet.bullets.size(); i++) {
-			for (int j = 0; j < Enemy.enemies.size(); j++) {
-				Collisions.checkCollision(statek1, Enemy.enemies.get(j));
-				if (Enemy.enemies.size() <= j)
-					break;
 				Collisions.checkCollision(Enemy.enemies.get(j), Bullet.bullets.get(i));
 				if (Enemy.enemies.size() <= j)
 					break;
 				if (Bullet.bullets.size() <= i)
 					break;
-				// Collisions.checkCollision(statek1, Bullet.bullets.get(i));
-
 			}
-			if (Bullet.bullets.size() <= i)
+			if (Enemy.enemies.size() <= j)
 				break;
 		}
 
+		for (int j = 0; j < Enemy.enemies.size(); j++) {
+			Collisions.checkCollision(statek1, Enemy.enemies.get(j));
+			if (Enemy.enemies.size() <= j)
+				break;
+		}
+
+		for (int i = 0; i < Bullet.bullets.size(); i++) {
+			Collisions.checkCollision(statek1, Bullet.bullets.get(i));
+			if (Bullet.bullets.size() <= i)
+				break;
+		}
 	}
 
 }

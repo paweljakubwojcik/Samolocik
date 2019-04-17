@@ -42,6 +42,7 @@ public class Player extends Collisionable {
 	public void draw(Graphics2D g) {
 		g.drawImage(statek, x, y, null);
 		g.setColor(Color.red);
+		g.drawRect(x, y, statek.getWidth(), statek.getHeight());
 		g.setColor(new Color(255, 0, 0, 200));
 		g.drawRect(win.size_x / 80, win.size_y / 10, win.size_x / 3, win.size_y / 20);
 		g.fillRect(win.size_x / 80, win.size_y / 10, (win.size_x / 3) * health / DefaultHealth, win.size_y / 20);
@@ -53,7 +54,7 @@ public class Player extends Collisionable {
 	public void strzal() {
 
 		if (System.currentTimeMillis() - CzasSzczau > delay) {
-			new Bullet(x, y);
+			new Bullet(x + statek.getWidth() * 6 / 10, y - statek.getHeight() / 10);
 			CzasSzczau = System.currentTimeMillis();
 		}
 	}
@@ -95,6 +96,33 @@ public class Player extends Collisionable {
 	@Override
 	public void collision(Object o) {
 
+		if (o.getClass() == Bullet.class) {
+			Bullet bullet = (Bullet) o;
+			this.health -= bullet.damage;
+			if (this.health == 0) {
+				System.out.println("umar³em");
+				try {
+					this.finalize();
+				} catch (Throwable e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		if (o.getClass() == Asteroid.class) {
+			Asteroid asteroid = (Asteroid) o;
+			this.health -= 5;
+			
+			
+			if (this.y > asteroid.y)
+				this.moveDown();
+			if (this.x < asteroid.x)
+				this.moveLeft();
+			if (this.x > asteroid.x + asteroid.width*8/10)
+				this.moveRight();
+
+		}
+		System.out.print("KOliiiiizjaaaaa");
 	}
 
 }

@@ -5,6 +5,7 @@ public class EnemyGenerator {
 	static long maxInterval = 10000;
 	Window win;
 	static int numberOfAliens = 0;
+	static boolean generateAliens = false;
 
 	/**
 	 * 
@@ -15,23 +16,30 @@ public class EnemyGenerator {
 		time = System.currentTimeMillis();
 	}
 
+	static int i = 0;
+
 	@SuppressWarnings("static-access")
 	void generate() {
-
-		if (!check(Alien.class)) {
+		////////////// generator alienow//////////////////
+		if (!check(Alien.class) && generateAliens == false) {
 			numberOfAliens += 5;
-
-			for (int i = 0; i < numberOfAliens; i++) {
-				new Alien(i * win.size_x / numberOfAliens + 20, 1, win);
-
-			}
+			generateAliens = true;
+			time2 = System.currentTimeMillis();
 		}
-
+		if (generateAliens && System.currentTimeMillis() - time2 > 500) {
+			new Alien(i * win.size_x / numberOfAliens + 20, 1, win);
+			i++;
+			time2 = System.currentTimeMillis();
+		}
+		if (i == numberOfAliens) {
+			generateAliens = false;
+			i = 0;
+		}
+		//////////// generator asteroid////////////////////
 		if (System.currentTimeMillis() - time > interval) {
 			time = System.currentTimeMillis();
 			interval = (long) Enemy.generator.nextInt(10000);
 			new Asteroid(win);
-
 		}
 	}
 

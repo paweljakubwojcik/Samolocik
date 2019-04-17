@@ -65,7 +65,7 @@ public class Bullet extends Collisionable {
 
 	synchronized void draw(Graphics2D g) {
 		g.setColor(Color.red);
-		g.fillOval(x + win.statek1.statek.getWidth() / 2 - size / 2, y, size, size);
+		g.fillOval(x, y, size, size);
 	}
 
 	static void motion() {
@@ -83,7 +83,7 @@ public class Bullet extends Collisionable {
 	@Override
 	public int[][] getPole() {
 
-		int[][] tab = { { x, y, size } };
+		int[][] tab = { { x, y, size,size } };
 		return tab;
 	}
 

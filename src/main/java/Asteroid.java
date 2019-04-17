@@ -1,4 +1,5 @@
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -42,7 +43,9 @@ public class Asteroid extends Enemy {
 
 	@Override
 	public void drawMe(Graphics2D g) {
-		g.drawImage(Image, x, y, height, width, null);
+		g.drawImage(Image, x, y,width,height, null);
+		g.setColor(Color.BLUE);
+		g.drawRect(x+width/10, y+height/10, width*8/10, height*8/10);
 
 	}
 
@@ -70,5 +73,12 @@ public class Asteroid extends Enemy {
 		super.collision(o);
 		if (health > 0)
 			loadGraphic();
+	}
+	
+	@Override
+	public int[][] getPole()
+	{
+		int[][] tab = { { x+width/10, y+height/10, width*8/10, height*8/10 } };
+		return tab;
 	}
 }

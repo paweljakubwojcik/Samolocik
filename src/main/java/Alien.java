@@ -25,8 +25,8 @@ public class Alien extends Enemy {
 		super(x, y);
 		this.win = win;
 		this.health = defaultHealth;
-		width = 50;
-		height = 50;
+		width = 40;
+		height = 40;
 
 		velocity = 1;
 		velocity_y = velocity;
@@ -56,10 +56,11 @@ public class Alien extends Enemy {
 			time = System.currentTimeMillis();
 		}
 
-		g.drawImage(Image[i], x, y, 40, 40, null);
-		g.setColor(Color.red);
-		g.drawRect(x, y + win.size_y / 400, win.size_x / 20, win.size_y / 300);
-		g.fillRect(x, y + win.size_y / 400, (win.size_x / 20) * health / defaultHealth, win.size_y / 300);
+		g.drawImage(Image[i], x, y, width, height, null);
+		g.setColor(new Color(255, 0, 0, 200));
+		g.drawRect(x, y, width, height);
+		g.drawRect(x, y + win.size_y / 400, win.size_x / 20, win.size_y / 200);
+		g.fillRect(x, y + win.size_y / 400, (win.size_x / 20) * health / defaultHealth, win.size_y / 200);
 	}
 
 	@SuppressWarnings("static-access")
