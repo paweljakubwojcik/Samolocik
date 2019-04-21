@@ -35,9 +35,10 @@ public class Collisions {
 		 * System.out.println(time2-time1);
 		 */
 	}
-/*
- * ta funkcja jest okej
- */
+
+	/*
+	 * ta funkcja jest okej
+	 */
 	static private boolean checkRectRect(int[][] tab1, int[][] tab2) {
 		for (int i = 0; i < tab1.length; i++) {
 			for (int j = 0; j < tab2.length; j++) {
@@ -60,34 +61,37 @@ public class Collisions {
 		}
 		return false;
 	}
-// tu jest coœ nie tak
+
+	// tu jest coœ nie tak
 	static private boolean checkRectOval(int[][] tab1, int[][] tab2) {
 		for (int i = 0; i < tab1.length; i++) {
 			for (int j = 0; j < tab2.length; j++) {
 
-				double x_0 = (double) tab1[i][0];
-				double y_0 = (double) tab1[i][1];
+				double x_1 = (double) tab1[i][0];
+				double y_1 = (double) tab1[i][1];
 				double x = (double) tab1[i][2];
 				double y = (double) tab1[i][3];
 
-				double x_1 = (double) tab2[j][0];
-				double y_1 = (double) tab2[j][1];
-				double r_1 = (double) tab2[j][2];
+				double x_0 = (double) tab2[j][0];
+				double y_0 = (double) tab2[j][1];
+				double r_0 = (double) tab2[j][2];
 
-				if ((Math.sqrt((x_0 - x_1) * (x_0 - x_1) + (y_0 - y_1) * (y_0 - y_1)) <= r_1)
-						|| (Math.sqrt((x_0 - x_1 - x) * (x_0 - x_1 - x) + (y_0 - y_1) * (y_0 - y_1)) <= r_1)
-						|| (Math.sqrt((x_0 - x_1) * (x_0 - x_1) + (y_0 - y_1 - y) * (y_0 - y_1 - y)) <= r_1)
-						|| (Math.sqrt((x_0 - x_1 - x) * (x_0 - x_1 - x) + (y_0 - y_1 - y) * (y_0 - y_1 - y)) <= r_1)) {
+				if ((Math.sqrt((x_0 - x_1) * (x_0 - x_1) + (y_0 - y_1) * (y_0 - y_1)) <= r_0)
+						|| (Math.sqrt((x_0 - x_1 - x) * (x_0 - x_1 - x) + (y_0 - y_1) * (y_0 - y_1)) <= r_0)
+						|| (Math.sqrt((x_0 - x_1) * (x_0 - x_1) + (y_0 - y_1 - y) * (y_0 - y_1 - y)) <= r_0)
+						|| (Math.sqrt((x_0 - x_1 - x) * (x_0 - x_1 - x) + (y_0 - y_1 - y) * (y_0 - y_1 - y)) <= r_0))
 
-					if ((x_0 - r_1 - x <= x_1 && x_1 <= x_0 + r_1) && (y_0 - r_1 - y <= y_1 && y_1 <= y_0 + r_1))
+					return true;
 
-						return true;
-				}
+				else if ((x_0 - r_0 - x <= x_1 && x_1 <= x_0 + r_0) && (y_0 - r_0 - y <= y_1 && y_1 <= y_0 + r_0))
+
+					return true;
 			}
 		}
 		return false;
 	}
-// a to nie sprawdzone jest nawet 
+
+	// a to nie sprawdzone jest nawet
 	static private boolean checkOvalOval(int[][] tab1, int[][] tab2) {
 		for (int i = 0; i < tab1.length; i++) {
 			for (int j = 0; j < tab2.length; j++) {

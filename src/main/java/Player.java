@@ -54,7 +54,7 @@ public class Player extends Collisionable {
 	public void strzal() {
 
 		if (System.currentTimeMillis() - CzasSzczau > delay) {
-			new Bullet(x + statek.getWidth() * 6 / 10, y - statek.getHeight() / 10);
+			new Bullet(x + statek.getWidth() * 6 / 10, y - statek.getHeight() / 5);
 			CzasSzczau = System.currentTimeMillis();
 		}
 	}

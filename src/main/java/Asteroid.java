@@ -43,9 +43,9 @@ public class Asteroid extends Enemy {
 
 	@Override
 	public void drawMe(Graphics2D g) {
-		g.drawImage(Image, x, y,width,height, null);
+		g.drawImage(Image, x-width/10, y-height/10,width*10/8,height*10/8, null);
 		g.setColor(Color.BLUE);
-		g.drawRect(x+width/10, y+height/10, width*8/10, height*8/10);
+		g.drawOval(x, y, (width+height)/2, (width+height)/2);
 
 	}
 
@@ -78,7 +78,7 @@ public class Asteroid extends Enemy {
 	@Override
 	public int[][] getPole()
 	{
-		int[][] tab = { { x+width/10, y+height/10, width*8/10, height*8/10 } };
+		int[][] tab = { { x+width/2, y+height/2, (width+height)/4 } };
 		return tab;
 	}
 }

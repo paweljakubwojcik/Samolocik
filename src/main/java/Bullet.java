@@ -83,7 +83,7 @@ public class Bullet extends Collisionable {
 	@Override
 	public int[][] getPole() {
 
-		int[][] tab = { { x, y, size,size } };
+		int[][] tab = { { x+size/2, y+size/2, size } };
 		return tab;
 	}
 
