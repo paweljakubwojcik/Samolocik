@@ -44,8 +44,8 @@ public class Asteroid extends Enemy {
 	@Override
 	public void drawMe(Graphics2D g) {
 		g.drawImage(Image, x-width/10, y-height/10,width*10/8,height*10/8, null);
-		g.setColor(Color.BLUE);
-		g.drawOval(x, y, (width+height)/2, (width+height)/2);
+		/*g.setColor(Color.BLUE);
+		g.drawOval(x, y, (width+height)/2, (width+height)/2);*/
 
 	}
 

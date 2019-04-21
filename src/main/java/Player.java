@@ -13,8 +13,8 @@ public class Player extends Collisionable {
 	BufferedImage statek;
 
 	int velocity = 5; // predkosc samolotu
-	int x, y;
-	long CzasSzczau;
+	int x, y, width, height;
+	long CzasSzczau, CzasAtaku = System.currentTimeMillis();
 	long delay = 200;
 	int health;
 	final int DefaultHealth = 100;
@@ -25,6 +25,7 @@ public class Player extends Collisionable {
 		this.x = x;
 		this.y = y;
 		this.health = DefaultHealth;
+
 		CzasSzczau = System.currentTimeMillis();
 		URL url = getClass().getResource("samolot.png");
 		try {
@@ -32,6 +33,8 @@ public class Player extends Collisionable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		this.height = statek.getHeight() * 8 / 10;
+		this.width = statek.getWidth() * 8 / 10;
 	}
 
 	/**
@@ -40,13 +43,19 @@ public class Player extends Collisionable {
 	 */
 	@SuppressWarnings("static-access")
 	public void draw(Graphics2D g) {
+		// actual image
 		g.drawImage(statek, x, y, null);
-		g.setColor(Color.red);
-		g.drawRect(x, y, statek.getWidth(), statek.getHeight());
+
+		// kwadrat testowy
+		/*g.setColor(Color.red);
+		g.drawRect(x + statek.getWidth() / 10, y + statek.getHeight() / 10, width, height);*/
+
+		// pasek ¿ycia
 		g.setColor(new Color(255, 0, 0, 200));
 		g.drawRect(win.size_x / 80, win.size_y / 10, win.size_x / 3, win.size_y / 20);
 		g.fillRect(win.size_x / 80, win.size_y / 10, (win.size_x / 3) * health / DefaultHealth, win.size_y / 20);
 
+		// napis player
 		g.setFont(new Font(null, Font.PLAIN, 25));
 		g.drawString(nazwa, win.size_x / 80, win.size_y / 12);
 	}
@@ -89,7 +98,7 @@ public class Player extends Collisionable {
 
 	@Override
 	public int[][] getPole() {
-		int[][] tab = { { x, y, statek.getWidth(), statek.getHeight() } };
+		int[][] tab = { { x + statek.getWidth() / 10, y + statek.getHeight() / 10, width, height } };
 		return tab;
 	}
 
@@ -99,30 +108,33 @@ public class Player extends Collisionable {
 		if (o.getClass() == Bullet.class) {
 			Bullet bullet = (Bullet) o;
 			this.health -= bullet.damage;
-			if (this.health == 0) {
-				System.out.println("umar³em");
-				try {
-					this.finalize();
-				} catch (Throwable e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		}
-		if (o.getClass() == Asteroid.class) {
+
+		} else if (o.getClass() == Asteroid.class) {
 			Asteroid asteroid = (Asteroid) o;
-			this.health -= 5;
-			
-			
-			if (this.y > asteroid.y)
-				this.moveDown();
-			if (this.x < asteroid.x)
+
+			if (System.currentTimeMillis() - CzasAtaku > delay) {
+				this.health -= 5;
+				CzasAtaku = System.currentTimeMillis();
+			}
+
+			if (this.x < asteroid.x && this.y < asteroid.y + asteroid.height)
 				this.moveLeft();
-			if (this.x > asteroid.x + asteroid.width*8/10)
+			else if (this.x > asteroid.x + asteroid.width)
 				this.moveRight();
+			else if (this.y > asteroid.y)
+				this.moveDown();
 
 		}
-		System.out.print("KOliiiiizjaaaaa");
+
+		if (this.health == 0) {
+			System.out.println("umar³em");
+			try {
+				this.finalize();
+			} catch (Throwable e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 }

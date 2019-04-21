@@ -188,23 +188,16 @@ public class Window implements KeyListener {
 				Collisions.checkCollision(Enemy.enemies.get(j), Bullet.bullets.get(i));
 				if (Enemy.enemies.size() <= j)
 					break;
-				if (Bullet.bullets.size() <= i)
-					break;
 			}
-			if (Enemy.enemies.size() <= j)
-				break;
+			
 		}
 
 		for (int j = 0; j < Enemy.enemies.size(); j++) {
 			Collisions.checkCollision(statek1, Enemy.enemies.get(j));
-			if (Enemy.enemies.size() <= j)
-				break;
 		}
 
 		for (int i = 0; i < Bullet.bullets.size(); i++) {
 			Collisions.checkCollision(statek1, Bullet.bullets.get(i));
-			if (Bullet.bullets.size() <= i)
-				break;
 		}
 	}
 
