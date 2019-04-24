@@ -37,6 +37,9 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		this.height=paszko.getHeight();
+		this.width=paszko.getWidth();
 
 	}
 
@@ -81,11 +84,11 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 	@Override
 	public void strzal(String rodzaj) {
 		if (rodzaj == "Bullet") {
-			new Bullet(x, y, -10);
+			new Bullet(x, y+height, -10);
 		} else if (rodzaj == "BulletEyes") {
-			new BulletEyes(x, y, -10);
+			new BulletEyes(x, y+height, -10);
 		} else if (rodzaj == "BulletExtra") {
-			new BulletExtra(x, y, -8);
+			new BulletExtra(x, y+height, -8);
 		}
 
 	}
@@ -95,11 +98,11 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 		int rszczalu = generator.nextInt(4);
 		if (System.currentTimeMillis() - czasAtak > generator.nextInt(1000) + 500) { // 1000 500
 			if (rszczalu == 0)
-				strzal("Bullet");
+				strzal("BulletEyes");
 			else if (rszczalu == 1)
 				strzal("BulletEyes");
 			else if (rszczalu == 2)
-				strzal("BulletExtra");
+				strzal("BulletEyes");
 			czasAtak = System.currentTimeMillis();
 		}
 
@@ -109,7 +112,7 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 	@Override
 	public int[][] getPole()
 	{
-		int[][] tab= {{x,y,width}};
+		int[][] tab= {{x+paszko.getWidth()/2,y+paszko.getWidth()/2,paszko.getWidth()/2}};
 		return tab;
 	}
 }

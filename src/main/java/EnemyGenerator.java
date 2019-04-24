@@ -21,7 +21,7 @@ public class EnemyGenerator {
 	@SuppressWarnings("static-access")
 	void generate() {
 		////////////// generator alienow//////////////////
-		if (!check(Alien.class) && generateAliens == false) {
+		/*if (!check(Alien.class) && generateAliens == false) {
 			numberOfAliens += 5;
 			generateAliens = true;
 			time2 = System.currentTimeMillis();
@@ -34,7 +34,7 @@ public class EnemyGenerator {
 		if (i == numberOfAliens) {
 			generateAliens = false;
 			i = 0;
-		}
+		}*/
 		//////////// generator asteroid////////////////////
 		if (System.currentTimeMillis() - time > interval) {
 			time = System.currentTimeMillis();

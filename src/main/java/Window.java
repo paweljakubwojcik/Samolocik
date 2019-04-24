@@ -44,7 +44,7 @@ public class Window implements KeyListener {
 
 		EnemyGenerator generator = new EnemyGenerator(this);
 
-		// Enemy.enemies.add(paszkow = new BossPaszko(this, 400, 20));
+		Enemy.enemies.add(paszkow = new BossPaszko(this, 400, 20));
 
 		losujtlo(im1);
 		losujtlo(im2);
@@ -93,7 +93,7 @@ public class Window implements KeyListener {
 						tloY = -size_y;
 					}
 
-					// paszkow.AI();
+					paszkow.AI();
 				}
 
 			}

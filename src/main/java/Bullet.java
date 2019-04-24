@@ -83,12 +83,17 @@ public class Bullet extends Collisionable {
 	@Override
 	public int[][] getPole() {
 
-		int[][] tab = { { x+size/2, y+size/2, size } };
+		int[][] tab = { { x + size / 2, y + size / 2, size } };
 		return tab;
 	}
 
 	@Override
 	public void collision(Object o) {
+
+		if (o.getClass() == Player.class) {
+			Player player = (Player) o;
+			player.health -= damage;
+		}
 
 		bullets.remove(this);
 		try {

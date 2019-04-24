@@ -23,4 +23,11 @@ public class BulletEyes extends Bullet {
 		g.fillRect(x + win.paszkow.paszko.getWidth() / 2 + 5 * size / 2, y, size / 3, size * 5);
 	}
 
+	
+	@Override
+	public int[][] getPole()
+	{
+		int[][] tab = { { x, y, size, size } };
+		return tab;
+	}
 }

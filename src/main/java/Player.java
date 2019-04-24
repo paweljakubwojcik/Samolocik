@@ -105,11 +105,8 @@ public class Player extends Collisionable {
 	@Override
 	public void collision(Object o) {
 
-		if (o.getClass() == Bullet.class) {
-			Bullet bullet = (Bullet) o;
-			this.health -= bullet.damage;
-
-		} else if (o.getClass() == Asteroid.class) {
+		
+	 if (o.getClass() == Asteroid.class) {
 			Asteroid asteroid = (Asteroid) o;
 
 			if (System.currentTimeMillis() - CzasAtaku > delay) {
