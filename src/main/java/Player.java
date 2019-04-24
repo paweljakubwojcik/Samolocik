@@ -16,8 +16,8 @@ public class Player extends Collisionable {
 	int x, y, width, height;
 	long CzasSzczau, CzasAtaku = System.currentTimeMillis();
 	long delay = 200;
-	int health;
-	final int DefaultHealth = 100;
+	int health, defense;
+	final int DefaultHealth = 100, defaultDefense = 0;
 	String nazwa = "PLAYER";
 
 	Player(Window win, int x, int y) {
@@ -25,6 +25,7 @@ public class Player extends Collisionable {
 		this.x = x;
 		this.y = y;
 		this.health = DefaultHealth;
+		this.defense = defaultDefense;
 
 		CzasSzczau = System.currentTimeMillis();
 		URL url = getClass().getResource("samolot.png");
@@ -47,8 +48,10 @@ public class Player extends Collisionable {
 		g.drawImage(statek, x, y, null);
 
 		// kwadrat testowy
-		/*g.setColor(Color.red);
-		g.drawRect(x + statek.getWidth() / 10, y + statek.getHeight() / 10, width, height);*/
+		/*
+		 * g.setColor(Color.red); g.drawRect(x + statek.getWidth() / 10, y +
+		 * statek.getHeight() / 10, width, height);
+		 */
 
 		// pasek ¿ycia
 		g.setColor(new Color(255, 0, 0, 200));
@@ -105,12 +108,11 @@ public class Player extends Collisionable {
 	@Override
 	public void collision(Object o) {
 
-		
-	 if (o.getClass() == Asteroid.class) {
+		if (o.getClass() == Asteroid.class) {
 			Asteroid asteroid = (Asteroid) o;
 
 			if (System.currentTimeMillis() - CzasAtaku > delay) {
-				this.health -= 5;
+				this.health -= ((asteroid.width + asteroid.height) / 2 / 50);
 				CzasAtaku = System.currentTimeMillis();
 			}
 
