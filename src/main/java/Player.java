@@ -17,6 +17,7 @@ public class Player extends Collisionable {
 	long CzasSzczau, CzasAtaku = System.currentTimeMillis();
 	long delay = 200;
 	int health, defense;
+	int amunitionAmount;
 	final int DefaultHealth = 100, defaultDefense = 0;
 	String nazwa = "PLAYER";
 
@@ -32,7 +33,7 @@ public class Player extends Collisionable {
 		try {
 			statek = ImageIO.read(url);
 		} catch (IOException e) {
-			e.printStackTrace();
+			e.printStackTrace(); 
 		}
 		this.height = statek.getHeight() * 8 / 10;
 		this.width = statek.getWidth() * 8 / 10;

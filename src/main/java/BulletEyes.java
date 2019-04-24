@@ -9,6 +9,7 @@ public class BulletEyes extends Bullet {
 		this.y = pos_y;
 		this.velocity = velocity;
 		this.size = 13;
+		
 		sizeX = -(win.paszkow.paszko.getWidth() / 2 - size / 2)
 				+ (x + win.paszkow.paszko.getWidth() / 2 + 5 * size / 2);
 		sizeY = size * 13 / 3;

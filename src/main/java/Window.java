@@ -22,8 +22,6 @@ public class Window implements KeyListener {
 	boolean ruch1U = false;
 	boolean strzal = false;
 
-	BossPaszko paszkow;
-
 	BufferedImage imc = new BufferedImage(size_x, size_y * 2, BufferedImage.TYPE_INT_ARGB);
 	BufferedImage im1 = new BufferedImage(size_x, size_y, BufferedImage.TYPE_INT_ARGB); // obrazek
 																						// tla1
@@ -43,8 +41,6 @@ public class Window implements KeyListener {
 		statek1 = new Player(this, 400, 500);
 
 		EnemyGenerator generator = new EnemyGenerator(this);
-
-		Enemy.enemies.add(paszkow = new BossPaszko(this, 400, 20));
 
 		losujtlo(im1);
 		losujtlo(im2);
@@ -93,7 +89,6 @@ public class Window implements KeyListener {
 						tloY = -size_y;
 					}
 
-					paszkow.AI();
 				}
 
 			}
@@ -181,7 +176,7 @@ public class Window implements KeyListener {
 	}
 
 	private void sprawdzKolizje() {
-		
+
 		for (int j = 0; j < Enemy.enemies.size(); j++) {
 			for (int i = 0; i < Bullet.bullets.size(); i++) {
 
@@ -189,7 +184,7 @@ public class Window implements KeyListener {
 				if (Enemy.enemies.size() <= j)
 					break;
 			}
-			
+
 		}
 
 		for (int j = 0; j < Enemy.enemies.size(); j++) {

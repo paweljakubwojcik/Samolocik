@@ -21,20 +21,24 @@ public class EnemyGenerator {
 	@SuppressWarnings("static-access")
 	void generate() {
 		////////////// generator alienow//////////////////
-		/*if (!check(Alien.class) && generateAliens == false) {
+
+		if (!check(Alien.class) && generateAliens == false) {
 			numberOfAliens += 5;
 			generateAliens = true;
 			time2 = System.currentTimeMillis();
 		}
-		if (generateAliens && System.currentTimeMillis() - time2 > 500) {
-			new Alien(i * win.size_x / numberOfAliens + 20, 1, win);
+		if (generateAliens && numberOfAliens > 15)
+			new BossPaszko(win, 400, 20);
+		else if (generateAliens && System.currentTimeMillis() - time2 > 500) {
+			new Alien(Enemy.generator.nextInt(numberOfAliens) * win.size_x / numberOfAliens + 20, -5, win);
 			i++;
 			time2 = System.currentTimeMillis();
 		}
 		if (i == numberOfAliens) {
 			generateAliens = false;
 			i = 0;
-		}*/
+		}
+
 		//////////// generator asteroid////////////////////
 		if (System.currentTimeMillis() - time > interval) {
 			time = System.currentTimeMillis();
