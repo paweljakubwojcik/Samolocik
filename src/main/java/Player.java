@@ -12,13 +12,14 @@ public class Player extends Collisionable {
 	Window win;
 	BufferedImage statek;
 
+	final int DefaultHealth = 100, defaultDefense = 0, maxAmunitionAmount = 50;
 	int velocity = 5; // predkosc samolotu
 	int x, y, width, height;
-	long CzasSzczau, CzasAtaku = System.currentTimeMillis();
+	long CzasSzczau, CzasAtaku, czasDodatkowejAmunicji;
 	long delay = 200;
 	int health, defense;
-	int amunitionAmount;
-	final int DefaultHealth = 100, defaultDefense = 0;
+	int amunitionAmount = maxAmunitionAmount;
+
 	String nazwa = "PLAYER";
 
 	Player(Window win, int x, int y) {
@@ -28,12 +29,12 @@ public class Player extends Collisionable {
 		this.health = DefaultHealth;
 		this.defense = defaultDefense;
 
-		CzasSzczau = System.currentTimeMillis();
+		CzasSzczau = CzasAtaku = czasDodatkowejAmunicji = System.currentTimeMillis();
 		URL url = getClass().getResource("samolot.png");
 		try {
 			statek = ImageIO.read(url);
 		} catch (IOException e) {
-			e.printStackTrace(); 
+			e.printStackTrace();
 		}
 		this.height = statek.getHeight() * 8 / 10;
 		this.width = statek.getWidth() * 8 / 10;
@@ -55,20 +56,33 @@ public class Player extends Collisionable {
 		 */
 
 		// pasek ¿ycia
-		g.setColor(new Color(255, 0, 0, 200));
+		g.setColor(new Color(255, 0, 0, 150));
 		g.drawRect(win.size_x / 80, win.size_y / 10, win.size_x / 3, win.size_y / 20);
 		g.fillRect(win.size_x / 80, win.size_y / 10, (win.size_x / 3) * health / DefaultHealth, win.size_y / 20);
 
 		// napis player
 		g.setFont(new Font(null, Font.PLAIN, 25));
 		g.drawString(nazwa, win.size_x / 80, win.size_y / 12);
+
+		// ilosc naboi
+
+		g.drawString(Integer.toString(amunitionAmount), win.size_x / 80, win.size_y / 10 + win.size_y / 20 + 30);
+	}
+
+	public void upDateAmunicji() {
+		if (System.currentTimeMillis() - czasDodatkowejAmunicji > 1000) {
+			amunitionAmount += 1;
+			czasDodatkowejAmunicji = System.currentTimeMillis();
+		}
+		if (amunitionAmount > maxAmunitionAmount)
+			amunitionAmount = maxAmunitionAmount;
 	}
 
 	public void strzal() {
 
-		if (System.currentTimeMillis() - CzasSzczau > delay) {
-			new Bullet(x + statek.getWidth() * 6 / 10, y - statek.getHeight() / 5);
-			CzasSzczau = System.currentTimeMillis();
+		if (System.currentTimeMillis() - CzasSzczau > delay && amunitionAmount != 0) {
+			new Bullet(x + statek.getWidth() * 6 / 10, y - statek.getHeight() / 5, this);
+			CzasSzczau = czasDodatkowejAmunicji = System.currentTimeMillis();
 		}
 	}
 

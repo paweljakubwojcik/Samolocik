@@ -88,7 +88,7 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 		if (rodzaj == "Bullet") {
 			new Bullet(x, y + height, -10);
 		} else if (rodzaj == "BulletEyes") {
-			new BulletEyes(x, y + height, -10);
+			new BulletEyes(x, y + height, -10, this);
 		} else if (rodzaj == "BulletExtra") {
 			new BulletExtra(x, y + height, -8);
 		}

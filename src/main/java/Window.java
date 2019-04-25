@@ -11,8 +11,14 @@ public class Window implements KeyListener {
 
 	JFrame okno;
 	public static final int size_x = 800, size_y = 600;
-	private int tloY = -size_y, pozycjatla = 0;;
+
+	private int tloY = -size_y, pozycjatla = 0;
 	BufferedImage klatka;
+	BufferedImage imc = new BufferedImage(size_x, size_y * 2, BufferedImage.TYPE_INT_ARGB);
+	BufferedImage im1 = new BufferedImage(size_x, size_y, BufferedImage.TYPE_INT_ARGB); // obrazek
+																						// tla1
+	BufferedImage im2 = new BufferedImage(size_x, size_y, BufferedImage.TYPE_INT_ARGB); // obrazek
+																						// tla2
 
 	Player statek1;
 	Thread Game;
@@ -21,12 +27,9 @@ public class Window implements KeyListener {
 	boolean ruch1D = false;
 	boolean ruch1U = false;
 	boolean strzal = false;
-
-	BufferedImage imc = new BufferedImage(size_x, size_y * 2, BufferedImage.TYPE_INT_ARGB);
-	BufferedImage im1 = new BufferedImage(size_x, size_y, BufferedImage.TYPE_INT_ARGB); // obrazek
-																						// tla1
-	BufferedImage im2 = new BufferedImage(size_x, size_y, BufferedImage.TYPE_INT_ARGB); // obrazek
-																						// tla2
+	boolean pause = false;
+	
+	boolean spanie = true; // kombinuje jak siê tego pozbyæ
 
 	Window() {
 		okno = new JFrame("Niewdzieczna przestrzen");
@@ -39,6 +42,7 @@ public class Window implements KeyListener {
 		okno.addKeyListener(this);
 		klatka = new BufferedImage(size_x, size_y, BufferedImage.TYPE_INT_ARGB);
 		statek1 = new Player(this, 400, 500);
+		Graphics2D g3 = (Graphics2D) okno.getGraphics();
 
 		EnemyGenerator generator = new EnemyGenerator(this);
 
@@ -51,46 +55,71 @@ public class Window implements KeyListener {
 			@Override
 			public void run() {
 				while (true) {
-					draw();
-					Bullet.motion();
-					Enemy.motion();
-					generator.generate();
-					sprawdzKolizje();
 
-					if (ruch1L)
-						statek1.moveLeft();
-					if (ruch1P)
-						statek1.moveRight();
-					if (ruch1U)
-						statek1.moveUp();
-					if (ruch1D)
-						statek1.moveDown();
-					if (strzal)
-						statek1.strzal();
+					if (!pause) {
 
-					try {
-						Thread.sleep(1000 / 60);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
+						draw();
+						Bullet.motion();
+						Enemy.motion();
+						generator.generate();
+						sprawdzKolizje();
+						statek1.upDateAmunicji();
 
-					tloY += 5;
-					pozycjatla += 5;
+						if (ruch1L)
+							statek1.moveLeft();
+						if (ruch1P)
+							statek1.moveRight();
+						if (ruch1U)
+							statek1.moveUp();
+						if (ruch1D)
+							statek1.moveDown();
+						if (strzal)
+							statek1.strzal();
 
-					if (tloY >= 0) {
-						if (pozycjatla == size_y) {
-							losujtlo(im2);
-							scaltla(im2, im1);
-						} else if (pozycjatla >= size_y * 2) {
-							losujtlo(im1);
-							scaltla(im1, im2);
-							pozycjatla = 0;
+						try {
+							Thread.sleep(1000 / 60);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
 						}
-						tloY = -size_y;
+
+						////////////////////////////
+						tloY += 5;
+						pozycjatla += 5;
+
+						if (tloY >= 0) {
+							if (pozycjatla == size_y) {
+								losujtlo(im2);
+								scaltla(im2, im1);
+							} else if (pozycjatla >= size_y * 2) {
+								losujtlo(im1);
+								scaltla(im1, im2);
+								pozycjatla = 0;
+							}
+							tloY = -size_y;
+						}
+						///////////////////////////////
+
+					} else {
+						////////// rysowanie znaku zatrzymania//////////////
+						spanie=!spanie;
+						if (spanie)
+							drawklatka();
+						else {
+							g3.setColor(Color.white);
+							g3.fillRect(size_x / 2 - 30, size_y / 2 - 30, 20, 50);
+							g3.fillRect(size_x / 2 + 20, size_y / 2 - 30, 20, 50);
+						}
+						
+						///////////////////////////////////////////////////////
+						try {
+							Thread.sleep(700);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
 
 				}
-
 			}
 		}, "GameWhile");
 	}
@@ -116,7 +145,7 @@ public class Window implements KeyListener {
 	void losujtlo(BufferedImage im) {
 		Random los = new Random();
 		Graphics2D g2d = (Graphics2D) im.getGraphics();
-		g2d.setColor(new Color(0, 0, 0, 255));
+		g2d.setColor(new Color(0, 0, 15, 255));
 		g2d.fillRect(0, 0, size_x, size_y);
 		g2d.setColor(Color.WHITE);
 		int wielkosc = 0, xxx = 0, yyy = 0;
@@ -127,7 +156,7 @@ public class Window implements KeyListener {
 
 			g2d.fillOval(xxx, yyy, wielkosc, wielkosc);
 		}
-		g2d.setColor(Color.WHITE);
+		// g2d.setColor(Color.WHITE);
 	}
 
 	void scaltla(BufferedImage i1, BufferedImage i2) {
@@ -150,6 +179,11 @@ public class Window implements KeyListener {
 			ruch1U = true;
 		} else if (klucz == KeyEvent.VK_DOWN) {
 			ruch1D = true;
+		} else if (klucz == KeyEvent.VK_P) {
+			if (pause == true)
+				pause = false;
+			else
+				pause = true;
 		}
 
 	}
@@ -180,19 +214,21 @@ public class Window implements KeyListener {
 		for (int j = 0; j < Enemy.enemies.size(); j++) {
 			for (int i = 0; i < Bullet.bullets.size(); i++) {
 
-				Collisions.checkCollision(Enemy.enemies.get(j), Bullet.bullets.get(i));
+				Collisions.checkCollision(Enemy.enemies.get(j), Bullet.bullets.get(i)); // enemy
+																						// z
+																						// nabojami
 				if (Enemy.enemies.size() <= j)
 					break;
 			}
-
 		}
-
 		for (int j = 0; j < Enemy.enemies.size(); j++) {
-			Collisions.checkCollision(statek1, Enemy.enemies.get(j));
+			Collisions.checkCollision(statek1, Enemy.enemies.get(j)); // enemy z
+																		// playerem
 		}
-
 		for (int i = 0; i < Bullet.bullets.size(); i++) {
-			Collisions.checkCollision(statek1, Bullet.bullets.get(i));
+			Collisions.checkCollision(statek1, Bullet.bullets.get(i)); // player
+																		// z
+																		// nabojami
 		}
 	}
 

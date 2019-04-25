@@ -19,10 +19,11 @@ public class Bullet extends Collisionable {
 	 * @param pos_y
 	 *            pozycja rakiety w momencie SZCZAUU
 	 */
-	Bullet(int pos_x, int pos_y) {
+	Bullet(int pos_x, int pos_y , Player player) {
 		this.x = pos_x;
 		this.y = pos_y;
 		bullets.add(this);
+		player.amunitionAmount--;
 	}
 
 	Bullet() {

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Enemy extends Collisionable implements IEnemy {
+public abstract class Enemy extends Collisionable {
 
 	int x, y;
 	int health;
@@ -13,6 +13,9 @@ public class Enemy extends Collisionable implements IEnemy {
 	Window win;
 	static Random generator = new Random();
 	static List<Enemy> enemies = new ArrayList<>();
+	
+	public abstract void drawMe(Graphics2D g);
+	public abstract void myMotion() ;
 
 	/**
 	 * 
@@ -24,6 +27,8 @@ public class Enemy extends Collisionable implements IEnemy {
 		this.y = y;
 		enemies.add(this);
 	}
+	
+	
 
 	/**
 	 * 
@@ -41,17 +46,8 @@ public class Enemy extends Collisionable implements IEnemy {
 		}
 	}
 
-	@Override
-	public void drawMe(Graphics2D g) {
-		// TODO Auto-generated method stub
+	
 
-	}
-
-	@Override
-	public void myMotion() {
-		// TODO Auto-generated method stub
-
-	}
 
 	@Override
 	public int[][] getPole() {

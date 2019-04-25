@@ -1,5 +1,5 @@
 
-public interface IEnemyBoss extends IEnemy {
+public interface IEnemyBoss {
 	
 	void AI();
 	/**
