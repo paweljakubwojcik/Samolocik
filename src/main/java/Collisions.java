@@ -4,7 +4,7 @@ public class Collisions {
 	// tab = {x,y,width, height}
 
 	static void checkCollision(Collisionable o1, Collisionable o2) {
-		// long time1=System.currentTimeMillis();
+		/* long time1=System.currentTimeMillis();*/
 
 		int[][] tab1 = o1.getPole(), tab2 = o2.getPole();
 
@@ -26,14 +26,14 @@ public class Collisions {
 			if (checkOvalOval(tab1, tab2) || checkOvalOval(tab2, tab1)) {
 				o1.collision(o2);
 				o2.collision(o1);
-				System.out.println("kolizja");
+				//System.out.println("kolizja");
 			}
 		}
-		/*
-		 * long time2 =System.currentTimeMillis();
-		 * System.out.print("Funkccja sprawdzenie kolizji wykonuje sie w : ");
-		 * System.out.println(time2-time1);
-		 */
+		
+		  /*long time2 =System.currentTimeMillis();
+		  System.out.print("Funkccja sprawdzenie kolizji wykonuje sie w : ");
+		  System.out.println(time2-time1);*/
+		 
 	}
 
 	/*

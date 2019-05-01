@@ -61,16 +61,17 @@ public abstract class Enemy extends Collisionable {
 		if (o.getClass() == Bullet.class) {
 			Bullet bullet = (Bullet) o;
 			this.health -= bullet.damage;
-			System.out.println(this.getPole()[0][2]);
-			if (this.health == 0) {
-				Enemy.enemies.remove(this);
-				System.out.println("umar³em");
-				try {
-					this.finalize();
-				} catch (Throwable e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+		}
+		
+		if (this.health == 0) {
+			Drop.generateDrop(this);
+			Enemy.enemies.remove(this);
+			
+			try {
+				this.finalize();
+			} catch (Throwable e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
 

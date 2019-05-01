@@ -1,12 +1,12 @@
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-public class BulletEyes extends Bullet {
+public class BulletEyes extends EnemyBullet {
 	protected int sizeX, sizeY;
 	private BossPaszko paszkow;
 
-	BulletEyes(int pos_x, int pos_y, int velocity , BossPaszko paszkow) {
-		super(pos_x,pos_y,velocity);
+	BulletEyes(int pos_x, int pos_y, BossPaszko paszkow) {
+		super(pos_x,pos_y);
 		this.size = 13;
 		this.paszkow=paszkow;
 		sizeX = -(paszkow.paszko.getWidth() / 2 - size / 2)

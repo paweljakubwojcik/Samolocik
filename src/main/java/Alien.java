@@ -13,6 +13,7 @@ public class Alien extends Enemy {
 	private BufferedImage Image[] = new BufferedImage[4];
 	private int i = 0;
 	long time = System.currentTimeMillis();
+	long czasAtak= System.currentTimeMillis();
 
 	/**
 	 * 
@@ -81,6 +82,11 @@ public class Alien extends Enemy {
 		}
 		x += velocity_x;
 		y += velocity_y;
+		
+		if(System.currentTimeMillis()-czasAtak>generator.nextInt(3000)+1000){
+			new EnemyBullet(x+width/2,y+height);
+			czasAtak=System.currentTimeMillis();
+		}
 	}
 
 	private void losujKierunek() {

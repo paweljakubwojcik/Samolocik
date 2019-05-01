@@ -19,11 +19,10 @@ public class Bullet extends Collisionable {
 	 * @param pos_y
 	 *            pozycja rakiety w momencie SZCZAUU
 	 */
-	Bullet(int pos_x, int pos_y , Player player) {
+	Bullet(int pos_x, int pos_y ) {
 		this.x = pos_x;
 		this.y = pos_y;
 		bullets.add(this);
-		player.amunitionAmount--;
 	}
 
 	Bullet() {
@@ -64,7 +63,7 @@ public class Bullet extends Collisionable {
 
 	}
 
-	synchronized void draw(Graphics2D g) {
+	void draw(Graphics2D g) {
 		g.setColor(Color.red);
 		g.fillOval(x, y, size, size);
 	}
@@ -91,18 +90,9 @@ public class Bullet extends Collisionable {
 	@Override
 	public void collision(Object o) {
 
-		if (o.getClass() == Player.class) {
-			Player player = (Player) o;
-			player.health -= damage;
-		}
-
+		
 		bullets.remove(this);
-		try {
-			this.finalize();
-		} catch (Throwable e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
+		
+		
 	}
 }

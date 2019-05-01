@@ -86,11 +86,11 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 	@Override
 	public void strzal(String rodzaj) {
 		if (rodzaj == "Bullet") {
-			new Bullet(x, y + height, -10);
+			new Bullet(x, y + height);
 		} else if (rodzaj == "BulletEyes") {
-			new BulletEyes(x, y + height, -10, this);
+			new BulletEyes(x, y + height, this);
 		} else if (rodzaj == "BulletExtra") {
-			new BulletExtra(x, y + height, -8);
+			new BulletExtra(x, y + height);
 		}
 
 	}

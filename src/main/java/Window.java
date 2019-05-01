@@ -61,9 +61,10 @@ public class Window implements KeyListener {
 						draw();
 						Bullet.motion();
 						Enemy.motion();
+						Drop.motion();
 						generator.generate();
 						sprawdzKolizje();
-						statek1.upDateAmunicji();
+						
 
 						if (ruch1L)
 							statek1.moveLeft();
@@ -131,6 +132,7 @@ public class Window implements KeyListener {
 		g.drawImage(imc, 0, tloY, null);
 		Bullet.drawBullets(g);
 		Enemy.draw(g);
+		Drop.draw(g);
 		statek1.draw(g);
 		g.dispose();
 		drawklatka();
@@ -229,6 +231,12 @@ public class Window implements KeyListener {
 			Collisions.checkCollision(statek1, Bullet.bullets.get(i)); // player
 																		// z
 																		// nabojami
+		}
+		
+		for (int i = 0; i < Drop.drops.size(); i++) {
+			Collisions.checkCollision(statek1, Drop.drops.get(i)); // player
+																		// z
+																		// dropami
 		}
 	}
 

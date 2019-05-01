@@ -22,7 +22,7 @@ public class EnemyGenerator {
 	@SuppressWarnings("static-access")
 	void generate() {
 		////////////// generator alienow//////////////////
-		if (!check(Alien.class) && generateAliens == false) {
+		if (!check(Alien.class) && !check(BossPaszko.class)&&generateAliens == false) {
 			numberOfAliens += 5;
 			numerFali++;
 			generateAliens = true;
