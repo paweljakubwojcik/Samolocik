@@ -12,6 +12,8 @@ public class BulletEyes extends EnemyBullet {
 		sizeX = -(paszkow.paszko.getWidth() / 2 - size / 2)
 				+ (x + paszkow.paszko.getWidth() / 2 + 5 * size / 2);
 		sizeY = size * 13 / 3;
+		
+		this.damage=10;
 
 		bullets.add(this);
 	}
