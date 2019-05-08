@@ -35,6 +35,8 @@ public abstract class Drop extends Collisionable {
 	{
 		int chance = generator.nextInt(100);
 		if(chance<20) new HealthPack(e.x, e.y);
+		else
+		if(chance<30) new DropExtraBullet(e.x, e.y);
 		
 	}
 	

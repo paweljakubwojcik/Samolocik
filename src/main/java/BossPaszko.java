@@ -51,8 +51,8 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 
 		g.setColor(new Color(0,255,0,200));
 		g.drawRect(win.size_x * 79 / 80 - win.size_x / 3, win.size_y / 10, win.size_x / 3, win.size_y / 20);
-		g.fillRect(win.size_x * 79 / 80 - win.size_x / 3 * health / defaultHealth, win.size_y / 10,
-				(win.size_x / 3) * health / defaultHealth, win.size_y / 20);
+		g.fillRect(win.size_x * 79 / 80 - win.size_x / 3 * (int)health / defaultHealth, win.size_y / 10,
+				(win.size_x / 3) * (int)health / defaultHealth, win.size_y / 20);
 		g.setFont(new Font(null, Font.PLAIN, 25));
 		g.drawString(nazwa, win.size_x * 64 / 80, win.size_y / 12);
 	}

@@ -8,7 +8,7 @@ public class Bullet extends Collisionable {
 	protected int x, y;
 	protected int size = 10;
 	protected int velocity = 10;
-	int damage = 1;
+	float damage = 1;
 	protected static Window win = Samolotoszczalec.win;
 	static List<Bullet> bullets = new ArrayList<>();
 

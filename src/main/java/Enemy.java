@@ -7,7 +7,7 @@ import java.util.Random;
 public abstract class Enemy extends Collisionable {
 
 	int x, y;
-	int health;
+	float health;
 	int width, height;
 	int velocity_x, velocity_y;
 	Window win;
@@ -58,12 +58,12 @@ public abstract class Enemy extends Collisionable {
 	@Override
 	public void collision(Object o) {
 
-		if (o.getClass() == Bullet.class) {
+		if (o.getClass() == Bullet.class||o.getClass() == BulletExtraPlayer.class) {
 			Bullet bullet = (Bullet) o;
 			this.health -= bullet.damage;
 		}
 		
-		if (this.health == 0) {
+		if (this.health <= 0) {
 			Drop.generateDrop(this);
 			Enemy.enemies.remove(this);
 			

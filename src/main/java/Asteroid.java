@@ -59,7 +59,7 @@ public class Asteroid extends Enemy {
 	}
 
 	private void loadGraphic() {
-		URL url = getClass().getResource(obrazy[index][(defaultHealth - health)]);
+		URL url = getClass().getResource(obrazy[index][(defaultHealth - (int)health)]);
 		try {
 			Image = ImageIO.read(url);
 		} catch (IOException e) {
