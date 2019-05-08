@@ -12,7 +12,7 @@ public class Player extends Collisionable {
 	Window win;
 	BufferedImage statek;
 
-	final int DefaultHealth = 100, defaultDefense = 0, maxAmunitionAmount = 50;
+	final int DefaultHealth = 1, defaultDefense = 0, maxAmunitionAmount = 50;
 	int velocity = 5; // predkosc samolotu
 	int x, y, width, height;
 	long CzasSzczau, CzasAtaku, czasDodatkowejAmunicji;
@@ -59,7 +59,7 @@ public class Player extends Collisionable {
 		// pasek ¿ycia
 		g.setColor(new Color(255, 0, 0, 150));
 		g.drawRect(win.size_x / 80, win.size_y / 10, win.size_x / 3, win.size_y / 20);
-		g.fillRect(win.size_x / 80, win.size_y / 10, (win.size_x / 3) * (int)health / DefaultHealth, win.size_y / 20);
+		g.fillRect(win.size_x / 80, win.size_y / 10, (win.size_x / 3) * (int) health / DefaultHealth, win.size_y / 20);
 
 		// napis player
 		g.setFont(new Font(null, Font.PLAIN, 25));
@@ -68,17 +68,17 @@ public class Player extends Collisionable {
 		Color[] kolory = { new Color(255, 0, 0, 200), new Color(0, 255, 0, 200), new Color(0, 0, 255, 200),
 				new Color(0, 255, 255, 200), new Color(255, 0, 255, 200) };
 		g.setFont(new Font(null, Font.PLAIN, 10));
-		
+
 		// rodzaje naboi
 		for (int i = 0; i < kolory.length; i++) {
 			g.setColor(kolory[i]);
 			g.fillOval(10, 100 + 20 * i, 10, 10);
-			if(i==0)
-			g.drawString("infinite", 30, 110 + 20 * i);
+			if (i == 0)
+				g.drawString("infinite", 30, 110 + 20 * i);
 			else
-			g.drawString(Integer.toString(amunition[i]), 30, 110 + 20 * i);
-			if(whichAmunition==i)
-			g.drawRect(10, 100 + 20 * i, 10, 10);
+				g.drawString(Integer.toString(amunition[i]), 30, 110 + 20 * i);
+			if (whichAmunition == i)
+				g.drawRect(10, 100 + 20 * i, 10, 10);
 		}
 
 		// ilosc naboi
@@ -97,7 +97,7 @@ public class Player extends Collisionable {
 			}
 			break;
 		case 1:
-			if (System.currentTimeMillis() - CzasSzczau > delay+200 && amunition[whichAmunition] != 0) {
+			if (System.currentTimeMillis() - CzasSzczau > delay + 200 && amunition[whichAmunition] != 0) {
 				new BulletExtraPlayer(x + statek.getWidth() * 6 / 10, y - statek.getHeight() / 2);
 				amunition[whichAmunition]--;
 				CzasSzczau = czasDodatkowejAmunicji = System.currentTimeMillis();
@@ -166,8 +166,9 @@ public class Player extends Collisionable {
 
 		}
 
-		if (this.health == 0) {
+		if (this.health <= 0) {
 			System.out.println("umar³em");
+			win.playerdeath = true;
 			try {
 				this.finalize();
 			} catch (Throwable e) {

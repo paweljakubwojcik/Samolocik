@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -28,7 +29,8 @@ public class Window implements KeyListener {
 	boolean ruch1U = false;
 	boolean strzal = false;
 	boolean pause = false;
-	
+	boolean playerdeath = false;
+
 	boolean spanie = true; // kombinuje jak siê tego pozbyæ
 
 	Window() {
@@ -64,7 +66,6 @@ public class Window implements KeyListener {
 						Drop.motion();
 						generator.generate();
 						sprawdzKolizje();
-						
 
 						if (ruch1L)
 							statek1.moveLeft();
@@ -99,10 +100,22 @@ public class Window implements KeyListener {
 							tloY = -size_y;
 						}
 						///////////////////////////////
+						while (playerdeath) {
+							g3.setColor(Color.RED);
+							g3.fillRect(0, 0, size_x, size_y);
+							g3.setColor(Color.BLACK);
+							g3.setFont(new Font(null, 100, 100));
+							g3.drawString("UMARLEM", size_x / 5, size_y / 2);
+							try {
+								Thread.sleep(100);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+						}
 
 					} else {
 						////////// rysowanie znaku zatrzymania//////////////
-						spanie=!spanie;
+						spanie = !spanie;
 						if (spanie)
 							drawklatka();
 						else {
@@ -110,7 +123,7 @@ public class Window implements KeyListener {
 							g3.fillRect(size_x / 2 - 30, size_y / 2 - 30, 20, 50);
 							g3.fillRect(size_x / 2 + 20, size_y / 2 - 30, 20, 50);
 						}
-						
+
 						///////////////////////////////////////////////////////
 						try {
 							Thread.sleep(700);
@@ -181,18 +194,18 @@ public class Window implements KeyListener {
 			ruch1U = true;
 		} else if (klucz == KeyEvent.VK_DOWN) {
 			ruch1D = true;
-		}else if(klucz==KeyEvent.VK_1){
-			statek1.whichAmunition=0;
-		}else if(klucz==KeyEvent.VK_2){
-			statek1.whichAmunition=1;
-		}else if(klucz==KeyEvent.VK_3){
-			statek1.whichAmunition=2;
-		}else if(klucz==KeyEvent.VK_4){
-			statek1.whichAmunition=3;
-		}else if(klucz==KeyEvent.VK_5){
-			statek1.whichAmunition=4;
+		} else if (klucz == KeyEvent.VK_1) {
+			statek1.whichAmunition = 0;
+		} else if (klucz == KeyEvent.VK_2) {
+			statek1.whichAmunition = 1;
+		} else if (klucz == KeyEvent.VK_3) {
+			statek1.whichAmunition = 2;
+		} else if (klucz == KeyEvent.VK_4) {
+			statek1.whichAmunition = 3;
+		} else if (klucz == KeyEvent.VK_5) {
+			statek1.whichAmunition = 4;
 		} else if (klucz == KeyEvent.VK_P) {
-			pause=!pause;
+			pause = !pause;
 		}
 
 	}
@@ -239,11 +252,11 @@ public class Window implements KeyListener {
 																		// z
 																		// nabojami
 		}
-		
+
 		for (int i = 0; i < Drop.drops.size(); i++) {
 			Collisions.checkCollision(statek1, Drop.drops.get(i)); // player
-																		// z
-																		// dropami
+																	// z
+																	// dropami
 		}
 	}
 
