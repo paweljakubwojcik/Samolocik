@@ -3,20 +3,19 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
 
-
 import javax.imageio.ImageIO;
 
-public class HealthPack extends Drop {
+public class DropExtraBullet extends Drop {
 
-	static BufferedImage apteczka;
+	static BufferedImage greenammo;
 
-	HealthPack(int x, int y) {
+	DropExtraBullet(int x, int y) {
 		super(x, y);
 		this.width = 50;
 		this.height = 50;
 		try {
-			URL url = getClass().getResource("images//apteczka.png");
-			apteczka = ImageIO.read(url);
+			URL url = getClass().getResource("images//greensuply.png");
+			greenammo = ImageIO.read(url);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -24,7 +23,8 @@ public class HealthPack extends Drop {
 
 	@Override
 	void drawMe(Graphics2D g) {
-		g.drawImage(apteczka, x, y, null);
+		g.drawImage(greenammo, x, y, null);
+
 	}
 
 	@Override
@@ -37,7 +37,7 @@ public class HealthPack extends Drop {
 	void collision(Object o) {
 		if (o.getClass() == Player.class) {
 			Player player = (Player) o;
-			player.health += 30;
+			player.amunition[1] += 30;
 			if (player.health > player.DefaultHealth)
 				player.health = player.DefaultHealth;
 			drops.remove(this);
