@@ -61,7 +61,7 @@ public class Alien extends Enemy {
 		g.setColor(new Color(255, 0, 0, 200));
 		/* g.drawRect(x, y, width, height); */
 		g.drawRect(x, y + win.size_y / 400, win.size_x / 20, win.size_y / 200);
-		g.fillRect(x, y + win.size_y / 400, (win.size_x / 20) * health / defaultHealth, win.size_y / 200);
+		g.fillRect(x, y + win.size_y / 400, (win.size_x / 20) * (int)health / defaultHealth, win.size_y / 200);
 	}
 
 	@SuppressWarnings("static-access")

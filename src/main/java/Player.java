@@ -17,8 +17,8 @@ public class Player extends Collisionable {
 	int x, y, width, height;
 	long CzasSzczau, CzasAtaku, czasDodatkowejAmunicji;
 	long delay = 200;
-	int health, defense;
-	int[] amunition = { 1, 0, 0, 0, 0 };
+	float health, defense;
+	int[] amunition = { 1, 30, 0, 0, 0 };
 	int whichAmunition = 0;
 
 	String nazwa = "PLAYER";
@@ -59,7 +59,7 @@ public class Player extends Collisionable {
 		// pasek ¿ycia
 		g.setColor(new Color(255, 0, 0, 150));
 		g.drawRect(win.size_x / 80, win.size_y / 10, win.size_x / 3, win.size_y / 20);
-		g.fillRect(win.size_x / 80, win.size_y / 10, (win.size_x / 3) * health / DefaultHealth, win.size_y / 20);
+		g.fillRect(win.size_x / 80, win.size_y / 10, (win.size_x / 3) * (int)health / DefaultHealth, win.size_y / 20);
 
 		// napis player
 		g.setFont(new Font(null, Font.PLAIN, 25));
@@ -77,6 +77,8 @@ public class Player extends Collisionable {
 			g.drawString("infinite", 30, 110 + 20 * i);
 			else
 			g.drawString(Integer.toString(amunition[i]), 30, 110 + 20 * i);
+			if(whichAmunition==i)
+			g.drawRect(10, 100 + 20 * i, 10, 10);
 		}
 
 		// ilosc naboi
@@ -95,7 +97,11 @@ public class Player extends Collisionable {
 			}
 			break;
 		case 1:
-			// to be done
+			if (System.currentTimeMillis() - CzasSzczau > delay+200 && amunition[whichAmunition] != 0) {
+				new BulletExtraPlayer(x + statek.getWidth() * 6 / 10, y - statek.getHeight() / 2);
+				amunition[whichAmunition]--;
+				CzasSzczau = czasDodatkowejAmunicji = System.currentTimeMillis();
+			}
 			break;
 		case 2:
 			break;

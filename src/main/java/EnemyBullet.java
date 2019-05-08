@@ -1,19 +1,17 @@
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-public class EnemyBullet extends Bullet{
+public class EnemyBullet extends Bullet {
 
-	
-	EnemyBullet(int x, int y)
-	{
-		super(x,y);
+	EnemyBullet(int x, int y) {
+		super(x, y);
 	}
-	
+
 	void draw(Graphics2D g) {
 		g.setColor(Color.green);
 		g.fillOval(x, y, size, size);
 	}
-	
+
 	@SuppressWarnings("static-access")
 	void MyMotion() {
 		if (y > 0 && y < win.size_y)
@@ -29,7 +27,7 @@ public class EnemyBullet extends Bullet{
 			}
 
 	}
-	
+
 	@Override
 	public void collision(Object o) {
 
@@ -37,11 +35,8 @@ public class EnemyBullet extends Bullet{
 			Player player = (Player) o;
 			player.health -= damage;
 			bullets.remove(this);
-		}
-		else if(o.getClass() ==Asteroid.class)
+		} else if (o.getClass() == Asteroid.class)
 			bullets.remove(this);
-		
-		
-		
+
 	}
 }
