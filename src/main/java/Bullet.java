@@ -9,6 +9,7 @@ public class Bullet extends Collisionable {
 	protected int size = 10;
 	protected int velocity = 10;
 	float damage = 1;
+	static long delay = 200;
 	protected static Window win = Samolotoszczalec.win;
 	static List<Bullet> bullets = new ArrayList<>();
 
@@ -29,18 +30,6 @@ public class Bullet extends Collisionable {
 
 	}
 
-	/**
-	 * 
-	 * @param pos_x
-	 * @param pos_y
-	 * @param velocity
-	 */
-	Bullet(int pos_x, int pos_y, int velocity) {
-		this.x = pos_x;
-		this.y = pos_y;
-		this.velocity = velocity;
-		bullets.add(this);
-	}
 
 	/**
 	 * opisuje ruch pocisku

@@ -59,13 +59,20 @@ public class MessageBox {
 		g.setFont(new Font(null, Font.PLAIN, 25));
 		g.drawString(str,x,y);
 		
+		motion();
+		
+	}
+	
+	
+	void motion()
+	{
 		if(fadeOut){
-		double czasKtoryMinal = (double)(System.currentTimeMillis()-time);
-		opacity = 255 - Math.sqrt(czasKtoryMinal/czas)*255;
-		}
-		
-		if(opacity<=0) messages.remove(this);
-		
+			double czasKtoryMinal = (double)(System.currentTimeMillis()-time);
+			opacity = 255 - Math.sqrt(czasKtoryMinal/czas)*255;
+			y--;
+			}
+			
+			if(opacity<=0) messages.remove(this);
 	}
 	
 }
