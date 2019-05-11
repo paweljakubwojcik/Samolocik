@@ -6,7 +6,7 @@ import java.util.List;
 public class Bullet extends Collisionable {
 
 	protected int x, y;
-	protected int size = 10;
+	static int size = 10;
 	protected int velocity = 10;
 	float damage = 1;
 	static long delay = 200;
@@ -20,7 +20,7 @@ public class Bullet extends Collisionable {
 	 * @param pos_y
 	 *            pozycja rakiety w momencie SZCZAUU
 	 */
-	Bullet(int pos_x, int pos_y ) {
+	Bullet(int pos_x, int pos_y) {
 		this.x = pos_x;
 		this.y = pos_y;
 		bullets.add(this);
@@ -29,7 +29,6 @@ public class Bullet extends Collisionable {
 	Bullet() {
 
 	}
-
 
 	/**
 	 * opisuje ruch pocisku
@@ -72,16 +71,14 @@ public class Bullet extends Collisionable {
 	@Override
 	public int[][] getPole() {
 
-		int[][] tab = { { x + size / 2, y + size / 2, size } };
+		int[][] tab = { { x + size / 2, y + size / 2, size / 2 } };
 		return tab;
 	}
 
 	@Override
 	public void collision(Object o) {
 
-		
 		bullets.remove(this);
-		
-		
+
 	}
 }

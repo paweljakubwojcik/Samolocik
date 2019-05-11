@@ -43,6 +43,8 @@ public class DropExtraBullet extends Drop {
 			drops.remove(this);
 		}
 
+		new MessageBox("Extra Bullet", 1500, x, y);
+		
 	}
 
 }

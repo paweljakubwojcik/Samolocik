@@ -15,10 +15,10 @@ public class Player extends Collisionable {
 	final int DefaultHealth = 40;
 	int velocity = 5; // predkosc samolotu
 	int x, y, width, height;
-	long CzasSzczau, CzasAtaku, czasDodatkowejAmunicji;
+	long CzasSzczau, CzasAtaku;
 	long delay = 200;
 	float health;
-	int[] amunition = { 1, 0, 0, 0, 0 };
+	int[] amunition = { 1, 30, 0, 0, 0 };
 	int whichAmunition = 0;
 
 	String nazwa = "PLAYER";
@@ -51,8 +51,8 @@ public class Player extends Collisionable {
 
 		// kwadrat testowy
 		
-		  g.setColor(Color.red); g.drawRect(x + statek.getWidth() / 10, y +
-		  statek.getHeight() / 10, width, height);
+		  g.setColor(Color.red);
+		  g.drawRect(getPole()[0][0],getPole()[0][1],getPole()[0][2],getPole()[0][3]);
 		 
 
 		// pasek ¿ycia
@@ -91,15 +91,15 @@ public class Player extends Collisionable {
 		switch (whichAmunition) {
 		case 0:
 			if (System.currentTimeMillis() - CzasSzczau > Bullet.delay && amunition[0] != 0) {
-				new Bullet(x + statek.getWidth() * 6 / 10, y - statek.getHeight() / 5);
-				CzasSzczau = czasDodatkowejAmunicji = System.currentTimeMillis();
+				new Bullet(x + statek.getWidth()/2-Bullet.size/2, y - Bullet.size);
+				CzasSzczau  = System.currentTimeMillis();
 			}
 			break;
 		case 1:
 			if (System.currentTimeMillis() - CzasSzczau > BulletExtraPlayer.delay && amunition[whichAmunition] != 0) {
-				new BulletExtraPlayer(x + statek.getWidth() * 6 / 10, y - statek.getHeight() / 2);
+				new BulletExtraPlayer(x + statek.getWidth()/2-BulletExtraPlayer.size/2, y - BulletExtraPlayer.size);
 				amunition[whichAmunition]--;
-				CzasSzczau = czasDodatkowejAmunicji = System.currentTimeMillis();
+				CzasSzczau = System.currentTimeMillis();
 			}
 			break;
 		case 2:
@@ -141,7 +141,7 @@ public class Player extends Collisionable {
 
 	@Override
 	public int[][] getPole() {
-		int[][] tab = { { x + statek.getWidth() / 10, y + statek.getHeight() / 10, width, height } };
+		int[][] tab = { { x+statek.getWidth()/10, y+statek.getHeight()/10, width, height } };
 		return tab;
 	}
 
