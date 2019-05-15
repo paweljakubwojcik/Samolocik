@@ -99,7 +99,7 @@ public class Collisions {
 		return false;
 	}
 
-	// a to nie sprawdzone jest nawet
+
 	static private boolean checkOvalOval(int[][] tab1, int[][] tab2) {
 		for (int i = 0; i < tab1.length; i++) {
 			for (int j = 0; j < tab2.length; j++) {

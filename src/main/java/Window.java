@@ -123,6 +123,7 @@ public class Window implements KeyListener {
 		Drop.draw(g);
 		statek1.draw(g);
 		MessageBox.draw(g);
+		
 		g.dispose();
 		drawklatka();
 	}
