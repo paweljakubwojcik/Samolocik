@@ -13,6 +13,7 @@ public class EnemyBullet extends Bullet {
 	}
 
 	@SuppressWarnings("static-access")
+	@Override
 	void MyMotion() {
 		if (y > 0 && y < win.size_y)
 			y += velocity;

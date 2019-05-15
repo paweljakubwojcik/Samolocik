@@ -12,12 +12,16 @@ public class Player extends Collisionable {
 	Window win;
 	BufferedImage statek;
 
+<<<<<<< HEAD
 	final int DefaultHealth = 1, defaultDefense = 0, maxAmunitionAmount = 50;
+=======
+	final int DefaultHealth = 40;
+>>>>>>> branch 'master' of https://github.com/7Adrian/Samolocik.git
 	int velocity = 5; // predkosc samolotu
 	int x, y, width, height;
-	long CzasSzczau, CzasAtaku, czasDodatkowejAmunicji;
+	long CzasSzczau, CzasAtaku;
 	long delay = 200;
-	float health, defense;
+	float health;
 	int[] amunition = { 1, 30, 0, 0, 0 };
 	int whichAmunition = 0;
 
@@ -28,7 +32,6 @@ public class Player extends Collisionable {
 		this.x = x;
 		this.y = y;
 		this.health = DefaultHealth;
-		this.defense = defaultDefense;
 
 		CzasSzczau = CzasAtaku = System.currentTimeMillis();
 		URL url = getClass().getResource("samolot.png");
@@ -51,10 +54,10 @@ public class Player extends Collisionable {
 		g.drawImage(statek, x, y, null);
 
 		// kwadrat testowy
-		/*
-		 * g.setColor(Color.red); g.drawRect(x + statek.getWidth() / 10, y +
-		 * statek.getHeight() / 10, width, height);
-		 */
+		
+		  g.setColor(Color.red);
+		  g.drawRect(getPole()[0][0],getPole()[0][1],getPole()[0][2],getPole()[0][3]);
+		 
 
 		// pasek ¿ycia
 		g.setColor(new Color(255, 0, 0, 150));
@@ -91,16 +94,21 @@ public class Player extends Collisionable {
 
 		switch (whichAmunition) {
 		case 0:
-			if (System.currentTimeMillis() - CzasSzczau > delay && amunition[0] != 0) {
-				new Bullet(x + statek.getWidth() * 6 / 10, y - statek.getHeight() / 5);
-				CzasSzczau = czasDodatkowejAmunicji = System.currentTimeMillis();
+			if (System.currentTimeMillis() - CzasSzczau > Bullet.delay && amunition[0] != 0) {
+				new Bullet(x + statek.getWidth()/2-Bullet.size/2, y - Bullet.size);
+				CzasSzczau  = System.currentTimeMillis();
 			}
 			break;
 		case 1:
+<<<<<<< HEAD
 			if (System.currentTimeMillis() - CzasSzczau > delay + 200 && amunition[whichAmunition] != 0) {
 				new BulletExtraPlayer(x + statek.getWidth() * 6 / 10, y - statek.getHeight() / 2);
+=======
+			if (System.currentTimeMillis() - CzasSzczau > BulletExtraPlayer.delay && amunition[whichAmunition] != 0) {
+				new BulletExtraPlayer(x + statek.getWidth()/2-BulletExtraPlayer.size/2, y - BulletExtraPlayer.size);
+>>>>>>> branch 'master' of https://github.com/7Adrian/Samolocik.git
 				amunition[whichAmunition]--;
-				CzasSzczau = czasDodatkowejAmunicji = System.currentTimeMillis();
+				CzasSzczau = System.currentTimeMillis();
 			}
 			break;
 		case 2:
@@ -142,7 +150,7 @@ public class Player extends Collisionable {
 
 	@Override
 	public int[][] getPole() {
-		int[][] tab = { { x + statek.getWidth() / 10, y + statek.getHeight() / 10, width, height } };
+		int[][] tab = { { x+statek.getWidth()/10, y+statek.getHeight()/10, width, height } };
 		return tab;
 	}
 
@@ -167,6 +175,7 @@ public class Player extends Collisionable {
 		}
 
 		if (this.health <= 0) {
+<<<<<<< HEAD
 			System.out.println("umar³em");
 			win.playerdeath = true;
 			try {
@@ -175,7 +184,18 @@ public class Player extends Collisionable {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+=======
+			new MessageBox("umarlem");
+
+>>>>>>> branch 'master' of https://github.com/7Adrian/Samolocik.git
 		}
+	}
+
+	public boolean isDead() {
+		if (health <= 0)
+			return true;
+		else
+			return false;
 	}
 
 }

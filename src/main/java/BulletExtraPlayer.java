@@ -3,10 +3,14 @@ import java.awt.Graphics2D;
 
 public class BulletExtraPlayer extends Bullet {
 
+	static long delay = 400;
+
+	static int size = 20;
+
 	public BulletExtraPlayer(int x, int y) {
 		super(x, y);
-		this.size = 20;
-		damage=2;
+
+		damage = 2;
 
 	}
 

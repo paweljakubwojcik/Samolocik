@@ -81,16 +81,17 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 			velocity_x = -velocity_x;
 		}
 
+		this.AI();
 	}
 
 	@Override
 	public void strzal(String rodzaj) {
 		if (rodzaj == "Bullet") {
-			new Bullet(x, y + height);
+			new EnemyBullet(x, y + height/2);
 		} else if (rodzaj == "BulletEyes") {
-			new BulletEyes(x, y + height, this);
+			new BulletEyes(x, y + height/2, this);
 		} else if (rodzaj == "BulletExtra") {
-			new BulletExtra(x, y + height);
+			new BulletExtra(x, y + height/2);
 		}
 
 	}

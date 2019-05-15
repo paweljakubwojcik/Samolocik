@@ -36,6 +36,7 @@ public class HealthPack extends Drop {
 	@Override
 	void collision(Object o) {
 		if (o.getClass() == Player.class) {
+			new MessageBox("Health Pack",1500,x,y);
 			Player player = (Player) o;
 			player.health += 30;
 			if (player.health > player.DefaultHealth)

@@ -4,12 +4,19 @@ public class Collisions {
 	// tab = {x,y,width, height}
 
 	static void checkCollision(Collisionable o1, Collisionable o2) {
-		/* long time1=System.currentTimeMillis();*/
+		/* long time1=System.currentTimeMillis(); */
 
 		int[][] tab1 = o1.getPole(), tab2 = o2.getPole();
 
 		if (tab1[0].length > tab2[0].length) {
 			if (checkRectOval(tab1, tab2)) {
+				o1.collision(o2);
+				o2.collision(o1);
+				// System.out.println("kolizja");
+			}
+
+		} else if (tab1[0].length < tab2[0].length) {
+			if (checkRectOval(tab2, tab1)) {
 				o1.collision(o2);
 				o2.collision(o1);
 				// System.out.println("kolizja");
@@ -26,14 +33,16 @@ public class Collisions {
 			if (checkOvalOval(tab1, tab2) || checkOvalOval(tab2, tab1)) {
 				o1.collision(o2);
 				o2.collision(o1);
-				//System.out.println("kolizja");
+				// System.out.println("kolizja");
 			}
 		}
-		
-		  /*long time2 =System.currentTimeMillis();
-		  System.out.print("Funkccja sprawdzenie kolizji wykonuje sie w : ");
-		  System.out.println(time2-time1);*/
-		 
+
+		/*
+		 * long time2 =System.currentTimeMillis();
+		 * System.out.print("Funkccja sprawdzenie kolizji wykonuje sie w : ");
+		 * System.out.println(time2-time1);
+		 */
+
 	}
 
 	/*
@@ -62,7 +71,6 @@ public class Collisions {
 		return false;
 	}
 
-	// tu jest coœ nie tak
 	static private boolean checkRectOval(int[][] tab1, int[][] tab2) {
 		for (int i = 0; i < tab1.length; i++) {
 			for (int j = 0; j < tab2.length; j++) {

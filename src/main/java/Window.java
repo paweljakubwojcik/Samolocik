@@ -29,7 +29,10 @@ public class Window implements KeyListener {
 	boolean ruch1U = false;
 	boolean strzal = false;
 	boolean pause = false;
+<<<<<<< HEAD
 	boolean playerdeath = false;
+=======
+>>>>>>> branch 'master' of https://github.com/7Adrian/Samolocik.git
 
 	boolean spanie = true; // kombinuje jak siê tego pozbyæ
 
@@ -60,24 +63,35 @@ public class Window implements KeyListener {
 
 					if (!pause) {
 
+<<<<<<< HEAD
 						draw();
 						Bullet.motion();
 						Enemy.motion();
 						Drop.motion();
 						generator.generate();
 						sprawdzKolizje();
+=======
+						if (!statek1.isDead()) {
+							draw();
+							Bullet.motion();
+							Enemy.motion();
+							Drop.motion();
+							generator.generate();
+							sprawdzKolizje();
+>>>>>>> branch 'master' of https://github.com/7Adrian/Samolocik.git
 
-						if (ruch1L)
-							statek1.moveLeft();
-						if (ruch1P)
-							statek1.moveRight();
-						if (ruch1U)
-							statek1.moveUp();
-						if (ruch1D)
-							statek1.moveDown();
-						if (strzal)
-							statek1.strzal();
-
+							if (ruch1L)
+								statek1.moveLeft();
+							if (ruch1P)
+								statek1.moveRight();
+							if (ruch1U)
+								statek1.moveUp();
+							if (ruch1D)
+								statek1.moveDown();
+							if (strzal)
+								statek1.strzal();
+						} else
+							endOfGame();
 						try {
 							Thread.sleep(1000 / 60);
 						} catch (InterruptedException e) {
@@ -85,20 +99,7 @@ public class Window implements KeyListener {
 						}
 
 						////////////////////////////
-						tloY += 5;
-						pozycjatla += 5;
-
-						if (tloY >= 0) {
-							if (pozycjatla == size_y) {
-								losujtlo(im2);
-								scaltla(im2, im1);
-							} else if (pozycjatla >= size_y * 2) {
-								losujtlo(im1);
-								scaltla(im1, im2);
-								pozycjatla = 0;
-							}
-							tloY = -size_y;
-						}
+						ruchTla();
 						///////////////////////////////
 						while (playerdeath) {
 							g3.setColor(Color.RED);
@@ -118,7 +119,7 @@ public class Window implements KeyListener {
 						spanie = !spanie;
 						if (spanie)
 							drawklatka();
-						else {
+						else  {
 							g3.setColor(Color.white);
 							g3.fillRect(size_x / 2 - 30, size_y / 2 - 30, 20, 50);
 							g3.fillRect(size_x / 2 + 20, size_y / 2 - 30, 20, 50);
@@ -138,7 +139,7 @@ public class Window implements KeyListener {
 		}, "GameWhile");
 	}
 
-	synchronized void draw() {
+	void draw() {
 		Graphics2D g = (Graphics2D) klatka.getGraphics();
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, size_x, size_y);
@@ -147,6 +148,7 @@ public class Window implements KeyListener {
 		Enemy.draw(g);
 		Drop.draw(g);
 		statek1.draw(g);
+		MessageBox.draw(g);
 		g.dispose();
 		drawklatka();
 	}
@@ -179,6 +181,32 @@ public class Window implements KeyListener {
 		g2d.drawImage(i1, 0, 0, null);
 		g2d.drawImage(i2, 0, size_y, null);
 		g2d.dispose();
+	}
+
+	void ruchTla() {
+		tloY += 5;
+		pozycjatla += 5;
+
+		if (tloY >= 0) {
+			if (pozycjatla == size_y) {
+				losujtlo(im2);
+				scaltla(im2, im1);
+			} else if (pozycjatla >= size_y * 2) {
+				losujtlo(im1);
+				scaltla(im1, im2);
+				pozycjatla = 0;
+			}
+			tloY = -size_y;
+		}
+
+	}
+
+	void endOfGame() {
+		draw();
+		Bullet.motion();
+//		Graphics2D g = (Graphics2D) okno.getGraphics();
+//		g.setColor(new Color(255,0,0,100));
+//		g.fillRect(0, 0, size_x, size_y);
 	}
 
 	@Override
@@ -248,7 +276,7 @@ public class Window implements KeyListener {
 																		// playerem
 		}
 		for (int i = 0; i < Bullet.bullets.size(); i++) {
-			Collisions.checkCollision(statek1, Bullet.bullets.get(i)); // player
+			Collisions.checkCollision( Bullet.bullets.get(i),statek1); // player
 																		// z
 																		// nabojami
 		}
