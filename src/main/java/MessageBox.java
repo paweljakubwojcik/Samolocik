@@ -16,6 +16,7 @@ public class MessageBox {
 	long time;
 	boolean fadeOut = true;
 	static Window win = Samolotoszczalec.win;
+	boolean wysrodkuj = false;
 
 	/**
 	 * 
@@ -57,8 +58,8 @@ public class MessageBox {
 
 		this.str = str;
 		this.fadeOut = false;
-		this.x = win.size_x / 2 - str.length() * fontSize / 2;
 		this.y = win.size_y / 2 - fontSize / 2;
+		wysrodkuj = true;
 		messages.add(this);
 	}
 
@@ -97,6 +98,7 @@ public class MessageBox {
 		}
 	}
 
+	@SuppressWarnings("static-access")
 	void drawMe(Graphics2D g) {
 		if (color == "green" || color == "GREEN")
 			g.setColor(new Color(0, 255, 0, (int) opacity));
@@ -106,6 +108,9 @@ public class MessageBox {
 			g.setColor(new Color(0, 0, 255, (int) opacity));
 
 		g.setFont(new Font(null, Font.PLAIN, fontSize));
+		if(wysrodkuj) {
+			this.x = win.size_x / 2 - g.getFontMetrics().stringWidth(str) / 2;
+		}
 		g.drawString(str, x, y);
 
 		motion();
