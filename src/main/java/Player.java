@@ -12,11 +12,7 @@ public class Player extends Collisionable {
 	Window win;
 	BufferedImage statek;
 
-<<<<<<< HEAD
-	final int DefaultHealth = 1, defaultDefense = 0, maxAmunitionAmount = 50;
-=======
 	final int DefaultHealth = 40;
->>>>>>> branch 'master' of https://github.com/7Adrian/Samolocik.git
 	int velocity = 5; // predkosc samolotu
 	int x, y, width, height;
 	long CzasSzczau, CzasAtaku;
@@ -100,13 +96,8 @@ public class Player extends Collisionable {
 			}
 			break;
 		case 1:
-<<<<<<< HEAD
-			if (System.currentTimeMillis() - CzasSzczau > delay + 200 && amunition[whichAmunition] != 0) {
-				new BulletExtraPlayer(x + statek.getWidth() * 6 / 10, y - statek.getHeight() / 2);
-=======
 			if (System.currentTimeMillis() - CzasSzczau > BulletExtraPlayer.delay && amunition[whichAmunition] != 0) {
 				new BulletExtraPlayer(x + statek.getWidth()/2-BulletExtraPlayer.size/2, y - BulletExtraPlayer.size);
->>>>>>> branch 'master' of https://github.com/7Adrian/Samolocik.git
 				amunition[whichAmunition]--;
 				CzasSzczau = System.currentTimeMillis();
 			}
@@ -175,19 +166,8 @@ public class Player extends Collisionable {
 		}
 
 		if (this.health <= 0) {
-<<<<<<< HEAD
-			System.out.println("umar³em");
-			win.playerdeath = true;
-			try {
-				this.finalize();
-			} catch (Throwable e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-=======
-			new MessageBox("umarlem");
+			new MessageBox("umarlem bo nie mam zyc");
 
->>>>>>> branch 'master' of https://github.com/7Adrian/Samolocik.git
 		}
 	}
 

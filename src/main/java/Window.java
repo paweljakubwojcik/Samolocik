@@ -1,5 +1,4 @@
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -29,10 +28,6 @@ public class Window implements KeyListener {
 	boolean ruch1U = false;
 	boolean strzal = false;
 	boolean pause = false;
-<<<<<<< HEAD
-	boolean playerdeath = false;
-=======
->>>>>>> branch 'master' of https://github.com/7Adrian/Samolocik.git
 
 	boolean spanie = true; // kombinuje jak siê tego pozbyæ
 
@@ -63,14 +58,6 @@ public class Window implements KeyListener {
 
 					if (!pause) {
 
-<<<<<<< HEAD
-						draw();
-						Bullet.motion();
-						Enemy.motion();
-						Drop.motion();
-						generator.generate();
-						sprawdzKolizje();
-=======
 						if (!statek1.isDead()) {
 							draw();
 							Bullet.motion();
@@ -78,7 +65,6 @@ public class Window implements KeyListener {
 							Drop.motion();
 							generator.generate();
 							sprawdzKolizje();
->>>>>>> branch 'master' of https://github.com/7Adrian/Samolocik.git
 
 							if (ruch1L)
 								statek1.moveLeft();
@@ -101,18 +87,6 @@ public class Window implements KeyListener {
 						////////////////////////////
 						ruchTla();
 						///////////////////////////////
-						while (playerdeath) {
-							g3.setColor(Color.RED);
-							g3.fillRect(0, 0, size_x, size_y);
-							g3.setColor(Color.BLACK);
-							g3.setFont(new Font(null, 100, 100));
-							g3.drawString("UMARLEM", size_x / 5, size_y / 2);
-							try {
-								Thread.sleep(100);
-							} catch (InterruptedException e) {
-								e.printStackTrace();
-							}
-						}
 
 					} else {
 						////////// rysowanie znaku zatrzymania//////////////
