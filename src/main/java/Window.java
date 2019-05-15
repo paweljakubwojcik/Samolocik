@@ -28,6 +28,8 @@ public class Window implements KeyListener {
 	boolean ruch1U = false;
 	boolean strzal = false;
 	boolean pause = false;
+	
+	boolean intro = true;
 
 	boolean spanie = true; // kombinuje jak siê tego pozbyæ
 
@@ -41,8 +43,10 @@ public class Window implements KeyListener {
 		okno.setVisible(true);
 		okno.addKeyListener(this);
 		klatka = new BufferedImage(size_x, size_y, BufferedImage.TYPE_INT_ARGB);
-		statek1 = new Player(this, 400, 500);
 		Graphics2D g3 = (Graphics2D) okno.getGraphics();
+		
+		statek1 = new Player(this, 400, 500);
+		
 
 		EnemyGenerator generator = new EnemyGenerator(this);
 
@@ -63,6 +67,7 @@ public class Window implements KeyListener {
 							Bullet.motion();
 							Enemy.motion();
 							Drop.motion();
+							if(!intro)
 							generator.generate();
 							sprawdzKolizje();
 
@@ -123,6 +128,7 @@ public class Window implements KeyListener {
 		Drop.draw(g);
 		statek1.draw(g);
 		MessageBox.draw(g);
+		if(intro) Intro.draw(g);
 		g.dispose();
 		drawklatka();
 	}
@@ -260,6 +266,11 @@ public class Window implements KeyListener {
 																	// z
 																	// dropami
 		}
+	}
+	
+	void setIntro(boolean b)
+	{
+		intro = b;
 	}
 
 }
