@@ -14,7 +14,7 @@ public abstract class Drop extends Collisionable {
 	Drop(int x, int y) {
 		this.x = x;
 		this.y = y;
-		this.velocity = generator.nextInt(2)+1;
+		this.velocity = generator.nextInt(2) + 1;
 		// this.win=win;
 		drops.add(this);
 	}
@@ -31,15 +31,22 @@ public abstract class Drop extends Collisionable {
 		}
 	}
 
-	static void generateDrop(Enemy e)
-	{
+	static void generateDrop(Enemy e) {
 		int chance = generator.nextInt(100);
-		if(chance<20) new HealthPack(e.x, e.y);
-		else
-		if(chance<30) new DropExtraBullet(e.x, e.y);
-		
+		if (chance < 20)
+			new HealthPack(e.x, e.y);
+		else if (chance < 30)
+			new DropExtraBullet(e.x, e.y);
+		else if (chance < 40)
+			new Shield(e.x, e.y);
+
 	}
-	
+
+	public int[][] getPole() {
+		int[][] tab = { { x, y, width, height } };
+		return tab;
+	}
+
 	@SuppressWarnings("static-access")
 	void myMotion() {
 		this.y += velocity;

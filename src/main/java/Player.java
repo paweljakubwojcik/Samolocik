@@ -18,8 +18,11 @@ public class Player extends Collisionable {
 	long CzasSzczau, CzasAtaku;
 	long delay = 200;
 	float health;
-	int[] amunition = { 1, 30, 0, 0, 0 };
+	int[] amunition = { 1, 0, 0, 0, 0 };
 	int whichAmunition = 0;
+
+	boolean shield = false;
+	long timeShield;
 
 	String nazwa = "PLAYER";
 
@@ -50,11 +53,14 @@ public class Player extends Collisionable {
 		g.drawImage(statek, x, y, null);
 
 		// kwadrat testowy
-		
-		  g.setColor(Color.red);
-		  g.drawRect(getPole()[0][0],getPole()[0][1],getPole()[0][2],getPole()[0][3]);
-		 
-
+		//
+		// g.setColor(Color.red);
+		// g.drawRect(getPole()[0][0],getPole()[0][1],getPole()[0][2],getPole()[0][3]);
+		//
+		if (shield) {
+			g.setColor(new Color(50, 50, 255, 100));
+			g.fillOval(x, y, statek.getWidth(), statek.getHeight());
+		}
 		// pasek ¿ycia
 		g.setColor(new Color(255, 0, 0, 150));
 		g.drawRect(win.size_x / 80, win.size_y / 10, win.size_x / 3, win.size_y / 20);
@@ -91,13 +97,14 @@ public class Player extends Collisionable {
 		switch (whichAmunition) {
 		case 0:
 			if (System.currentTimeMillis() - CzasSzczau > Bullet.delay && amunition[0] != 0) {
-				new Bullet(x + statek.getWidth()/2-Bullet.size/2, y - Bullet.size);
-				CzasSzczau  = System.currentTimeMillis();
+				new Bullet(x + statek.getWidth() / 2 - Bullet.size / 2, y - Bullet.size);
+				CzasSzczau = System.currentTimeMillis();
 			}
 			break;
 		case 1:
 			if (System.currentTimeMillis() - CzasSzczau > BulletExtraPlayer.delay && amunition[whichAmunition] != 0) {
-				new BulletExtraPlayer(x + statek.getWidth()/2-BulletExtraPlayer.size/2, y - BulletExtraPlayer.size);
+				new BulletExtraPlayer(x + statek.getWidth() / 2 - BulletExtraPlayer.size / 2,
+						y - BulletExtraPlayer.size);
 				amunition[whichAmunition]--;
 				CzasSzczau = System.currentTimeMillis();
 			}
@@ -141,17 +148,23 @@ public class Player extends Collisionable {
 
 	@Override
 	public int[][] getPole() {
-		int[][] tab = { { x+statek.getWidth()/10, y+statek.getHeight()/10, width, height } };
+		int[][] tab = { { x + statek.getWidth() / 10, y + statek.getHeight() / 10, width, height } };
 		return tab;
 	}
 
 	@Override
 	public void collision(Object o) {
 
+		
+		if (shield && System.currentTimeMillis() - timeShield > Shield.time)
+			shield = false;
+		
 		if (o.getClass() == Asteroid.class) {
 			Asteroid asteroid = (Asteroid) o;
 
-			if (System.currentTimeMillis() - CzasAtaku > delay) {
+			if (shield )
+				;
+			else if (System.currentTimeMillis() - CzasAtaku > delay) {
 				this.health -= ((asteroid.width + asteroid.height) / 2 / 50);
 				CzasAtaku = System.currentTimeMillis();
 			}
@@ -166,7 +179,7 @@ public class Player extends Collisionable {
 		}
 
 		if (this.health <= 0) {
-			new MessageBox("umarlem");
+			new MessageBox("umarlem bo nie mam zyc");
 
 		}
 	}

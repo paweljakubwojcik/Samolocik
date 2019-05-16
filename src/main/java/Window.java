@@ -3,8 +3,11 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.Random;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JFrame;
 
 public class Window implements KeyListener {
@@ -29,6 +32,8 @@ public class Window implements KeyListener {
 	boolean strzal = false;
 	boolean pause = false;
 
+	boolean intro = true;
+
 	boolean spanie = true; // kombinuje jak siê tego pozbyæ
 
 	Window() {
@@ -41,10 +46,15 @@ public class Window implements KeyListener {
 		okno.setVisible(true);
 		okno.addKeyListener(this);
 		klatka = new BufferedImage(size_x, size_y, BufferedImage.TYPE_INT_ARGB);
-		statek1 = new Player(this, 400, 500);
 		Graphics2D g3 = (Graphics2D) okno.getGraphics();
 
+		statek1 = new Player(this, 400, 500);
+
 		EnemyGenerator generator = new EnemyGenerator(this);
+		
+		AudioMeneger audio = new AudioMeneger();
+			//audio.playMusic();
+	
 
 		losujtlo(im1);
 		losujtlo(im2);
@@ -63,7 +73,8 @@ public class Window implements KeyListener {
 							Bullet.motion();
 							Enemy.motion();
 							Drop.motion();
-							generator.generate();
+							if (!intro)
+								generator.generate();
 							sprawdzKolizje();
 
 							if (ruch1L)
@@ -93,7 +104,7 @@ public class Window implements KeyListener {
 						spanie = !spanie;
 						if (spanie)
 							drawklatka();
-						else  {
+						else {
 							g3.setColor(Color.white);
 							g3.fillRect(size_x / 2 - 30, size_y / 2 - 30, 20, 50);
 							g3.fillRect(size_x / 2 + 20, size_y / 2 - 30, 20, 50);
@@ -123,7 +134,10 @@ public class Window implements KeyListener {
 		Drop.draw(g);
 		statek1.draw(g);
 		MessageBox.draw(g);
-		
+
+		if (intro)
+			Intro.draw(g);
+
 		g.dispose();
 		drawklatka();
 	}
@@ -179,9 +193,9 @@ public class Window implements KeyListener {
 	void endOfGame() {
 		draw();
 		Bullet.motion();
-//		Graphics2D g = (Graphics2D) okno.getGraphics();
-//		g.setColor(new Color(255,0,0,100));
-//		g.fillRect(0, 0, size_x, size_y);
+		// Graphics2D g = (Graphics2D) okno.getGraphics();
+		// g.setColor(new Color(255,0,0,100));
+		// g.fillRect(0, 0, size_x, size_y);
 	}
 
 	@Override
@@ -251,7 +265,7 @@ public class Window implements KeyListener {
 																		// playerem
 		}
 		for (int i = 0; i < Bullet.bullets.size(); i++) {
-			Collisions.checkCollision( Bullet.bullets.get(i),statek1); // player
+			Collisions.checkCollision(Bullet.bullets.get(i), statek1); // player
 																		// z
 																		// nabojami
 		}
@@ -261,6 +275,10 @@ public class Window implements KeyListener {
 																	// z
 																	// dropami
 		}
+	}
+
+	void setIntro(boolean b) {
+		intro = b;
 	}
 
 }

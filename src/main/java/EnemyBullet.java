@@ -34,6 +34,7 @@ public class EnemyBullet extends Bullet {
 
 		if (o.getClass() == Player.class) {
 			Player player = (Player) o;
+			if(!player.shield)
 			player.health -= damage;
 			bullets.remove(this);
 		} else if (o.getClass() == Asteroid.class)

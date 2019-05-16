@@ -27,18 +27,14 @@ public class HealthPack extends Drop {
 		g.drawImage(apteczka, x, y, null);
 	}
 
-	@Override
-	public int[][] getPole() {
-		int[][] tab = { { x, y, width, height } };
-		return tab;
-	}
+	
 
 	@Override
 	void collision(Object o) {
 		if (o.getClass() == Player.class) {
-			new MessageBox("Health +30",1500,x,y);
+			new MessageBox("Health +10",1500,x,y);
 			Player player = (Player) o;
-			player.health += 30;
+			player.health += 10;
 			if (player.health > player.DefaultHealth)
 				player.health = player.DefaultHealth;
 			drops.remove(this);
