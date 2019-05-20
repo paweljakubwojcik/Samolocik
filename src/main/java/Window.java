@@ -22,7 +22,7 @@ public class Window implements KeyListener {
 																						// tla1
 	BufferedImage im2 = new BufferedImage(size_x, size_y, BufferedImage.TYPE_INT_ARGB); // obrazek
 																						// tla2
-	
+
 	AudioMeneger audio = new AudioMeneger();
 
 	Player statek1;
@@ -54,9 +54,7 @@ public class Window implements KeyListener {
 
 		EnemyGenerator generator = new EnemyGenerator(this);
 		
-		
-			audio.play();
-			
+		audio.readIntro();
 
 		losujtlo(im1);
 		losujtlo(im2);
@@ -225,12 +223,11 @@ public class Window implements KeyListener {
 			statek1.whichAmunition = 4;
 		} else if (klucz == KeyEvent.VK_P) {
 			pause = !pause;
-		}else if(klucz==KeyEvent.VK_M)
-		{
-			if(audio.clips.isRunning())
-			audio.stop();
+		} else if (klucz == KeyEvent.VK_M) {
+			if (audio.clips.isRunning())
+				audio.stop();
 			else
-			audio.play();
+				audio.play();
 		}
 
 	}
@@ -287,6 +284,8 @@ public class Window implements KeyListener {
 
 	void setIntro(boolean b) {
 		intro = b;
+		if (!b)
+			audio.play();
 	}
 
 }

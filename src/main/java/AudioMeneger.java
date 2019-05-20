@@ -10,9 +10,11 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class AudioMeneger {
 
-	Clip clips;
+	Clip clips, tekstClip;
 	AudioInputStream audioInputStream;
 	String filePath = "music//GameTrack.wav"; // GameTrack
+	
+	String tekstReadPath = "music//IntroRead.wav";
 
 	AudioMeneger()
 	{
@@ -25,8 +27,18 @@ public class AudioMeneger {
 			clips = (Clip) AudioSystem.getLine(info);
 			// System.out.println(audioIns.getFormat());
 			clips.open(audioIns);
+
+
 			
 			
+			urls = this.getClass().getClassLoader().getResource(tekstReadPath);
+			audioIns = AudioSystem.getAudioInputStream(urls);
+			info = new DataLine.Info(Clip.class, audioIns.getFormat());
+			tekstClip = (Clip) AudioSystem.getLine(info);
+			tekstClip.open(audioIns);
+			
+			
+
 		} catch (UnsupportedAudioFileException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -38,6 +50,11 @@ public class AudioMeneger {
 
 	}
 	
+	
+	void readIntro()
+	{
+		tekstClip.start();
+	}
 	
 	void play() {
 		clips.loop(Clip.LOOP_CONTINUOUSLY);
