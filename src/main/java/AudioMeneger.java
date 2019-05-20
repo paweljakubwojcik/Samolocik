@@ -14,7 +14,8 @@ public class AudioMeneger {
 	AudioInputStream audioInputStream;
 	String filePath = "music//GameTrack.wav"; // GameTrack
 
-	void playMusic() {
+	AudioMeneger()
+	{
 		try {
 			// Open an audio input stream.
 			URL urls = this.getClass().getClassLoader().getResource(filePath);
@@ -22,11 +23,10 @@ public class AudioMeneger {
 			// Clip clips = (Clip) AudioSystem.getClip();
 			DataLine.Info info = new DataLine.Info(Clip.class, audioIns.getFormat());
 			clips = (Clip) AudioSystem.getLine(info);
-			//System.out.println(audioIns.getFormat());
+			// System.out.println(audioIns.getFormat());
 			clips.open(audioIns);
-
-			clips.loop(Clip.LOOP_CONTINUOUSLY);
-			// clips.start();
+			
+			
 		} catch (UnsupportedAudioFileException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -36,12 +36,15 @@ public class AudioMeneger {
 
 		}
 
-//		File sound = new File(filePath).getAbsoluteFile();
-//		clips = AudioSystem.getClip();
-//		audioInputStream = AudioSystem.getAudioInputStream(sound);
-//		clips.open(audioInputStream);
-//		clips.loop(Clip.LOOP_CONTINUOUSLY);
-//		clips.start();
-
+	}
+	
+	
+	void play() {
+		clips.loop(Clip.LOOP_CONTINUOUSLY);
+		clips.start();
+	}
+	
+	void stop(){
+		clips.stop();
 	}
 }

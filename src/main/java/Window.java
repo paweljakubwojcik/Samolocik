@@ -22,6 +22,8 @@ public class Window implements KeyListener {
 																						// tla1
 	BufferedImage im2 = new BufferedImage(size_x, size_y, BufferedImage.TYPE_INT_ARGB); // obrazek
 																						// tla2
+	
+	AudioMeneger audio = new AudioMeneger();
 
 	Player statek1;
 	Thread Game;
@@ -52,9 +54,9 @@ public class Window implements KeyListener {
 
 		EnemyGenerator generator = new EnemyGenerator(this);
 		
-		AudioMeneger audio = new AudioMeneger();
-			audio.playMusic();
-	
+		
+			audio.play();
+			
 
 		losujtlo(im1);
 		losujtlo(im2);
@@ -223,6 +225,12 @@ public class Window implements KeyListener {
 			statek1.whichAmunition = 4;
 		} else if (klucz == KeyEvent.VK_P) {
 			pause = !pause;
+		}else if(klucz==KeyEvent.VK_M)
+		{
+			if(audio.clips.isRunning())
+			audio.stop();
+			else
+			audio.play();
 		}
 
 	}
