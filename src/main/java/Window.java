@@ -34,7 +34,7 @@ public class Window implements KeyListener {
 
 	boolean intro = true;
 
-	boolean spanie = true; // kombinuje jak siê tego pozbyæ
+	boolean spanie = true; // kombinuje jak siï¿½ tego pozbyï¿½
 
 	Window() {
 		okno = new JFrame("Niewdzieczna przestrzen");
@@ -53,7 +53,7 @@ public class Window implements KeyListener {
 		EnemyGenerator generator = new EnemyGenerator(this);
 		
 		AudioMeneger audio = new AudioMeneger();
-			//audio.playMusic();
+			audio.playMusic();
 	
 
 		losujtlo(im1);
