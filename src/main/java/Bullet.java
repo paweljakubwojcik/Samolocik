@@ -6,7 +6,7 @@ import java.util.List;
 public class Bullet extends Collisionable {
 
 	protected int x, y;
-	static int size = 10;
+	static int size = 10; //to jest statyczne poniewaz jest wykorzystywane w klasie player
 	protected int velocity = 10;
 	float damage = 1;
 	static long delay = 200;

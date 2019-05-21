@@ -5,7 +5,7 @@ public class BulletExtraPlayer extends Bullet {
 
 	static long delay = 400;
 
-	static int size = 20;
+	static int size = 20; // kazdy rodzaj kuli musi miec swoj statyczny rozmiars
 
 	public BulletExtraPlayer(int x, int y) {
 		super(x, y);

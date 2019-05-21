@@ -3,9 +3,11 @@ import java.awt.Graphics2D;
 
 public class BulletExtra extends EnemyBullet {
 
+	
+	static int size = 20; //kazdy rodzaj kuli musi miec swoj statyczny rozmiar
+	
 	public BulletExtra(int x, int y) {
 		super(x, y);
-		this.size = 20;
 		damage=10;
 
 	}
