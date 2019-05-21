@@ -22,7 +22,6 @@ public class Window implements KeyListener {
 																						// tla1
 	BufferedImage im2 = new BufferedImage(size_x, size_y, BufferedImage.TYPE_INT_ARGB); // obrazek
 																						// tla2
-
 	AudioMeneger audio = new AudioMeneger();
 
 	Player statek1;
@@ -33,6 +32,7 @@ public class Window implements KeyListener {
 	boolean ruch1U = false;
 	boolean strzal = false;
 	boolean pause = false;
+	boolean mute = false;
 
 	boolean intro = true;
 
@@ -53,7 +53,7 @@ public class Window implements KeyListener {
 		statek1 = new Player(this, 400, 500);
 
 		EnemyGenerator generator = new EnemyGenerator(this);
-		
+
 		audio.readIntro();
 
 		losujtlo(im1);
@@ -73,9 +73,10 @@ public class Window implements KeyListener {
 							Bullet.motion();
 							Enemy.motion();
 							Drop.motion();
+							sprawdzKolizje();
+
 							if (!intro)
 								generator.generate();
-							sprawdzKolizje();
 
 							if (ruch1L)
 								statek1.moveLeft();
@@ -134,9 +135,9 @@ public class Window implements KeyListener {
 		Drop.draw(g);
 		statek1.draw(g);
 		MessageBox.draw(g);
-
 		if (intro)
 			Intro.draw(g);
+		MessageTypingIn.draw(g);
 
 		g.dispose();
 		drawklatka();
@@ -223,11 +224,17 @@ public class Window implements KeyListener {
 			statek1.whichAmunition = 4;
 		} else if (klucz == KeyEvent.VK_P) {
 			pause = !pause;
-		} else if (klucz == KeyEvent.VK_M) {
-			if (audio.clips.isRunning())
-				audio.stop();
+			if (pause)
+				Mute(pause);
 			else
-				audio.play();
+				Mute(mute);
+
+		} else if (klucz == KeyEvent.VK_M) {
+			mute = !mute;
+			Mute(mute);
+		} else if (klucz== KeyEvent.VK_S)
+		{
+			MessageTypingIn.skip();
 		}
 
 	}
@@ -284,8 +291,13 @@ public class Window implements KeyListener {
 
 	void setIntro(boolean b) {
 		intro = b;
-		if (!b)
-			audio.play();
 	}
 
+	void Mute(boolean b) {
+		if (audio.clips.isRunning() && b)
+			audio.stop();
+		if (!b && !audio.clips.isRunning())
+			audio.play();
+
+	}
 }

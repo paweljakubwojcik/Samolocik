@@ -120,7 +120,7 @@ public class MessageBox {
 	void motion() {
 		if (fadeOut) {
 			double czasKtoryMinal = (double) (System.currentTimeMillis() - time);
-			opacity = 255 - Math.sqrt(czasKtoryMinal / czas) * 255;
+			opacity = 255 - Math.sqrt(czasKtoryMinal / czas) * 255; //fadeOut nieliniowy
 			y--;
 		}
 
