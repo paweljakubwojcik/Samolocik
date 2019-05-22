@@ -45,7 +45,7 @@ public class MessageTypingIn {
 			messages.get(i).skipMe();
 	}
 
-	public void drawMe(Graphics2D g) {
+	public synchronized void drawMe(Graphics2D g) {
 
 		g.setFont(new Font(null, Font.TYPE1_FONT, 20));
 		g.setColor(new Color(0, 255, 0, opacity));
@@ -68,7 +68,7 @@ public class MessageTypingIn {
 	}
 
 	//zwraca true jesli napootka znak nowj lini
-	private boolean isNextLine(int l) {
+	private  boolean isNextLine(int l) {
 		if (l < message.length() + 2) {
 			if (message.charAt(l) == '/' && message.charAt(l + 1) == 'n') {
 				return true;
@@ -80,7 +80,7 @@ public class MessageTypingIn {
 	String buffor = "";
 	long pauza = 0;
 
-	private void animate() {
+	private synchronized void animate() {
 			//time - lokalny czas, czas ostatniego wykonania funkcjii
 		if (System.currentTimeMillis() - time > tempoLiter + pauza && message.length() > literka) {
 
@@ -111,7 +111,7 @@ public class MessageTypingIn {
 		}
 	}
 	
-	void skipMe()
+	synchronized void skipMe()
 	{
 		for(int i=shownMessage.size()-1;i>=0;i--)
 		shownMessage.remove(i);
