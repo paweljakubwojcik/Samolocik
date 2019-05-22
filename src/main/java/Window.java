@@ -224,6 +224,7 @@ public class Window implements KeyListener {
 			Mute(mute);
 		} else if (klucz == KeyEvent.VK_S) {
 			MessageTypingIn.skip();
+
 		}
 
 	}
