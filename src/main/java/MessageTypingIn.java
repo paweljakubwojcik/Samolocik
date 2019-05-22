@@ -113,13 +113,13 @@ public class MessageTypingIn {
 	
 	void skipMe()
 	{
-		for(int i=shownMessage.size()-1;i>=0;i--)
+		for(int i=shownMessage.size()-1;i<0;i--)
 		shownMessage.remove(i);
 		buffor="";
 		literka=0;
 		linijka=0;
 		
-		while(literka<message.length());
+		while(literka<message.length())
 		{
 			if(message.charAt(literka)=='%')
 			{
@@ -141,7 +141,6 @@ public class MessageTypingIn {
 			literka++;
 			
 		}
-		shownMessage.add(buffor);
 		
 		
 	}

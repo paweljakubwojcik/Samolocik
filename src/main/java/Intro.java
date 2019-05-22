@@ -32,9 +32,10 @@ public class Intro {
 			win.setIntro(false);
 
 		if (m.isFadeOutBegun && !itHappened) {
-			win.audio.stop();
-			win.audio.play(0);
+			win.audio.play();
 			itHappened = true;
 		}
+
 	}
+
 }
