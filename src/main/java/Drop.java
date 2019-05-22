@@ -39,6 +39,8 @@ public abstract class Drop extends Collisionable {
 			new DropExtraBullet(e.x, e.y);
 		else if (chance < 40)
 			new Shield(e.x, e.y);
+		else if (chance < 50)
+			new DropPelletBullet(e.x, e.y);
 
 	}
 
