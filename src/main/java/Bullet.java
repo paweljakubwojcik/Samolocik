@@ -81,4 +81,30 @@ public class Bullet extends Collisionable {
 		bullets.remove(this);
 
 	}
+	
+	/**
+	 * @param Class
+	 * @return true if there is at least 1 object of Class c
+	 */
+	@SuppressWarnings("rawtypes")
+	static boolean check(Class c) {
+		for (int i = 0; i < Bullet.bullets.size(); i++) {
+			if(i>=Bullet.bullets.size()) break;
+			
+			if (Bullet.bullets.get(i).getClass() == c)
+				return true;
+		}
+		return false;
+	}
+	
+	@SuppressWarnings("rawtypes")
+	static int find(Class c) {
+		for (int i = 0; i < Bullet.bullets.size(); i++) {
+			if (Bullet.bullets.get(i).getClass() == c) {
+				return i;
+			}
+				
+		}
+		return 0;
+	}
 }

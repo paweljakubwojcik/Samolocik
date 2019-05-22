@@ -94,7 +94,7 @@ public class MessageTypingIn {
 			}
 
 			if (isNextLine(literka)) {
-				literka += 2;
+				literka++;
 				linijka++;
 				pauza += 500;
 				buffor = "";
