@@ -10,28 +10,35 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class AudioMeneger {
 
-	Clip clips, tekstClip;
+	URL urls;
+	AudioInputStream audioIns;
+	DataLine.Info info;
+	Clip[] clips = new Clip[1];
+	Clip[] tekstClip = new Clip[1];
+	
 	AudioInputStream audioInputStream;
-	String filePath = "music//GameTrack.wav"; // GameTrack
+	String filePath[] = {"music//GameTrack.wav"}; // GameTrack
 
 	String tekstReadPath = "music//IntroRead.wav";
 
 	AudioMeneger() {
 		try {
+			for(int i=0; i<filePath.length;i++){
 			// Open an audio input stream.
-			URL urls = this.getClass().getClassLoader().getResource(filePath);
-			AudioInputStream audioIns = AudioSystem.getAudioInputStream(urls);
+			urls = this.getClass().getClassLoader().getResource(filePath[i]);
+			audioIns = AudioSystem.getAudioInputStream(urls);
 			// Clip clips = (Clip) AudioSystem.getClip();
-			DataLine.Info info = new DataLine.Info(Clip.class, audioIns.getFormat());
-			clips = (Clip) AudioSystem.getLine(info);
+			info = new DataLine.Info(Clip.class, audioIns.getFormat());
+			clips[i] = (Clip) AudioSystem.getLine(info);
 			// System.out.println(audioIns.getFormat());
-			clips.open(audioIns);
-
+			clips[i].open(audioIns);
+			}
+			
 			urls = this.getClass().getClassLoader().getResource(tekstReadPath);
 			audioIns = AudioSystem.getAudioInputStream(urls);
 			info = new DataLine.Info(Clip.class, audioIns.getFormat());
-			tekstClip = (Clip) AudioSystem.getLine(info);
-			tekstClip.open(audioIns);
+			tekstClip[0] = (Clip) AudioSystem.getLine(info);
+			tekstClip[0].open(audioIns);
 
 		} catch (UnsupportedAudioFileException e) {
 			e.printStackTrace();
@@ -45,16 +52,36 @@ public class AudioMeneger {
 	}
 
 	void readIntro() {
-		tekstClip.start();
+		tekstClip[0].start();
 	}
 
-	void play() {
-		tekstClip.close();
-		clips.loop(Clip.LOOP_CONTINUOUSLY);
-		clips.start();
+	/**
+	 * 
+	 * @param i - number of track
+	 */
+	void play(int i) {
+		//for(int j=0; j<tekstClip.length;j++)
+		//tekstClip[j].stop();
+		for(int j=0; j<clips.length;j++)
+			clips[j].stop();
+		
+		clips[i].loop(Clip.LOOP_CONTINUOUSLY);
+		clips[i].start();
 	}
 
 	void stop() {
-		clips.stop();
+		for(int i=0;i<clips.length;i++)
+		clips[i].stop();
+	}
+	
+	/**
+	 * 
+	 * @return true if any track is currantly running
+	 */
+	boolean isRunning()
+	{
+		for(int j=0; j<clips.length;j++)
+			if(clips[j].isRunning()) return true;
+		return false;
 	}
 }
