@@ -203,15 +203,15 @@ public class Window implements KeyListener {
 		} else if (klucz == KeyEvent.VK_DOWN) {
 			ruch1D = true;
 		} else if (klucz == KeyEvent.VK_1) {
-			statek1.whichAmunition = 0;
+			statek1.changeAmunition(0);
 		} else if (klucz == KeyEvent.VK_2) {
-			statek1.whichAmunition = 1;
+			statek1.changeAmunition(1);
 		} else if (klucz == KeyEvent.VK_3) {
-			statek1.whichAmunition = 2;
+			statek1.changeAmunition(2);
 		} else if (klucz == KeyEvent.VK_4) {
-			statek1.whichAmunition = 3;
+			statek1.changeAmunition(3);
 		} else if (klucz == KeyEvent.VK_5) {
-			statek1.whichAmunition = 4;
+			statek1.changeAmunition(4);
 		} else if (klucz == KeyEvent.VK_P) {
 			pause = !pause;
 			if (pause)
@@ -224,6 +224,7 @@ public class Window implements KeyListener {
 			Mute(mute);
 		} else if (klucz == KeyEvent.VK_S) {
 			MessageTypingIn.skip();
+
 		}
 
 	}

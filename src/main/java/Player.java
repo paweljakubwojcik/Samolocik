@@ -18,7 +18,9 @@ public class Player extends Collisionable {
 	long CzasSzczau, CzasAtaku;
 	long delay = 200;
 	float health;
-	int[] amunition = { 1, 0, 0, 0, 0 };
+
+	int[] amunition = { 1, 0, 30, 30, 0 };
+
 	int whichAmunition = 0;
 
 	boolean shield = false;
@@ -107,15 +109,42 @@ public class Player extends Collisionable {
 						y - BulletExtraPlayer.size);
 				amunition[whichAmunition]--;
 				CzasSzczau = System.currentTimeMillis();
+
 			}
 			break;
 		case 2:
+			if (System.currentTimeMillis() - CzasSzczau > BulletPelletLeft.delay && amunition[whichAmunition] != 0) {
+				new Pellet(x + statek.getWidth() / 2 - BulletPelletLeft.size / 2,
+						y - BulletExtraPlayer.size);
+				amunition[whichAmunition]--;
+				CzasSzczau = System.currentTimeMillis();
+			}
 			break;
 		case 3:
+			if (System.currentTimeMillis() - CzasSzczau > Granade.delay && amunition[whichAmunition] != 0) {
+				if (!Bullet.check(Granade.class)) {
+					new Granade(x + statek.getWidth() / 2 - Granade.size / 2, y - Granade.size);
+					CzasSzczau = System.currentTimeMillis();
+
+				} else {
+					int i = Bullet.find(Granade.class);
+					Granade o = (Granade)Bullet.bullets.get(i);
+					o.detonate();
+					amunition[whichAmunition]--;
+					System.out.println("detonate");
+				}
+			}
 			break;
 		case 4:
 			break;
 		}
+		if (amunition[whichAmunition] == 0)
+			whichAmunition = 0;
+	}
+
+	void changeAmunition(int n) {
+		if (amunition[n] != 0)
+			whichAmunition = n;
 	}
 
 	@SuppressWarnings("static-access")
@@ -155,14 +184,13 @@ public class Player extends Collisionable {
 	@Override
 	public void collision(Object o) {
 
-		
 		if (shield && System.currentTimeMillis() - timeShield > Shield.time)
 			shield = false;
-		
+
 		if (o.getClass() == Asteroid.class) {
 			Asteroid asteroid = (Asteroid) o;
 
-			if (shield )
+			if (shield)
 				;
 			else if (System.currentTimeMillis() - CzasAtaku > delay) {
 				this.health -= ((asteroid.width + asteroid.height) / 2 / 50);
