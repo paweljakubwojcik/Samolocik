@@ -112,11 +112,9 @@ public class Window implements KeyListener {
 						try {
 							Thread.sleep(700);
 						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}
-
 				}
 			}
 		}, "GameWhile");
@@ -160,7 +158,6 @@ public class Window implements KeyListener {
 
 			g2d.fillOval(xxx, yyy, wielkosc, wielkosc);
 		}
-		// g2d.setColor(Color.WHITE);
 	}
 
 	void scaltla(BufferedImage i1, BufferedImage i2) {
@@ -185,15 +182,11 @@ public class Window implements KeyListener {
 			}
 			tloY = -size_y;
 		}
-
 	}
 
 	void endOfGame() {
 		draw();
 		Bullet.motion();
-		// Graphics2D g = (Graphics2D) okno.getGraphics();
-		// g.setColor(new Color(255,0,0,100));
-		// g.fillRect(0, 0, size_x, size_y);
 	}
 
 	@Override
@@ -229,8 +222,7 @@ public class Window implements KeyListener {
 		} else if (klucz == KeyEvent.VK_M) {
 			mute = !mute;
 			Mute(mute);
-		} else if (klucz== KeyEvent.VK_S)
-		{
+		} else if (klucz == KeyEvent.VK_S) {
 			MessageTypingIn.skip();
 		}
 
