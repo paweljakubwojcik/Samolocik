@@ -5,17 +5,16 @@ import java.net.URL;
 
 import javax.imageio.ImageIO;
 
-public class DropExtraBullet extends Drop {
+public class DropPelletBullet extends Drop {
+	static BufferedImage blueammo;
 
-	static BufferedImage greenammo;
-
-	DropExtraBullet(int x, int y) {
+	DropPelletBullet(int x, int y) {
 		super(x, y);
 		this.width = 50;
 		this.height = 50;
 		try {
-			URL url = getClass().getResource("images//greensuply.png");
-			greenammo = ImageIO.read(url);
+			URL url = getClass().getResource("images//bluesuply.png");
+			blueammo = ImageIO.read(url);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -23,7 +22,7 @@ public class DropExtraBullet extends Drop {
 
 	@Override
 	void drawMe(Graphics2D g) {
-		g.drawImage(greenammo, x, y, null);
+		g.drawImage(blueammo, x, y, null);
 
 	}
 
@@ -37,11 +36,11 @@ public class DropExtraBullet extends Drop {
 	void collision(Object o) {
 		if (o.getClass() == Player.class) {
 			Player player = (Player) o;
-			player.amunition[1] += 30;
+			player.amunition[2] += 15;
 			drops.remove(this);
 		}
 
-		new MessageBox("Extra Bullet", 1500, x, y);
+		new MessageBox("Pellet Bullet", 1500, x, y);
 
 	}
 

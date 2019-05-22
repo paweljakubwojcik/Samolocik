@@ -18,7 +18,9 @@ public class Player extends Collisionable {
 	long CzasSzczau, CzasAtaku;
 	long delay = 200;
 	float health;
-	int[] amunition = { 1, 0, 0, 30, 0 };
+
+	int[] amunition = { 1, 0, 30, 30, 0 };
+
 	int whichAmunition = 0;
 
 	boolean shield = false;
@@ -111,6 +113,12 @@ public class Player extends Collisionable {
 			}
 			break;
 		case 2:
+			if (System.currentTimeMillis() - CzasSzczau > BulletPelletLeft.delay && amunition[whichAmunition] != 0) {
+				new Pellet(x + statek.getWidth() / 2 - BulletPelletLeft.size / 2,
+						y - BulletExtraPlayer.size);
+				amunition[whichAmunition]--;
+				CzasSzczau = System.currentTimeMillis();
+			}
 			break;
 		case 3:
 			if (System.currentTimeMillis() - CzasSzczau > Granade.delay && amunition[whichAmunition] != 0) {

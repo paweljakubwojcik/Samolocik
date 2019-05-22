@@ -6,7 +6,7 @@ import java.util.List;
 public class Bullet extends Collisionable {
 
 	protected int x, y;
-	static int size = 10; //to jest statyczne poniewaz jest wykorzystywane w klasie player
+	static int size = 10; // to jest statyczne poniewaz jest wykorzystywane w klasie player
 	protected int velocity = 10;
 	float damage = 1;
 	static long delay = 200;
@@ -15,10 +15,8 @@ public class Bullet extends Collisionable {
 
 	/**
 	 * 
-	 * @param pos_x:
-	 *            pozycja rakiety w momencie SZCZAUU
-	 * @param pos_y
-	 *            pozycja rakiety w momencie SZCZAUU
+	 * @param       pos_x: pozycja rakiety w momencie SZCZAUU
+	 * @param pos_y pozycja rakiety w momencie SZCZAUU
 	 */
 	Bullet(int pos_x, int pos_y) {
 		this.x = pos_x;
@@ -43,9 +41,7 @@ public class Bullet extends Collisionable {
 			try {
 				bullets.remove(this);
 				this.finalize();
-
 			} catch (Throwable e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
