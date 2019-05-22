@@ -55,8 +55,7 @@ public abstract class Enemy extends Collisionable {
 	public void collision(Object o) {
 
 		if (o.getClass() == Bullet.class || o.getClass() == BulletExtraPlayer.class
-				|| o.getClass() == BulletPelletLeft.class || o.getClass() == BulletPelletCenter.class
-				|| o.getClass() == BulletPelletRight.class) {
+				|| o.getClass() == BulletPellet.class) {
 			Bullet bullet = (Bullet) o;
 			this.health -= bullet.damage;
 		}

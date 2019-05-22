@@ -63,7 +63,7 @@ public class Player extends Collisionable {
 			g.setColor(new Color(50, 50, 255, 100));
 			g.fillOval(x, y, statek.getWidth(), statek.getHeight());
 		}
-		// pasek ¿ycia
+		// pasek ï¿½ycia
 		g.setColor(new Color(255, 0, 0, 150));
 		g.drawRect(win.size_x / 80, win.size_y / 10, win.size_x / 3, win.size_y / 20);
 		g.fillRect(win.size_x / 80, win.size_y / 10, (win.size_x / 3) * (int) health / DefaultHealth, win.size_y / 20);
@@ -113,8 +113,8 @@ public class Player extends Collisionable {
 			}
 			break;
 		case 2:
-			if (System.currentTimeMillis() - CzasSzczau > BulletPelletLeft.delay && amunition[whichAmunition] != 0) {
-				new Pellet(x + statek.getWidth() / 2 - BulletPelletLeft.size / 2,
+			if (System.currentTimeMillis() - CzasSzczau > BulletPellet.delay && amunition[whichAmunition] != 0) {
+				new Pellet(x + statek.getWidth() / 2 - BulletPellet.size / 2,
 						y - BulletExtraPlayer.size);
 				amunition[whichAmunition]--;
 				CzasSzczau = System.currentTimeMillis();
