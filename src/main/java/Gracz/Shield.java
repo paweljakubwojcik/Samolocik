@@ -3,8 +3,8 @@ package Gracz;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
+import Bullets.Drop;
 import InterFace.MessageBox;
-import Rozgrywka.Drop;
 
 public class Shield extends Drop {
 

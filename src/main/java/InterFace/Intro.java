@@ -1,4 +1,5 @@
 package InterFace;
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 
@@ -24,11 +25,11 @@ public class Intro {
 	static boolean itHappened = false;
 
 	@SuppressWarnings("static-access")
-	public
-	static void draw(Graphics2D g) {
+	public static void draw(Graphics2D g) {
 		if (m.opacity > 0) {
 			g.setColor(new Color(0, 0, 0, m.opacity));
 			g.fillRect(0, 0, win.size_x, win.size_y);
+			Sterowanie.PominDraw(g);
 			// m.draw(g); jest wykonywane w Window
 		} else
 			win.setIntro(false);
@@ -37,6 +38,7 @@ public class Intro {
 			win.audio.stop();
 			win.audio.play(0);
 			itHappened = true;
+			win.setInstrukcja(true);
 		}
 	}
 }

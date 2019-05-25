@@ -9,7 +9,6 @@ import javax.imageio.ImageIO;
 
 import Gracz.Player;
 import InterFace.MessageBox;
-import Rozgrywka.Drop;
 
 public class DropExtraBullet extends Drop {
 

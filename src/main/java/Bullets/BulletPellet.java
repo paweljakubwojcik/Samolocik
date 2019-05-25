@@ -1,4 +1,5 @@
 package Bullets;
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 
@@ -39,8 +40,9 @@ public class BulletPellet extends Bullet {
 		this.poly = y;
 	}
 
+	@Override
 	synchronized void draw(Graphics2D g) {
-		g.setColor(Color.GRAY);
+		g.setColor(new Color(0, 200, 200));
 		g.fillOval(x, y, size, size);
 		// rysuje okrąg po którym poruszają się kule
 		g.drawOval(polx - 10 * klatka, (poly - 10 * klatka) * 1, 2 * (klatka * 10), 2 * (klatka * 10));

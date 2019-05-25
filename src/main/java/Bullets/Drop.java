@@ -1,16 +1,16 @@
-package Rozgrywka;
+package Bullets;
+
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import AI.Enemy;
-import Bullets.DropExtraBullet;
-import Bullets.DropPelletBullet;
 import Gracz.HealthPack;
 import Gracz.Shield;
 import Program.Samolotoszczalec;
 import Program.Window;
+import Rozgrywka.Collisionable;
 
 public abstract class Drop extends Collisionable {
 
@@ -54,6 +54,8 @@ public abstract class Drop extends Collisionable {
 			new Shield(e.x, e.y);
 		else if (chance < 50)
 			new DropPelletBullet(e.x, e.y);
+		else if (chance < 60)
+			new DropPlazmaBullet(e.x, e.y);
 
 	}
 

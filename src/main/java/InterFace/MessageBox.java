@@ -24,10 +24,8 @@ public class MessageBox {
 
 	/**
 	 * 
-	 * @param str
-	 *            - wiadomosc
-	 * @param czas
-	 *            - w milisekundach, jak dlugo wiadomosc ma byc wyswietlana
+	 * @param str  - wiadomosc
+	 * @param czas - w milisekundach, jak dlugo wiadomosc ma byc wyswietlana
 	 */
 	public MessageBox(String str, int czas, int x, int y) {
 		this.x = x;
@@ -40,12 +38,10 @@ public class MessageBox {
 
 	/**
 	 * 
-	 * @param str
-	 *            - wiadomosc
-	 * @param czas
-	 *            - w milisekundach, jak dlugo wiadomosc ma byc wyswietlana
+	 * @param str  - wiadomosc
+	 * @param czas - w milisekundach, jak dlugo wiadomosc ma byc wyswietlana
 	 */
-	MessageBox(String str, int czas, int x, int y, String color) {
+	public MessageBox(String str, int czas, int x, int y, String color) {
 		this(str, czas, x, y);
 		this.color = color;
 	}
@@ -53,13 +49,11 @@ public class MessageBox {
 	/**
 	 * ten wyswietla napis caly czas
 	 * 
-	 * @param str
-	 *            - wiadomosc
+	 * @param str - wiadomosc
 	 * 
 	 */
 	@SuppressWarnings("static-access")
-	public
-	MessageBox(String str) {
+	public MessageBox(String str) {
 
 		this.str = str;
 		this.fadeOut = false;
@@ -74,7 +68,7 @@ public class MessageBox {
 	 * @param fontSize
 	 */
 	@SuppressWarnings("static-access")
-	MessageBox(String str, int fontSize) {
+	public MessageBox(String str, int fontSize) {
 
 		this.fontSize = fontSize;
 		this.str = str;
@@ -84,12 +78,13 @@ public class MessageBox {
 		messages.add(this);
 
 	}
-/**
- * 
- * @param str
- * @param fontSize
- * @param Color
- */
+
+	/**
+	 * 
+	 * @param str
+	 * @param fontSize
+	 * @param Color
+	 */
 	MessageBox(String str, int fontSize, String Color) {
 
 		this(str, fontSize);
@@ -113,7 +108,7 @@ public class MessageBox {
 			g.setColor(new Color(0, 0, 255, (int) opacity));
 
 		g.setFont(new Font(null, Font.PLAIN, fontSize));
-		if(wysrodkuj) {
+		if (wysrodkuj) {
 			this.x = win.size_x / 2 - g.getFontMetrics().stringWidth(str) / 2;
 		}
 		g.drawString(str, x, y);
@@ -125,7 +120,7 @@ public class MessageBox {
 	void motion() {
 		if (fadeOut) {
 			double czasKtoryMinal = (double) (System.currentTimeMillis() - time);
-			opacity = 255 - Math.sqrt(czasKtoryMinal / czas) * 255; //fadeOut nieliniowy
+			opacity = 255 - Math.sqrt(czasKtoryMinal / czas) * 255; // fadeOut nieliniowy
 			y--;
 		}
 

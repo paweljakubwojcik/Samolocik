@@ -7,8 +7,8 @@ import java.net.URL;
 
 import javax.imageio.ImageIO;
 
+import Bullets.Drop;
 import InterFace.MessageBox;
-import Rozgrywka.Drop;
 
 public class HealthPack extends Drop {
 

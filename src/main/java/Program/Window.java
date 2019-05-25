@@ -12,13 +12,14 @@ import javax.swing.JFrame;
 import AI.Enemy;
 import AI.EnemyGenerator;
 import Bullets.Bullet;
+import Bullets.Drop;
 import Gracz.Player;
 import InterFace.AudioMeneger;
 import InterFace.Intro;
 import InterFace.MessageBox;
 import InterFace.MessageTypingIn;
+import InterFace.Sterowanie;
 import Rozgrywka.Collisions;
-import Rozgrywka.Drop;
 
 public class Window implements KeyListener {
 
@@ -45,6 +46,8 @@ public class Window implements KeyListener {
 	boolean mute = false;
 
 	boolean intro = true;
+	boolean sterowanie = true;
+	boolean instrukcja = false;
 
 	boolean spanie = true; // kombinuje jak si� tego pozby�
 
@@ -85,7 +88,7 @@ public class Window implements KeyListener {
 							Drop.motion();
 							sprawdzKolizje();
 
-							if (!intro)
+							if (!intro && !sterowanie)
 								generator.generate();
 
 							if (ruch1L)
@@ -145,6 +148,10 @@ public class Window implements KeyListener {
 		MessageBox.draw(g);
 		if (intro)
 			Intro.draw(g);
+		if (instrukcja) {
+			Sterowanie.draw(g);
+		}
+
 		MessageTypingIn.draw(g);
 
 		g.dispose();
@@ -236,8 +243,13 @@ public class Window implements KeyListener {
 			mute = !mute;
 			Mute(mute);
 		} else if (klucz == KeyEvent.VK_S) {
-			MessageTypingIn.skip();
-
+			if (intro) {
+				MessageTypingIn.skip();
+			}
+			if (instrukcja) {
+				instrukcja = false;
+				sterowanie = false;
+			}
 		}
 
 	}
@@ -292,10 +304,6 @@ public class Window implements KeyListener {
 		}
 	}
 
-	public void setIntro(boolean b) {
-		intro = b;
-	}
-
 	void Mute(boolean b) {
 		if (audio.isRunning() && b)
 			audio.stop();
@@ -303,4 +311,21 @@ public class Window implements KeyListener {
 			audio.play(0);
 
 	}
+
+	public void setIntro(boolean b) {
+		intro = b;
+	}
+
+	public boolean isIntro() {
+		return intro;
+	}
+
+	public void setSterowanie(boolean sterowanie) {
+		this.sterowanie = sterowanie;
+	}
+
+	public void setInstrukcja(boolean instrukcja) {
+		this.instrukcja = instrukcja;
+	}
+
 }

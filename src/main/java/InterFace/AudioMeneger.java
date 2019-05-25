@@ -19,9 +19,9 @@ public class AudioMeneger {
 	boolean music = false;
 
 	AudioInputStream audioInputStream;
-	String filePath[] = { "/music//GameTrack.wav" }; // GameTrack
+	String filePath[] = { "music//GameTrack.wav" }; // GameTrack
 
-	String tekstReadPath = "/music//IntroRead.wav";
+	String tekstReadPath = "music//IntroRead.wav";
 
 	public AudioMeneger() {
 		if (music) {

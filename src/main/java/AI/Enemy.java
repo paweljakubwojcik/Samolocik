@@ -8,9 +8,11 @@ import java.util.Random;
 import Bullets.Bullet;
 import Bullets.BulletExtraPlayer;
 import Bullets.BulletPellet;
+import Bullets.BulletPlazma;
+import Bullets.Drop;
+import Bullets.Granade;
 import Program.Window;
 import Rozgrywka.Collisionable;
-import Rozgrywka.Drop;
 
 public abstract class Enemy extends Collisionable {
 
@@ -65,7 +67,8 @@ public abstract class Enemy extends Collisionable {
 	public void collision(Object o) {
 
 		if (o.getClass() == Bullet.class || o.getClass() == BulletExtraPlayer.class
-				|| o.getClass() == BulletPellet.class) {
+				|| o.getClass() == BulletPellet.class || o.getClass() == Granade.class
+				|| o.getClass() == BulletPlazma.class) {
 			Bullet bullet = (Bullet) o;
 			this.health -= bullet.damage;
 		}

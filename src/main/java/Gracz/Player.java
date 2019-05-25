@@ -1,4 +1,5 @@
 package Gracz;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
@@ -12,6 +13,7 @@ import AI.Asteroid;
 import Bullets.Bullet;
 import Bullets.BulletExtraPlayer;
 import Bullets.BulletPellet;
+import Bullets.BulletPlazma;
 import Bullets.Granade;
 import Bullets.Pellet;
 import InterFace.MessageBox;
@@ -30,7 +32,7 @@ public class Player extends Collisionable {
 	long delay = 200;
 	public float health;
 
-	public int[] amunition = { 1, 0, 30, 30, 0 };
+	public int[] amunition = { 1, 0, 30, 30, 2000 };
 
 	int whichAmunition = 0;
 
@@ -120,13 +122,11 @@ public class Player extends Collisionable {
 						y - BulletExtraPlayer.size);
 				amunition[whichAmunition]--;
 				CzasSzczau = System.currentTimeMillis();
-
 			}
 			break;
 		case 2:
 			if (System.currentTimeMillis() - CzasSzczau > BulletPellet.delay && amunition[whichAmunition] != 0) {
-				new Pellet(x + statek.getWidth() / 2 - BulletPellet.size / 2,
-						y - BulletExtraPlayer.size);
+				new Pellet(x + statek.getWidth() / 2 - BulletPellet.size / 2, y - BulletPellet.size);
 				amunition[whichAmunition]--;
 				CzasSzczau = System.currentTimeMillis();
 			}
@@ -136,10 +136,9 @@ public class Player extends Collisionable {
 				if (!Bullet.check(Granade.class)) {
 					new Granade(x + statek.getWidth() / 2 - Granade.size / 2, y - Granade.size);
 					CzasSzczau = System.currentTimeMillis();
-
 				} else {
 					int i = Bullet.find(Granade.class);
-					Granade o = (Granade)Bullet.bullets.get(i);
+					Granade o = (Granade) Bullet.bullets.get(i);
 					o.detonate();
 					amunition[whichAmunition]--;
 					System.out.println("detonate");
@@ -147,10 +146,17 @@ public class Player extends Collisionable {
 			}
 			break;
 		case 4:
+			if (System.currentTimeMillis() - CzasSzczau > BulletPlazma.delay && amunition[whichAmunition] != 0) {
+				new BulletPlazma(x + statek.getWidth() / 2 - BulletPlazma.size / 2, y - BulletPlazma.size);
+				amunition[whichAmunition]--;
+				CzasSzczau = System.currentTimeMillis();
+			}
 			break;
 		}
-		if (amunition[whichAmunition] == 0)
+		if (amunition[whichAmunition] == 0) {
 			whichAmunition = 0;
+			new MessageBox("No ammo", 1000, x, y, "RED");
+		}
 	}
 
 	public void changeAmunition(int n) {
