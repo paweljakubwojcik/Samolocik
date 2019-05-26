@@ -25,7 +25,7 @@ public class Player extends Collisionable {
 	Window win;
 	BufferedImage statek, statekLewa, statekPrawa, statekRuch, statekRuchUp, statekRuchDown;
 
-	final int DefaultHealth = 40;
+	final int DefaultHealth = 40*100;
 	int velocity = 5; // predkosc samolotu
 	int x, y, width, height;
 	long CzasSzczau, CzasAtaku;

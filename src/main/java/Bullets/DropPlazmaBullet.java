@@ -42,7 +42,7 @@ public class DropPlazmaBullet extends Drop {
 	public void collision(Object o) {
 		if (o.getClass() == Player.class) {
 			Player player = (Player) o;
-			player.amunition[4] += 500;
+			player.amunition[4] += 200;
 			drops.remove(this);
 		}
 

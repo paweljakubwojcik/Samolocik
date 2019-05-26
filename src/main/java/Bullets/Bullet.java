@@ -13,7 +13,7 @@ public class Bullet extends Collisionable {
 	protected int x, y;
 	public static int size = 10; // to jest statyczne poniewaz jest wykorzystywane w klasie player
 	protected int velocity = 10;
-	public float damage = 1;
+	public float damage = 1*100;
 	public static long delay = 200;
 	protected static Window win = Samolotoszczalec.win;
 	public static List<Bullet> bullets = new ArrayList<>();

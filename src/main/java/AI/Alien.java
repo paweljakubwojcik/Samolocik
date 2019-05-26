@@ -11,7 +11,7 @@ import Program.Window;
 
 public class Alien extends Enemy {
 
-	static final int defaultHealth = 10;
+	static final int defaultHealth = 10*100;
 	private int zakresRuchuX, zakresRuchuY;
 	int velocity;
 	private BufferedImage Image[] = new BufferedImage[4];

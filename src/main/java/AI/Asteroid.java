@@ -11,7 +11,7 @@ import Program.Window;
 
 public class Asteroid extends Enemy {
 
-	static final int defaultHealth = 4;
+	static final int defaultHealth = 4 * 100;
 	private BufferedImage Image;
 	static String obrazy[][] = {
 			{ "/images//Asteroida1.png", "/images//Asteroida1Damage1.png", "/images//Asteroida1Damage2.png",
@@ -62,7 +62,7 @@ public class Asteroid extends Enemy {
 	}
 
 	private void loadGraphic() {
-		URL url = getClass().getResource(obrazy[index][(defaultHealth - (int) health)]);
+		URL url = getClass().getResource(obrazy[index][(defaultHealth - (int) health) / 100]);
 		try {
 			Image = ImageIO.read(url);
 		} catch (IOException e) {

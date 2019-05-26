@@ -9,7 +9,7 @@ public class BulletExtra extends EnemyBullet {
 
 	public BulletExtra(int x, int y) {
 		super(x, y);
-		damage = 10;
+		damage = 10*100;
 
 	}
 

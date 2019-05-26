@@ -17,7 +17,7 @@ public class BulletPaszkoProstopadly extends EnemyBullet {
 
 	public BulletPaszkoProstopadly(int x, int y) {
 		super(x - 2 * Window.size_x, y);
-		this.damage = 10000;
+		this.damage = 10000*100;
 		super.velocity = this.velocity;
 		liczbaKresek += 2;
 

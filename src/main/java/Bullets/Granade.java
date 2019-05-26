@@ -16,7 +16,7 @@ public class Granade extends Bullet {
 	public Granade(int x, int y) {
 		super(x, y);
 		this.size2 = size;
-		damage = 5;
+		damage = 5*100;
 
 	}
 

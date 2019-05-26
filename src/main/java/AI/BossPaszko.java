@@ -21,7 +21,7 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 
 	public BufferedImage paszko;
 	private long czasAtak;
-	private final int defaultHealth = 100;
+	private final int defaultHealth = 150*100;
 	String nazwa = "FINAL BOSS"; // nie psuj�� niespodziaki xd
 
 	/**

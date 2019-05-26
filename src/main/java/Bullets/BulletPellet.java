@@ -33,7 +33,7 @@ public class BulletPellet extends Bullet {
 	 */
 	public BulletPellet(int x, int y, float Vx, float Vy) {
 		super(x, y);
-		damage = 1;
+		damage = (int) (0.7 * 100);
 		this.ruchBok = Vx;
 		this.ruchPion = Vy;
 		this.polx = x;

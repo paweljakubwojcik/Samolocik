@@ -19,7 +19,7 @@ public class BulletEyes extends EnemyBullet {
 
 		super.velocity = 8;
 
-		this.damage = 10;
+		this.damage = 10*100;
 
 		bullets.add(this);
 	}
