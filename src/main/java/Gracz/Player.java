@@ -23,7 +23,7 @@ import Rozgrywka.Collisionable;
 public class Player extends Collisionable {
 
 	Window win;
-	BufferedImage statek;
+	BufferedImage statek, statekLewa, statekPrawa, statekRuch, statekRuchUp, statekRuchDown;
 
 	final int DefaultHealth = 40;
 	int velocity = 5; // predkosc samolotu
@@ -39,6 +39,8 @@ public class Player extends Collisionable {
 	public boolean shield = false;
 	long timeShield;
 
+	private boolean ruchL = false, ruchP = false, ruchUP = false, ruchDOWN = false;
+
 	String nazwa = "PLAYER";
 
 	public Player(Window win, int x, int y) {
@@ -48,9 +50,17 @@ public class Player extends Collisionable {
 		this.health = DefaultHealth;
 
 		CzasSzczau = CzasAtaku = System.currentTimeMillis();
-		URL url = getClass().getResource("/samolot.png");
+		URL[] url = { getClass().getResource("/images/samolot.png"), getClass().getResource("/images/samolot left.png"),
+				getClass().getResource("/images/samolot right.png"), getClass().getResource("/images/ognieruch.png"),
+				getClass().getResource("/images/ognieruchup.png"),
+				getClass().getResource("/images/ognieruchdown.png") };
 		try {
-			statek = ImageIO.read(url);
+			statek = ImageIO.read(url[0]);
+			statekLewa = ImageIO.read(url[1]);
+			statekPrawa = ImageIO.read(url[2]);
+			statekRuch = ImageIO.read(url[3]);
+			statekRuchUp = ImageIO.read(url[4]);
+			statekRuchDown = ImageIO.read(url[5]);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -65,7 +75,7 @@ public class Player extends Collisionable {
 	@SuppressWarnings("static-access")
 	public void draw(Graphics2D g) {
 		// actual image
-		g.drawImage(statek, x, y, null);
+		drawAnimation(g);
 
 		// kwadrat testowy
 		//
@@ -168,12 +178,14 @@ public class Player extends Collisionable {
 	public void moveRight() {
 		if (x + statek.getWidth() < win.size_x) {
 			x += velocity;
+			ruchP = true;
 		}
 	}
 
 	public void moveLeft() {
 		if (x > 0) {
 			x -= velocity;
+			ruchL = true;
 		}
 	}
 
@@ -181,6 +193,7 @@ public class Player extends Collisionable {
 	public void moveUp() {
 		if (y > win.size_y / 2) {
 			y -= velocity / 2;
+			ruchUP = true;
 		}
 	}
 
@@ -189,6 +202,7 @@ public class Player extends Collisionable {
 	public void moveDown() {
 		if (y + statek.getHeight() < win.size_y) {
 			y += velocity;
+			ruchDOWN = true;
 		}
 	}
 
@@ -234,6 +248,29 @@ public class Player extends Collisionable {
 			return true;
 		else
 			return false;
+	}
+
+	private void drawAnimation(Graphics2D g) {
+		if (!ruchUP && !ruchDOWN) {
+			g.drawImage(statekRuch, x, y, null);
+		} else if (ruchUP) {
+			g.drawImage(statekRuchUp, x, y, null);
+		} else if (ruchDOWN) {
+			g.drawImage(statekRuchDown, x, y, null);
+		}
+
+		if (!ruchL && !ruchP) {
+			g.drawImage(statek, x, y, null);
+		} else if (ruchL) {
+			g.drawImage(statekLewa, x, y, null);
+		} else if (ruchP) {
+			g.drawImage(statekPrawa, x, y, null);
+		}
+
+		ruchDOWN = false;
+		ruchUP = false;
+		ruchL = false;
+		ruchP = false;
 	}
 
 }

@@ -249,6 +249,7 @@ public class Window implements KeyListener {
 			if (instrukcja) {
 				instrukcja = false;
 				sterowanie = false;
+				Sterowanie.InfoDrop();
 			}
 		}
 
@@ -309,7 +310,6 @@ public class Window implements KeyListener {
 			audio.stop();
 		if (!b && !audio.isRunning())
 			audio.play(0);
-
 	}
 
 	public void setIntro(boolean b) {

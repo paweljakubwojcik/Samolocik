@@ -45,7 +45,8 @@ public class BulletPellet extends Bullet {
 		g.setColor(new Color(0, 200, 200));
 		g.fillOval(x, y, size, size);
 		// rysuje okrąg po którym poruszają się kule
-		g.drawOval(polx - 10 * klatka, (poly - 10 * klatka) * 1, 2 * (klatka * 10), 2 * (klatka * 10));
+		// g.drawOval(polx - 10 * klatka, (poly - 10 * klatka) * 1, 2 * (klatka * 10), 2
+		// * (klatka * 10));
 	}
 
 	@Override

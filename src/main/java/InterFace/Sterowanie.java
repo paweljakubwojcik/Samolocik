@@ -4,9 +4,16 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 
+import Bullets.DropExtraBullet;
 import Program.Samolotoszczalec;
 import Program.Window;
 
+/**
+ * Klasa odpowiedzialna za wyświetlanie informacji o sterowaniu w grze
+ * 
+ * @author adrian
+ *
+ */
 public class Sterowanie {
 	static int startopacity = 20;
 	static int opacity = startopacity;
@@ -19,9 +26,15 @@ public class Sterowanie {
 	private static boolean fadeOut = false;
 	private static short instrukcji = 0;
 	private static int rK = 255, gK = 255, bK = 100;
+	public static boolean dropAmmo = false;
 
 	private static int liczbainstrukcji = 4; // Trzeba ustawić jeśli dodaje się nowe instrukcje
 
+	/**
+	 * Rysuje na ekranie instrukcje do sterowania
+	 * 
+	 * @param g - Rysuje na tej grafice
+	 */
 	public static void draw(Graphics2D g) {
 		logika();
 		przezroczystosc();
@@ -39,6 +52,10 @@ public class Sterowanie {
 			break;
 		case 2:
 			SupplyDraw(g);
+			if (!dropAmmo) {
+				InfoDrop();
+				dropAmmo = true;
+			}
 			PauseDraw(g);
 			break;
 		case 3:
@@ -129,6 +146,11 @@ public class Sterowanie {
 		}
 	}
 
+	/**
+	 * Wyświetla napis "Naciśnij 'S' aby pominąć"
+	 * 
+	 * @param g - Rysuje na tej grafice
+	 */
 	public static void PominDraw(Graphics2D g) {
 		g.setColor(new Color(rK, gK, bK, Maxopacity));
 		if (instrukcji + 1 == liczbainstrukcji && opacity == Maxopacity) {
@@ -158,6 +180,13 @@ public class Sterowanie {
 		g.setFont(new Font(null, 0, 20));
 		g.drawString("Naciśnij 'P' aby zapauzować", 470, 570);
 		g.setColor(new Color(rK, gK, bK, opacity));
+	}
+
+	/**
+	 * Daje dropa ExtraBulletu
+	 */
+	public static void InfoDrop() {
+		new DropExtraBullet(Window.size_x / 2, Window.size_y / 2);
 	}
 
 }
