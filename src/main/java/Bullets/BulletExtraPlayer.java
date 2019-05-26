@@ -1,4 +1,5 @@
 package Bullets;
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 
@@ -11,7 +12,7 @@ public class BulletExtraPlayer extends Bullet {
 	public BulletExtraPlayer(int x, int y) {
 		super(x, y);
 
-		damage = 2*100;
+		damage = (int) (1.6 * 100);
 
 	}
 

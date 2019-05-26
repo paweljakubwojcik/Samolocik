@@ -14,6 +14,7 @@ import AI.EnemyGenerator;
 import Bullets.Bullet;
 import Bullets.Drop;
 import Gracz.Player;
+import InterFace.Achievement;
 import InterFace.AudioMeneger;
 import InterFace.Intro;
 import InterFace.MessageBox;
@@ -50,6 +51,8 @@ public class Window implements KeyListener {
 	boolean instrukcja = false;
 
 	boolean spanie = true; // kombinuje jak si� tego pozby�
+
+	Achievement ach = new Achievement();
 
 	Window() {
 		okno = new JFrame("Niewdzieczna przestrzen");
@@ -153,6 +156,8 @@ public class Window implements KeyListener {
 		}
 
 		MessageTypingIn.draw(g);
+		if (!ach.usun && EnemyGenerator.stworzonePaszki == 2)
+			ach.drawMe(g);
 
 		g.dispose();
 		drawklatka();

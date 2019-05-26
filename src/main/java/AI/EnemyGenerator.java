@@ -11,6 +11,7 @@ public class EnemyGenerator {
 	static int numberOfAliens = 0;
 	static boolean generateAliens = false, timeForBoss = false; // false false
 	static int numerFali = 0;
+	public static int stworzonePaszki = 0;
 
 	/**
 	 * 
@@ -50,6 +51,7 @@ public class EnemyGenerator {
 
 		if (timeForBoss && !check(BossPaszko.class)) {
 			new BossPaszko(win, 400, 20);
+			stworzonePaszki++;
 
 		}
 
