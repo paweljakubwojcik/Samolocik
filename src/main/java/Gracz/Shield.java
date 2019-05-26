@@ -8,7 +8,7 @@ import InterFace.MessageBox;
 
 public class Shield extends Drop {
 
-	static long time = 30000;
+	static long time = 5000;
 
 	public Shield(int x, int y) {
 		super(x, y);

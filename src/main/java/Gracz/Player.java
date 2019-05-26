@@ -50,6 +50,9 @@ public class Player extends Collisionable {
 		this.health = DefaultHealth;
 
 		CzasSzczau = CzasAtaku = System.currentTimeMillis();
+
+		// Poszczególne animacje dla (odpowiednio) swobodny lot | lot w lewo | lot w
+		// prawo | silniki swobodny lot | silniki lot w górę | silniki lot w dół
 		URL[] url = { getClass().getResource("/images/samolot.png"), getClass().getResource("/images/samolot left.png"),
 				getClass().getResource("/images/samolot right.png"), getClass().getResource("/images/ognieruch.png"),
 				getClass().getResource("/images/ognieruchup.png"),
@@ -83,8 +86,16 @@ public class Player extends Collisionable {
 		// g.drawRect(getPole()[0][0],getPole()[0][1],getPole()[0][2],getPole()[0][3]);
 		//
 		if (shield) {
-			g.setColor(new Color(50, 50, 255, 100));
+			long pozostalyCzas = -System.currentTimeMillis() + timeShield + Shield.time;
+			if (pozostalyCzas > 1500)
+				g.setColor(new Color(50, 50, 255, 100));
+			else if (pozostalyCzas < 1500 && pozostalyCzas % 400 > 200)
+				g.setColor(new Color(50, 50, 255, 50));
+			else
+				g.setColor(new Color(50, 50, 255, 100));
 			g.fillOval(x, y, statek.getWidth(), statek.getHeight());
+			if (pozostalyCzas < 0)
+				shield = false;
 		}
 		// pasek �ycia
 		g.setColor(new Color(255, 0, 0, 150));
@@ -250,6 +261,11 @@ public class Player extends Collisionable {
 			return false;
 	}
 
+	/**
+	 * Funkcja rysuje animacje samolocika
+	 * 
+	 * @param g
+	 */
 	private void drawAnimation(Graphics2D g) {
 		if (!ruchUP && !ruchDOWN) {
 			g.drawImage(statekRuch, x, y, null);

@@ -1,15 +1,19 @@
 package AI;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Random;
 
 import javax.imageio.ImageIO;
 
 import Bullets.BulletExtra;
 import Bullets.BulletEyes;
+import Bullets.BulletPaszkoProstopadly;
+import Bullets.BulletPaszkoRownolegly;
 import Bullets.EnemyBullet;
 import Program.Window;
 
@@ -36,7 +40,7 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 		health = defaultHealth;
 		czasAtak = System.currentTimeMillis();
 
-		URL url = getClass().getResource("/paszko.png");
+		URL url = getClass().getResource("/images/paszko.png");
 		try {
 			paszko = ImageIO.read(url);
 		} catch (IOException e) {
@@ -55,10 +59,10 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 	public void drawMe(Graphics2D g) {
 		g.drawImage(paszko, x, y, null);
 
-		g.setColor(new Color(0,255,0,200));
+		g.setColor(new Color(0, 255, 0, 200));
 		g.drawRect(win.size_x * 79 / 80 - win.size_x / 3, win.size_y / 10, win.size_x / 3, win.size_y / 20);
-		g.fillRect(win.size_x * 79 / 80 - win.size_x / 3 * (int)health / defaultHealth, win.size_y / 10,
-				(win.size_x / 3) * (int)health / defaultHealth, win.size_y / 20);
+		g.fillRect(win.size_x * 79 / 80 - win.size_x / 3 * (int) health / defaultHealth, win.size_y / 10,
+				(win.size_x / 3) * (int) health / defaultHealth, win.size_y / 20);
 		g.setFont(new Font(null, Font.PLAIN, 25));
 		g.drawString(nazwa, win.size_x * 64 / 80, win.size_y / 12);
 	}
@@ -75,8 +79,8 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 		if (y < 20) {
 			y = 20;
 			velocity_y = -velocity_y;
-		} else if (y > 400) {
-			y = 400;
+		} else if (y > 200) {
+			y = 200;
 			velocity_y = -velocity_y;
 		}
 
@@ -92,19 +96,39 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 
 	@Override
 	public void strzal(String rodzaj) {
+
 		if (rodzaj == "Bullet") {
-			new EnemyBullet(x, y + height/2);
-		} else if (rodzaj == "BulletEyes") {
-			new BulletEyes(x, y + height/2, this);
+			new EnemyBullet(x, y + height / 2);
 		} else if (rodzaj == "BulletExtra") {
-			new BulletExtra(x, y + height/2);
+			new BulletExtra(x, y + height / 2);
+		}
+		if (BulletPaszkoRownolegly.liczbaKresek == 0 && BulletPaszkoProstopadly.liczbaKresek == 0) {
+			if (rodzaj == "BulletPaszkoRownolegly") {
+				Random los = new Random();
+				int losX, losY;
+				for (int i = 0; i < 7; i++) {
+					losX = los.nextInt(Window.size_x);
+					losY = los.nextInt(Window.size_y);
+					new BulletPaszkoRownolegly(losX, losY + height / 2);
+				}
+			} else if (rodzaj == "BulletPaszkoProstopadly") {
+				Random los = new Random();
+				int losX, losY;
+				for (int i = 0; i < 4; i++) {
+					losX = los.nextInt(Window.size_x);
+					losY = los.nextInt(Window.size_y / 2) + Window.size_y / 2;
+					new BulletPaszkoProstopadly(losX, losY);
+				}
+			} else if (rodzaj == "BulletEyes") {
+				new BulletEyes(x, y + height / 2, this);
+			}
 		}
 
 	}
 
 	@Override
 	public void AI() {
-		int rszczalu = generator.nextInt(4);
+		int rszczalu = generator.nextInt(5);
 		if (System.currentTimeMillis() - czasAtak > generator.nextInt(1000) + 500) { // 1000 500
 			if (rszczalu == 0)
 				strzal("Bullet");
@@ -112,6 +136,10 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 				strzal("BulletEyes");
 			else if (rszczalu == 2)
 				strzal("BulletExtra");
+			else if (rszczalu == 3)
+				strzal("BulletPaszkoRownolegly");
+			else if (rszczalu == 4)
+				strzal("BulletPaszkoProstopadly");
 			czasAtak = System.currentTimeMillis();
 		}
 

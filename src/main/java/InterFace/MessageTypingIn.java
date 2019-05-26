@@ -1,4 +1,5 @@
 package InterFace;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
@@ -49,6 +50,8 @@ public class MessageTypingIn {
 	public void drawMe(Graphics2D g) {
 
 		g.setFont(new Font(null, Font.TYPE1_FONT, 20));
+		if (opacity < 0)
+			opacity = 0;
 		g.setColor(new Color(0, 255, 0, opacity));
 
 		for (int i = 0; i < shownMessage.size(); i++) {

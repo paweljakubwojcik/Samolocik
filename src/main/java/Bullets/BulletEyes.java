@@ -1,4 +1,5 @@
 package Bullets;
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 
@@ -8,15 +9,17 @@ public class BulletEyes extends EnemyBullet {
 	protected int sizeX, sizeY;
 	private BossPaszko paszkow;
 
+	@SuppressWarnings("static-access")
 	public BulletEyes(int pos_x, int pos_y, BossPaszko paszkow) {
-		super(pos_x,pos_y);
+		super(pos_x, pos_y);
 		this.size = 13;
-		this.paszkow=paszkow;
-		sizeX = -(paszkow.paszko.getWidth() / 2 - size / 2)
-				+ (x + paszkow.paszko.getWidth() / 2 + 5 * size / 2);
+		this.paszkow = paszkow;
+		sizeX = -(paszkow.paszko.getWidth() / 2 - size / 2) + (x + paszkow.paszko.getWidth() / 2 + 5 * size / 2);
 		sizeY = size * 13 / 3;
-		
-		this.damage=10;
+
+		super.velocity = 8;
+
+		this.damage = 10;
 
 		bullets.add(this);
 	}

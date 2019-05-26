@@ -9,7 +9,7 @@ public class EnemyGenerator {
 	static long maxInterval = 10000;
 	Window win;
 	static int numberOfAliens = 0;
-	static boolean generateAliens = false, timeForBoss = false;
+	static boolean generateAliens = false, timeForBoss = false; // false false
 	static int numerFali = 0;
 
 	/**
@@ -24,10 +24,9 @@ public class EnemyGenerator {
 	static int i = 0;
 
 	@SuppressWarnings("static-access")
-	public
-	void generate() {
+	public void generate() {
 		////////////// generator alienow//////////////////
-		if (!check(Alien.class)&&generateAliens==false&&!check(BossPaszko.class)) {
+		if (!check(Alien.class) && generateAliens == false && !check(BossPaszko.class)) {
 			numberOfAliens += 5;
 			numerFali++;
 			generateAliens = true;
@@ -51,7 +50,7 @@ public class EnemyGenerator {
 
 		if (timeForBoss && !check(BossPaszko.class)) {
 			new BossPaszko(win, 400, 20);
-			
+
 		}
 
 		//////////// generator asteroid////////////////////

@@ -249,7 +249,8 @@ public class Window implements KeyListener {
 			if (instrukcja) {
 				instrukcja = false;
 				sterowanie = false;
-				Sterowanie.InfoDrop();
+				if (!Sterowanie.dropAmmo)
+					Sterowanie.InfoDrop();
 			}
 		}
 

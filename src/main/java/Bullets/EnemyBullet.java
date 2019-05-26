@@ -1,4 +1,5 @@
 package Bullets;
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 
@@ -25,9 +26,7 @@ public class EnemyBullet extends Bullet {
 			try {
 				bullets.remove(this);
 				this.finalize();
-
 			} catch (Throwable e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
@@ -38,8 +37,8 @@ public class EnemyBullet extends Bullet {
 
 		if (o.getClass() == Player.class) {
 			Player player = (Player) o;
-			if(!player.shield)
-			player.health -= damage;
+			if (!player.shield)
+				player.health -= damage;
 			bullets.remove(this);
 		} else if (o.getClass() == Asteroid.class)
 			bullets.remove(this);
