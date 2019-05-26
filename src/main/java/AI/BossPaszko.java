@@ -19,9 +19,9 @@ import Program.Window;
 
 public class BossPaszko extends Enemy implements IEnemyBoss {
 
-	public BufferedImage paszko;
+	public BufferedImage paszko, paszko2;
 	private long czasAtak;
-	private final int defaultHealth = 150*100;
+	private final int defaultHealth = 150 * 100;
 	String nazwa = "FINAL BOSS"; // nie psuj�� niespodziaki xd
 
 	/**
@@ -40,9 +40,10 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 		health = defaultHealth;
 		czasAtak = System.currentTimeMillis();
 
-		URL url = getClass().getResource("/images/paszko.png");
+		URL[] url = { getClass().getResource("/images/paszko.png"), getClass().getResource("/images/paszko2.png") };
 		try {
-			paszko = ImageIO.read(url);
+			paszko = ImageIO.read(url[0]);
+			paszko2 = ImageIO.read(url[1]);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -57,7 +58,11 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 	@SuppressWarnings("static-access")
 	@Override
 	public void drawMe(Graphics2D g) {
-		g.drawImage(paszko, x, y, null);
+		if (velocity_x < 0) {
+			g.drawImage(paszko, x, y, null);
+		} else {
+			g.drawImage(paszko2, x, y, null);
+		}
 
 		g.setColor(new Color(0, 255, 0, 200));
 		g.drawRect(win.size_x * 79 / 80 - win.size_x / 3, win.size_y / 10, win.size_x / 3, win.size_y / 20);
