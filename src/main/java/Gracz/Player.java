@@ -25,7 +25,7 @@ public class Player extends Collisionable {
 	Window win;
 	BufferedImage statek, statekLewa, statekPrawa, statekRuch, statekRuchUp, statekRuchDown;
 
-	final int DefaultHealth = 40*100;
+	final int DefaultHealth = 40 * 100;
 	int velocity = 5; // predkosc samolotu
 	int x, y, width, height;
 	long CzasSzczau, CzasAtaku;
@@ -235,7 +235,7 @@ public class Player extends Collisionable {
 			if (shield)
 				;
 			else if (System.currentTimeMillis() - CzasAtaku > delay) {
-				this.health -= ((asteroid.width + asteroid.height) / 2 / 50);
+				this.health -= ((asteroid.width + asteroid.height) / 2 / 50) * 100;
 				CzasAtaku = System.currentTimeMillis();
 			}
 
