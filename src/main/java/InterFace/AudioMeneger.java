@@ -1,4 +1,5 @@
 package InterFace;
+
 import java.io.IOException;
 import java.net.URL;
 
@@ -14,12 +15,12 @@ public class AudioMeneger {
 	URL urls;
 	AudioInputStream audioIns;
 	DataLine.Info info;
-	Clip[] clips = new Clip[1];
-	Clip[] tekstClip = new Clip[1];
-	boolean music = false;
+	Clip[] clips = new Clip[3];
+	Clip[] tekstClip = new Clip[3];
+	boolean music = true;
 
 	AudioInputStream audioInputStream;
-	String filePath[] = { "music//GameTrack.wav" }; // GameTrack
+	String filePath[] = { "music//GameTrack.wav", "music//icykprostopadla1.wav", "music//imykrownolegla1.wav" }; // GameTrack
 
 	String tekstReadPath = "music//IntroRead.wav";
 
@@ -77,6 +78,15 @@ public class AudioMeneger {
 		}
 	}
 
+	
+	/**
+	 * 
+	 * @param i : 1) "i cyk prostopadła" 2) "i myk równoległa"
+	 */
+	public void playNoRepeat(int i) {
+		clips[i].start();
+	}
+
 	public void stop() {
 		if (music) {
 			for (int i = 0; i < clips.length; i++)
@@ -98,4 +108,5 @@ public class AudioMeneger {
 		} else
 			return false;
 	}
+
 }

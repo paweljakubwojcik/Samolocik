@@ -15,6 +15,7 @@ import Bullets.BulletEyes;
 import Bullets.BulletPaszkoProstopadly;
 import Bullets.BulletPaszkoRownolegly;
 import Bullets.EnemyBullet;
+import InterFace.AudioMeneger;
 import Program.Window;
 
 public class BossPaszko extends Enemy implements IEnemyBoss {
@@ -108,7 +109,9 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 			new BulletExtra(x, y + height / 2);
 		}
 		if (BulletPaszkoRownolegly.liczbaKresek == 0 && BulletPaszkoProstopadly.liczbaKresek == 0) {
+			AudioMeneger audio = new AudioMeneger();
 			if (rodzaj == "BulletPaszkoRownolegly") {
+				audio.playNoRepeat(2);
 				Random los = new Random();
 				int losX, losY;
 				for (int i = 0; i < 7; i++) {
@@ -117,6 +120,7 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 					new BulletPaszkoRownolegly(losX, losY + height / 2);
 				}
 			} else if (rodzaj == "BulletPaszkoProstopadly") {
+				audio.playNoRepeat(1);
 				Random los = new Random();
 				int losX, losY;
 				for (int i = 0; i < 4; i++) {
