@@ -6,7 +6,7 @@ import java.util.List;
 public class Bullet extends Collisionable {
 
 	protected int x, y;
-	static int size = 10; //to jest statyczne poniewaz jest wykorzystywane w klasie player
+	static int size = 10; // to jest statyczne poniewaz jest wykorzystywane w klasie player
 	protected int velocity = 10;
 	float damage = 1;
 	static long delay = 200;
@@ -15,10 +15,8 @@ public class Bullet extends Collisionable {
 
 	/**
 	 * 
-	 * @param pos_x:
-	 *            pozycja rakiety w momencie SZCZAUU
-	 * @param pos_y
-	 *            pozycja rakiety w momencie SZCZAUU
+	 * @param       pos_x: pozycja rakiety w momencie SZCZAUU
+	 * @param pos_y pozycja rakiety w momencie SZCZAUU
 	 */
 	Bullet(int pos_x, int pos_y) {
 		this.x = pos_x;
@@ -43,9 +41,7 @@ public class Bullet extends Collisionable {
 			try {
 				bullets.remove(this);
 				this.finalize();
-
 			} catch (Throwable e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
@@ -80,5 +76,31 @@ public class Bullet extends Collisionable {
 
 		bullets.remove(this);
 
+	}
+	
+	/**
+	 * @param Class
+	 * @return true if there is at least 1 object of Class c
+	 */
+	@SuppressWarnings("rawtypes")
+	static boolean check(Class c) {
+		for (int i = 0; i < Bullet.bullets.size(); i++) {
+			if(i>=Bullet.bullets.size()) break;
+			
+			if (Bullet.bullets.get(i).getClass() == c)
+				return true;
+		}
+		return false;
+	}
+	
+	@SuppressWarnings("rawtypes")
+	static int find(Class c) {
+		for (int i = 0; i < Bullet.bullets.size(); i++) {
+			if (Bullet.bullets.get(i).getClass() == c) {
+				return i;
+			}
+				
+		}
+		return 0;
 	}
 }

@@ -13,9 +13,10 @@ public abstract class Enemy extends Collisionable {
 	Window win;
 	static Random generator = new Random();
 	static List<Enemy> enemies = new ArrayList<>();
-	
+
 	public abstract void drawMe(Graphics2D g);
-	public abstract void myMotion() ;
+
+	public abstract void myMotion();
 
 	/**
 	 * 
@@ -27,8 +28,6 @@ public abstract class Enemy extends Collisionable {
 		this.y = y;
 		enemies.add(this);
 	}
-	
-	
 
 	/**
 	 * 
@@ -46,9 +45,6 @@ public abstract class Enemy extends Collisionable {
 		}
 	}
 
-	
-
-
 	@Override
 	public int[][] getPole() {
 		int[][] tab = { { x, y, width, height } };
@@ -58,19 +54,19 @@ public abstract class Enemy extends Collisionable {
 	@Override
 	public void collision(Object o) {
 
-		if (o.getClass() == Bullet.class||o.getClass() == BulletExtraPlayer.class) {
+		if (o.getClass() == Bullet.class || o.getClass() == BulletExtraPlayer.class
+				|| o.getClass() == BulletPellet.class) {
 			Bullet bullet = (Bullet) o;
 			this.health -= bullet.damage;
 		}
-		
+
 		if (this.health <= 0) {
 			Drop.generateDrop(this);
 			Enemy.enemies.remove(this);
-			
+
 			try {
 				this.finalize();
 			} catch (Throwable e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

@@ -17,7 +17,8 @@ public class MessageTypingIn {
 	// tempo pisania liter i tempo fadeoutu napisu w milisekundach
 	long tempoLiter = 100, fadeOutTempo = 5000;
 	int linijka = 0, literka = 0;
-	boolean isFadeOutBegun=false; // gdy caly napis zostanie napisany i zacznie sie fadeOut to zmieni sie na true 
+	boolean isFadeOutBegun = false; // gdy caly napis zostanie napisany i
+									// zacznie sie fadeOut to zmieni sie na true
 	@SuppressWarnings("static-access")
 	static int x = win.size_x / 4, y = win.size_y / 4;
 
@@ -32,16 +33,14 @@ public class MessageTypingIn {
 		this.message = s;
 		messages.add(this);
 	}
-	
-	static void draw(Graphics2D g)
-	{
-		for(int i=0;i<messages.size();i++)
+
+	static void draw(Graphics2D g) {
+		for (int i = 0; i < messages.size(); i++)
 			messages.get(i).drawMe(g);
 	}
-	
-	static void skip()
-	{
-		for(int i=0;i<messages.size();i++)
+
+	static void skip() {
+		for (int i = 0; i < messages.size(); i++)
 			messages.get(i).skipMe();
 	}
 
@@ -58,17 +57,19 @@ public class MessageTypingIn {
 			animate();
 
 		} else if (opacity > 0) {
-			if(!isFadeOutBegun) isFadeOutBegun=true;
+			if (!isFadeOutBegun)
+				isFadeOutBegun = true;
 			double czasKtoryMinal = (double) (System.currentTimeMillis() - time);
 			opacity = (int) (255 - (czasKtoryMinal / fadeOutTempo) * 255); // fadeOut
-																			// tym razem liniowy
+																			// tym
+																			// razem
+																			// liniowy
 		} else
 			messages.remove(this);
-
 	}
 
-	//zwraca true jesli napootka znak nowj lini
-	private  boolean isNextLine(int l) {
+	// zwraca true jesli napootka znak nowj lini
+	private boolean isNextLine(int l) {
 		if (l < message.length() + 2) {
 			if (message.charAt(l) == '/' && message.charAt(l + 1) == 'n') {
 				return true;
@@ -80,8 +81,8 @@ public class MessageTypingIn {
 	String buffor = "";
 	long pauza = 0;
 
-	private synchronized void animate() {
-			//time - lokalny czas, czas ostatniego wykonania funkcjii
+	private void animate() {
+		// time - lokalny czas, czas ostatniego wykonania funkcjii
 		if (System.currentTimeMillis() - time > tempoLiter + pauza && message.length() > literka) {
 
 			if (message.charAt(literka) == '%') {
@@ -94,9 +95,8 @@ public class MessageTypingIn {
 				pauza = 0;
 				buffor += message.charAt(literka);
 			}
-
 			if (isNextLine(literka)) {
-				literka += 2;
+				literka++;
 				linijka++;
 				pauza += 500;
 				buffor = "";
@@ -110,39 +110,32 @@ public class MessageTypingIn {
 			time = System.currentTimeMillis();
 		}
 	}
-	
-	synchronized void skipMe()
-	{
-		for(int i=shownMessage.size()-1;i>=0;i--)
-		shownMessage.remove(i);
-		buffor="";
-		literka=0;
-		linijka=0;
-		
-		while(literka<message.length());
-		{
-			if(message.charAt(literka)=='%')
-			{
+
+	void skipMe() {
+		for (int i = shownMessage.size() - 1; i >= 0; i--)
+			shownMessage.remove(i);
+		buffor = "";
+		literka = 0;
+		linijka = 0;
+
+		while (literka < message.length()) {
+			if (message.charAt(literka) == '%') {
 				literka++;
 				while ((int) message.charAt(literka) >= 48 && (int) message.charAt(literka) <= 57) {
 					literka++;
 				}
 			}
-			
-			if(isNextLine(literka))
-			{
+
+			if (isNextLine(literka)) {
 				shownMessage.add(buffor);
 				linijka++;
-				literka+=2;
-				buffor="";
+				literka += 2;
+				buffor = "";
 			}
-			
-			buffor+=message.charAt(literka);
+			buffor += message.charAt(literka);
 			literka++;
-			
 		}
 		shownMessage.add(buffor);
-		
-		
+
 	}
 }
