@@ -20,6 +20,7 @@ import InterFace.Intro;
 import InterFace.MessageBox;
 import InterFace.MessageTypingIn;
 import InterFace.Sterowanie;
+import InterFace.Zaliczenie;
 import Rozgrywka.Collisions;
 
 public class Window implements KeyListener {
@@ -53,6 +54,9 @@ public class Window implements KeyListener {
 	boolean spanie = true; // kombinuje jak si� tego pozby�
 
 	Achievement ach = new Achievement();
+
+	public static boolean wyswietlWynik = false;
+	Zaliczenie ekranKoncowy;
 
 	Window() {
 		okno = new JFrame("Niewdzieczna przestrzen");
@@ -159,6 +163,10 @@ public class Window implements KeyListener {
 		if (!ach.usun && EnemyGenerator.stworzonePaszki == 2)
 			ach.drawMe(g);
 
+		if (wyswietlWynik) {
+			ekranKoncowy.drawMe(g);
+		}
+
 		g.dispose();
 		drawklatka();
 	}
@@ -210,6 +218,10 @@ public class Window implements KeyListener {
 	}
 
 	void endOfGame() {
+		if (!wyswietlWynik) {
+			wyswietlWynik = true;
+			ekranKoncowy = new Zaliczenie(10000000, 3, 0, 2);
+		}
 		draw();
 		Bullet.motion();
 	}
