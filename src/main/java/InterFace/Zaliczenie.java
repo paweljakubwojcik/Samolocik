@@ -114,11 +114,11 @@ public class Zaliczenie {
 
 			if (opacityPKT > 0) {
 				if (punkty <= 50) {
-					kolor = new Color(255, 0, 0, opacityPKT);
-					bgKolor = new Color(220, 10, 10, opacityPKT * 40 / 255);
+					kolor = new Color(0, 0, 0, opacityPKT);
+					bgKolor = new Color(220, 10, 10, opacityPKT * 80 / 255);
 				} else {
-					kolor = new Color(0, 255, 0, opacityPKT);
-					bgKolor = new Color(10, 220, 10, opacityPKT * 40 / 255);
+					kolor = new Color(0, 0, 0, opacityPKT);
+					bgKolor = new Color(10, 220, 10, opacityPKT * 80 / 255);
 				}
 				g.setColor(bgKolor);
 				g.fillRect(xPunkty - 5, yPunkty - 80, szerPKT, 90);
@@ -128,11 +128,11 @@ public class Zaliczenie {
 
 			if (opacityOcena > 0) {
 				if (punkty <= 50) {
-					kolor = new Color(255, 0, 0, opacityOcena);
-					bgKolor = new Color(220, 10, 10, opacityOcena * 40 / 255);
+					kolor = new Color(0, 0, 0, opacityOcena);
+					bgKolor = new Color(220, 10, 10, opacityOcena * 80 / 255);
 				} else {
-					kolor = new Color(0, 255, 0, opacityOcena);
-					bgKolor = new Color(10, 220, 10, opacityOcena * 40 / 255);
+					kolor = new Color(0, 0, 0, opacityOcena);
+					bgKolor = new Color(10, 220, 10, opacityOcena * 80 / 255);
 				}
 				g.setColor(bgKolor);
 				g.fillRect(xOcena - 5, yOcena - 80, 140, 90);
