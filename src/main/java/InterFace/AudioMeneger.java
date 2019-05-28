@@ -72,8 +72,8 @@ public class AudioMeneger {
 	}
 
 	public void readIntroStop() {
-
-		tekstClip[0].stop();
+		if (tekstClip[0] != null)
+			tekstClip[0].stop();
 	}
 
 	/**
