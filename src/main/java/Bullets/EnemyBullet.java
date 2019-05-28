@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 
 import AI.Asteroid;
 import Gracz.Player;
+import InterFace.MessageBox;
 
 public class EnemyBullet extends Bullet {
 
@@ -39,6 +40,7 @@ public class EnemyBullet extends Bullet {
 			Player player = (Player) o;
 			if (!player.shield)
 				player.health -= damage;
+			new MessageBox(Integer.toString((int) -damage), 1000, x, y, "RED");
 			bullets.remove(this);
 		} else if (o.getClass() == Asteroid.class)
 			bullets.remove(this);

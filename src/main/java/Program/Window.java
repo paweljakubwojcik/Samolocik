@@ -127,7 +127,9 @@ public class Window implements KeyListener {
 							odliczanie++;
 						}
 
-						while (System.nanoTime() - startTime < 15500 * 1000) // Około 60 FPSa
+						while (System.nanoTime() - startTime < 1000000000/60) // Około
+																				// 60
+																				// FPSa
 						{
 							try {
 								Thread.sleep(0, 100 * 1000);

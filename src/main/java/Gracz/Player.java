@@ -51,8 +51,10 @@ public class Player extends Collisionable {
 
 		CzasSzczau = CzasAtaku = System.currentTimeMillis();
 
-		// Poszczególne animacje dla (odpowiednio) swobodny lot | lot w lewo | lot w
-		// prawo | silniki swobodny lot | silniki lot w górę | silniki lot w dół
+		// Poszczególne animacje dla (odpowiednio) swobodny lot | lot w lewo |
+		// lot w
+		// prawo | silniki swobodny lot | silniki lot w górę | silniki lot w
+		// dół
 		URL[] url = { getClass().getResource("/images/samolot.png"), getClass().getResource("/images/samolot left.png"),
 				getClass().getResource("/images/samolot right.png"), getClass().getResource("/images/ognieruch.png"),
 				getClass().getResource("/images/ognieruchup.png"),
@@ -157,12 +159,7 @@ public class Player extends Collisionable {
 				if (!Bullet.check(Granade.class)) {
 					new Granade(x + statek.getWidth() / 2 - Granade.size / 2, y - Granade.size);
 					CzasSzczau = System.currentTimeMillis();
-				} else {
-					int i = Bullet.find(Granade.class);
-					Granade o = (Granade) Bullet.bullets.get(i);
-					o.detonate();
-					amunition[whichAmunition]--;
-					System.out.println("detonate");
+
 				}
 			}
 			break;
@@ -235,7 +232,9 @@ public class Player extends Collisionable {
 			if (shield)
 				;
 			else if (System.currentTimeMillis() - CzasAtaku > delay) {
+				int damage = -((asteroid.width + asteroid.height) / 2 / 50) * 100;
 				this.health -= ((asteroid.width + asteroid.height) / 2 / 50) * 100;
+				new MessageBox(Integer.toString(damage), 1000, x, y, "RED");
 				CzasAtaku = System.currentTimeMillis();
 			}
 

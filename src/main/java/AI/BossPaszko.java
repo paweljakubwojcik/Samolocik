@@ -23,8 +23,8 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 	public BufferedImage paszko, paszko2;
 	private long czasAtak;
 	private final int defaultHealth = 150 * 100;
-	String nazwa = "PROF. PASZKOWSKI"; // nie psuj�� niespodziaki xd
-	
+	String nazwa = "PROF. PASZKOWSKI";
+
 	AudioMeneger audio = new AudioMeneger();
 
 	/**
@@ -42,7 +42,6 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 		this.velocity_y = 2;
 		health = defaultHealth;
 		czasAtak = System.currentTimeMillis();
-		
 
 		URL[] url = { getClass().getResource("/images/paszko.png"), getClass().getResource("/images/paszko2.png") };
 		try {
@@ -72,7 +71,7 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 		g.drawRect(win.size_x * 79 / 80 - win.size_x / 3, win.size_y / 10, win.size_x / 3, win.size_y / 20);
 		g.fillRect(win.size_x * 79 / 80 - win.size_x / 3 * (int) health / defaultHealth, win.size_y / 10,
 				(win.size_x / 3) * (int) health / defaultHealth, win.size_y / 20);
-		
+
 		g.setFont(new Font(null, Font.PLAIN, 25));
 		g.drawString(nazwa, win.size_x * 50 / 80, win.size_y / 12);
 	}
@@ -113,7 +112,7 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 			new BulletExtra(x, y + height / 2);
 		}
 		if (BulletPaszkoRownolegly.liczbaKresek == 0 && BulletPaszkoProstopadly.liczbaKresek == 0) {
-			
+
 			if (rodzaj == "BulletPaszkoRownolegly") {
 				audio.playNoRepeat(2);
 				int losX, losY;
@@ -140,7 +139,8 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 	@Override
 	public void AI() {
 		int rszczalu = generator.nextInt(5);
-		if (System.currentTimeMillis() - czasAtak > generator.nextInt(1000) + 500) { // 1000 500
+		if (System.currentTimeMillis() - czasAtak > generator.nextInt(1000) + 500) { // 1000
+																						// 500
 			if (rszczalu == 0)
 				strzal("Bullet");
 			else if (rszczalu == 1)

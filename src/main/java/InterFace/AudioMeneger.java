@@ -21,8 +21,8 @@ public class AudioMeneger {
 	boolean music = true;
 
 	AudioInputStream audioInputStream;
-	String musicSource[] = { "music//GameTrack.wav"}; // GameTrack
-	String soundSource[] = { "music//icykprostopadla1.wav", "music//imykrownolegla1.wav"};
+	String musicSource[] = { "music//GameTrack.wav" }; // GameTrack
+	String soundSource[] = { "music//icykprostopadla1.wav", "music//imykrownolegla1.wav" };
 	String readSource = "music//IntroRead.wav";
 
 	public AudioMeneger() {
@@ -36,7 +36,7 @@ public class AudioMeneger {
 					musicClip[i] = (Clip) AudioSystem.getLine(info);
 					musicClip[i].open(audioIns);
 				}
-				
+
 				for (int i = 0; i < soundSource.length; i++) {
 					// Open an audio input stream.
 					urls = this.getClass().getClassLoader().getResource(soundSource[i]);
@@ -69,15 +69,16 @@ public class AudioMeneger {
 			tekstClip[0].start();
 		}
 	}
-	
+
 	public void readIntroStop() {
-		
-			tekstClip[0].stop();
+
+		tekstClip[0].stop();
 	}
 
 	/**
 	 * 
-	 * @param i - number of track
+	 * @param i
+	 *            - number of track
 	 */
 	public void play(int i) {
 		if (music) {
@@ -91,18 +92,18 @@ public class AudioMeneger {
 		}
 	}
 
-	
 	/**
 	 * 
-	 * @param i : 1) "i cyk prostopadła" 2) "i myk równoległa"
+	 * @param i
+	 *            : 1) "i cyk prostopadła" 2) "i myk równoległa"
 	 */
 	public void playNoRepeat(int i) {
-		try{
-		urls = this.getClass().getClassLoader().getResource(soundSource[i-1]);
-		audioIns = AudioSystem.getAudioInputStream(urls);
-		info = new DataLine.Info(Clip.class, audioIns.getFormat());
-		soundsClip[i-1] = (Clip) AudioSystem.getLine(info);
-		soundsClip[i-1].open(audioIns);
+		try {
+			urls = this.getClass().getClassLoader().getResource(soundSource[i - 1]);
+			audioIns = AudioSystem.getAudioInputStream(urls);
+			info = new DataLine.Info(Clip.class, audioIns.getFormat());
+			soundsClip[i - 1] = (Clip) AudioSystem.getLine(info);
+			soundsClip[i - 1].open(audioIns);
 		} catch (UnsupportedAudioFileException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -110,12 +111,11 @@ public class AudioMeneger {
 		} catch (LineUnavailableException e) {
 			e.printStackTrace();
 		}
-		soundsClip[i-1].start();
+		soundsClip[i - 1].start();
 	}
-	
-	public void shot()
-	{
-		
+
+	public void shot() {
+
 	}
 
 	public void stop() {

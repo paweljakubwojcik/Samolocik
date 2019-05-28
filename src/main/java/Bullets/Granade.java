@@ -2,37 +2,39 @@ package Bullets;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.util.Random;
 
 public class Granade extends Bullet {
 
 	boolean bang = false;
 	int opacity = 255;
+	long time = System.currentTimeMillis();
+	long time2 = System.currentTimeMillis();
+	Random generator = new Random();
 
 	public static long delay = 400;
 
-	public static int size = 15; // kazdy rodzaj kuli musi miec swoj statyczny rozmiars
+	public static int size = 15; // kazdy rodzaj kuli musi miec swoj statyczny
+									// rozmiars
 	int size2;
+	int i = 1;
 
 	public Granade(int x, int y) {
 		super(x, y);
-		this.size2 = size;
-		damage = 5*100;
 
 	}
 
 	synchronized void draw(Graphics2D g) {
 		g.setColor(new Color(255, 255, 0, opacity));
-		if (!bang)
-			g.fillOval(x, y, size, size);
-		else
-			g.drawOval(x, y, size2, size2);
+		g.fillOval(x, y, size, size);
+
 	}
 
 	@SuppressWarnings("static-access")
 	@Override
 	void MyMotion() {
 
-		if (!bang) {
+		if (System.currentTimeMillis() - time < 600) {
 			if (y > 0 && y < win.size_y)
 				y -= velocity;
 			else
@@ -44,12 +46,25 @@ public class Granade extends Bullet {
 					e.printStackTrace();
 				}
 		} else {
-			size2++;
-			opacity -= 10;
+
+			opacity = 0;
+			if (System.currentTimeMillis() - time > 1000)
+				Bullet.bullets.remove(this);
+			else if (System.currentTimeMillis() - time2 > 100) {
+				new GranadeExplosion(x + generator.nextInt(25 * i) - 25 * i / 2,
+						y + generator.nextInt(25 * i) - 25 * i / 2);
+				time2 = System.currentTimeMillis();
+				i++;
+			}
 
 		}
-		if (opacity <= 10)
-			Bullet.bullets.remove(this);
+	}
+
+	@Override
+	public int[][] getPole() {
+
+		int[][] tab = { { 0, 0, 0 } };
+		return tab;
 	}
 
 	public void detonate() {

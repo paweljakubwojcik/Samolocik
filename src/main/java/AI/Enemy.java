@@ -11,6 +11,8 @@ import Bullets.BulletPellet;
 import Bullets.BulletPlazma;
 import Bullets.Drop;
 import Bullets.Granade;
+import Bullets.GranadeExplosion;
+import InterFace.MessageBox;
 import Program.Window;
 import Rozgrywka.Collisionable;
 
@@ -68,9 +70,10 @@ public abstract class Enemy extends Collisionable {
 
 		if (o.getClass() == Bullet.class || o.getClass() == BulletExtraPlayer.class
 				|| o.getClass() == BulletPellet.class || o.getClass() == Granade.class
-				|| o.getClass() == BulletPlazma.class) {
+				|| o.getClass() == BulletPlazma.class || o.getClass() == GranadeExplosion.class) {
 			Bullet bullet = (Bullet) o;
 			this.health -= bullet.damage;
+			new MessageBox(Integer.toString((int) -bullet.damage), 1000, x, y, "GREEN");
 		}
 
 		if (this.health <= 0) {

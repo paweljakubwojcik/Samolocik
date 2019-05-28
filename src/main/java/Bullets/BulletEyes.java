@@ -8,16 +8,16 @@ import AI.BossPaszko;
 public class BulletEyes extends EnemyBullet {
 	protected int sizeX, sizeY;
 	private BossPaszko paszkow;
+	static int size = 13;
 
-	@SuppressWarnings("static-access")
+	
 	public BulletEyes(int pos_x, int pos_y, BossPaszko paszkow) {
 		super(pos_x, pos_y);
-		this.size = 13;
 		this.paszkow = paszkow;
 		sizeX = -(paszkow.paszko.getWidth() / 2 - size / 2) + (x + paszkow.paszko.getWidth() / 2 + 5 * size / 2);
 		sizeY = size * 13 / 3;
 
-		super.velocity = 8;
+		super.velocity = 6;
 
 		this.damage = 10*100;
 
