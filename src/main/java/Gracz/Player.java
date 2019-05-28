@@ -43,6 +43,8 @@ public class Player extends Collisionable {
 
 	String nazwa = "PLAYER";
 
+	public int punkty = 0;
+
 	public Player(Window win, int x, int y) {
 		this.win = win;
 		this.x = x;

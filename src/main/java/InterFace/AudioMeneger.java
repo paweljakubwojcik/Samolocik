@@ -15,10 +15,11 @@ public class AudioMeneger {
 	URL urls;
 	AudioInputStream audioIns;
 	DataLine.Info info;
+
 	Clip[] musicClip = new Clip[1];
 	Clip[] tekstClip = new Clip[1];
 	Clip[] soundsClip = new Clip[2];
-	boolean music = true;
+	boolean music = false;
 
 	AudioInputStream audioInputStream;
 	String musicSource[] = { "music//GameTrack.wav" }; // GameTrack
@@ -77,8 +78,7 @@ public class AudioMeneger {
 
 	/**
 	 * 
-	 * @param i
-	 *            - number of track
+	 * @param i - number of track
 	 */
 	public void play(int i) {
 		if (music) {
@@ -94,8 +94,7 @@ public class AudioMeneger {
 
 	/**
 	 * 
-	 * @param i
-	 *            : 1) "i cyk prostopadła" 2) "i myk równoległa"
+	 * @param i : 1) "i cyk prostopadła" 2) "i myk równoległa"
 	 */
 	public void playNoRepeat(int i) {
 		try {
@@ -111,7 +110,8 @@ public class AudioMeneger {
 		} catch (LineUnavailableException e) {
 			e.printStackTrace();
 		}
-		soundsClip[i - 1].start();
+		if (soundsClip[i - 1] != null)
+			soundsClip[i - 1].start();
 	}
 
 	public void shot() {
