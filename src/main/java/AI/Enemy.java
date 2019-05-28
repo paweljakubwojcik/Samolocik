@@ -78,6 +78,12 @@ public abstract class Enemy extends Collisionable {
 
 		if (this.health <= 0) {
 			Drop.generateDrop(this);
+			if (this.getClass() == AI.Alien.class) {
+				Alien.zabiteAlieny++;
+			}
+			if (this.getClass() == AI.Asteroid.class) {
+				Asteroid.ZniszczoneAsteroidy++;
+			}
 			Enemy.enemies.remove(this);
 
 			try {

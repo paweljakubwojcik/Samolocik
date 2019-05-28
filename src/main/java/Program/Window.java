@@ -99,6 +99,7 @@ public class Window implements KeyListener {
 							Enemy.motion();
 							Drop.motion();
 							sprawdzKolizje();
+							ach.sprawdzOsiagniecia(statek1);
 
 							if (!intro && !sterowanie)
 								generator.generate();
@@ -119,7 +120,7 @@ public class Window implements KeyListener {
 						// wyświetla max potencjał PC w klatkach na sekunde
 						if (odliczanie == 60) {
 							lacznyCzas += (1000.0 / ((System.nanoTime() - startTime) / 1000.0 / 1000.0));
-							System.out.println(lacznyCzas / 60);
+							// System.out.println(lacznyCzas / 60);
 							lacznyCzas = 0;
 							odliczanie = 0;
 						} else {
@@ -127,7 +128,7 @@ public class Window implements KeyListener {
 							odliczanie++;
 						}
 
-						while (System.nanoTime() - startTime < 1000000000/60) // Około
+						while (System.nanoTime() - startTime < 1000000000 / 60) // Około
 																				// 60
 																				// FPSa
 						{
@@ -183,8 +184,7 @@ public class Window implements KeyListener {
 		}
 
 		MessageTypingIn.draw(g);
-		if (EnemyGenerator.stworzonePaszki == 0)
-			ach.draw(g);
+		ach.draw(g);
 
 		if (wyswietlWynik) {
 			ekranKoncowy.drawMe(g);

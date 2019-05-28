@@ -28,6 +28,8 @@ public class Shield extends Drop {
 		if (o.getClass() == Player.class) {
 			new MessageBox("Shield Activated", 2000, x, y);
 			Player player = (Player) o;
+			player.zlapaneBonusy++;
+			player.zlapaneTarcze++;
 			player.shield = true;
 			player.timeShield = System.currentTimeMillis();
 			drops.remove(this);

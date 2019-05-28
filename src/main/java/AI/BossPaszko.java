@@ -25,6 +25,8 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 	private final int defaultHealth = 150 * 100;
 	String nazwa = "PROF. PASZKOWSKI";
 
+	public static int superCiosy = 0;
+
 	AudioMeneger audio = new AudioMeneger();
 
 	/**
@@ -114,6 +116,7 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 		if (BulletPaszkoRownolegly.liczbaKresek == 0 && BulletPaszkoProstopadly.liczbaKresek == 0) {
 
 			if (rodzaj == "BulletPaszkoRownolegly") {
+				superCiosy++;
 				audio.playNoRepeat(2);
 				int losX, losY;
 				for (int i = 0; i < 7; i++) {
@@ -122,6 +125,7 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 					new BulletPaszkoRownolegly(losX, losY + height / 2);
 				}
 			} else if (rodzaj == "BulletPaszkoProstopadly") {
+				superCiosy++;
 				audio.playNoRepeat(1);
 				int losX, losY;
 				for (int i = 0; i < 4; i++) {
@@ -130,6 +134,7 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 					new BulletPaszkoProstopadly(losX, losY);
 				}
 			} else if (rodzaj == "BulletEyes") {
+				superCiosy++;
 				new BulletEyes(x, y + height / 2, this);
 			}
 		}

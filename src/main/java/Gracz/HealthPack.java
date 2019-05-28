@@ -36,7 +36,8 @@ public class HealthPack extends Drop {
 		if (o.getClass() == Player.class) {
 			new MessageBox("Health +10", 1500, x, y);
 			Player player = (Player) o;
-			player.health += 10*100;
+			player.zlapaneBonusy++;
+			player.health += 10 * 100;
 			if (player.health > player.DefaultHealth)
 				player.health = player.DefaultHealth;
 			drops.remove(this);

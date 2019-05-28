@@ -19,7 +19,7 @@ public class AudioMeneger {
 	Clip[] musicClip = new Clip[1];
 	Clip[] tekstClip = new Clip[1];
 	Clip[] soundsClip = new Clip[2];
-	boolean music = false;
+	boolean music = true;
 
 	AudioInputStream audioInputStream;
 	String musicSource[] = { "music//GameTrack.wav" }; // GameTrack

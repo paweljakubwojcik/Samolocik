@@ -11,6 +11,10 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
+import AI.Alien;
+import AI.Asteroid;
+import AI.BossPaszko;
+import AI.EnemyGenerator;
 import Gracz.Player;
 import Program.Window;
 
@@ -31,6 +35,8 @@ public class Achievement {
 
 	private static String[][] nazwyOsiagniec = new String[15][2];
 	private static int[] punkty = new int[15];
+
+	private static boolean[] zdobyte = new boolean[15];
 
 	/**
 	 * Narzędzie do wyświetlania Achievementow. Funkcja drawMe dba o zachowanie
@@ -147,6 +153,7 @@ public class Achievement {
 			x += 5;
 			if (x > Window.size_x) {
 				try {
+					osiagniecia.remove(this);
 					this.finalize();
 				} catch (Throwable e) {
 					e.printStackTrace();
@@ -196,6 +203,70 @@ public class Achievement {
 			im.setFont(new Font(null, 0, 15));
 			im.drawString(nazwyOsiagniec[i][1], 60, 45);
 
+		}
+
+	}
+
+	public void sprawdzOsiagniecia(Player player) {
+		if (Alien.zabiteAlieny == 1 && !zdobyte[0]) {
+			zdobyte[0] = true;
+			new Achievement(0, player);
+		}
+		if (EnemyGenerator.getStageOfGame() == 2 && !zdobyte[1]) {
+			zdobyte[1] = true;
+			new Achievement(1, player);
+		}
+		if (player.wystrzeloneNaboje == 100 && !zdobyte[2]) {
+			zdobyte[2] = true;
+			new Achievement(2, player);
+		}
+		if (Asteroid.ZniszczoneAsteroidy == 10 && !zdobyte[3]) {
+			zdobyte[3] = true;
+			new Achievement(3, player);
+		}
+		if (player.zlapaneBonusy == 5 && !zdobyte[4]) {
+			zdobyte[4] = true;
+			new Achievement(4, player);
+		}
+		if (Alien.zabiteAlieny == 25 && !zdobyte[5]) {
+			zdobyte[5] = true;
+			new Achievement(5, player);
+		}
+		if (EnemyGenerator.stworzonePaszki == 2 && !zdobyte[6]) {
+			zdobyte[6] = true;
+			new Achievement(6, player);
+		}
+		if (EnemyGenerator.stworzonePaszki == 3 && !zdobyte[7]) {
+			zdobyte[7] = true;
+			new Achievement(7, player);
+		}
+		if (player.zlapaneTarcze == 20 && !zdobyte[8]) {
+			zdobyte[8] = true;
+			new Achievement(8, player);
+		}
+		if (Asteroid.ZniszczoneAsteroidy == 100 && !zdobyte[9]) {
+			zdobyte[9] = true;
+			new Achievement(9, player);
+		}
+		if (player.zlapaneBonusy == 100 && !zdobyte[10]) {
+			zdobyte[10] = true;
+			new Achievement(10, player);
+		}
+		if (BossPaszko.superCiosy == 100 && !zdobyte[11]) {
+			zdobyte[11] = true;
+			new Achievement(11, player);
+		}
+		if (Asteroid.ZniszczoneAsteroidy == 200 && !zdobyte[12]) {
+			zdobyte[12] = true;
+			new Achievement(12, player);
+		}
+		if (player.wystrzeloneNaboje == 2500 && !zdobyte[13]) {
+			zdobyte[13] = true;
+			new Achievement(13, player);
+		}
+		if (player.wystrzeloneNaboje == 7000 && !zdobyte[14]) {
+			zdobyte[14] = true;
+			new Achievement(14, player);
 		}
 
 	}

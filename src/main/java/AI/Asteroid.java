@@ -24,6 +24,8 @@ public class Asteroid extends Enemy {
 					"/images//Asteroida4Damage3.png" } };
 	private int index = generator.nextInt(4);
 
+	public static int ZniszczoneAsteroidy = 0;
+
 	/**
 	 * @param window
 	 * 

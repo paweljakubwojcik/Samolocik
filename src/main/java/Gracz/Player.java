@@ -45,6 +45,10 @@ public class Player extends Collisionable {
 
 	public int punkty = 0;
 
+	public int wystrzeloneNaboje = 0;
+	public int zlapaneBonusy = 0;
+	public int zlapaneTarcze = 0;
+
 	public Player(Window win, int x, int y) {
 		this.win = win;
 		this.x = x;
@@ -137,12 +141,14 @@ public class Player extends Collisionable {
 		switch (whichAmunition) {
 		case 0:
 			if (System.currentTimeMillis() - CzasSzczau > Bullet.delay && amunition[0] != 0) {
+				wystrzeloneNaboje++;
 				new Bullet(x + statek.getWidth() / 2 - Bullet.size / 2, y - Bullet.size);
 				CzasSzczau = System.currentTimeMillis();
 			}
 			break;
 		case 1:
 			if (System.currentTimeMillis() - CzasSzczau > BulletExtraPlayer.delay && amunition[whichAmunition] != 0) {
+				wystrzeloneNaboje++;
 				new BulletExtraPlayer(x + statek.getWidth() / 2 - BulletExtraPlayer.size / 2,
 						y - BulletExtraPlayer.size);
 				amunition[whichAmunition]--;
@@ -151,6 +157,7 @@ public class Player extends Collisionable {
 			break;
 		case 2:
 			if (System.currentTimeMillis() - CzasSzczau > BulletPellet.delay && amunition[whichAmunition] != 0) {
+				wystrzeloneNaboje++;
 				new Pellet(x + statek.getWidth() / 2 - BulletPellet.size / 2, y - BulletPellet.size);
 				amunition[whichAmunition]--;
 				CzasSzczau = System.currentTimeMillis();
@@ -158,6 +165,7 @@ public class Player extends Collisionable {
 			break;
 		case 3:
 			if (System.currentTimeMillis() - CzasSzczau > Granade.delay && amunition[whichAmunition] != 0) {
+				wystrzeloneNaboje++;
 				if (!Bullet.check(Granade.class)) {
 					new Granade(x + statek.getWidth() / 2 - Granade.size / 2, y - Granade.size);
 					CzasSzczau = System.currentTimeMillis();
@@ -167,6 +175,7 @@ public class Player extends Collisionable {
 			break;
 		case 4:
 			if (System.currentTimeMillis() - CzasSzczau > BulletPlazma.delay && amunition[whichAmunition] != 0) {
+				wystrzeloneNaboje++;
 				new BulletPlazma(x + statek.getWidth() / 2 - BulletPlazma.size / 2, y - BulletPlazma.size);
 				amunition[whichAmunition]--;
 				CzasSzczau = System.currentTimeMillis();
