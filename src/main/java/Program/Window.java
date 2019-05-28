@@ -84,8 +84,12 @@ public class Window implements KeyListener {
 
 			@Override
 			public void run() {
+				long startTime;
+				long lacznyCzas = 0;
+				int odliczanie = 0;
+
 				while (true) {
-					long startTime = System.nanoTime();
+					startTime = System.nanoTime();
 
 					if (!pause) {
 
@@ -113,7 +117,15 @@ public class Window implements KeyListener {
 							endOfGame();
 
 						// wyświetla max potencjał PC
-						System.out.println(1000.0 / ((System.nanoTime() - startTime) / 1000.0 / 1000.0));
+						if (odliczanie == 60) {
+							lacznyCzas += (1000.0 / ((System.nanoTime() - startTime) / 1000.0 / 1000.0));
+							System.out.println(lacznyCzas / 60);
+							lacznyCzas = 0;
+							odliczanie = 0;
+						} else {
+							lacznyCzas += (1000.0 / ((System.nanoTime() - startTime) / 1000.0 / 1000.0));
+							odliczanie++;
+						}
 
 						while (System.nanoTime() - startTime < 15500 * 1000) // Około 60 FPSa
 						{
