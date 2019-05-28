@@ -20,6 +20,7 @@ import InterFace.Intro;
 import InterFace.MessageBox;
 import InterFace.MessageTypingIn;
 import InterFace.Sterowanie;
+import InterFace.Zaliczenie;
 import Rozgrywka.Collisions;
 
 public class Window implements KeyListener {
@@ -54,6 +55,9 @@ public class Window implements KeyListener {
 
 	Achievement ach = new Achievement();
 
+	public static boolean wyswietlWynik = false;
+	Zaliczenie ekranKoncowy;
+
 	Window() {
 		okno = new JFrame("Niewdzieczna przestrzen");
 		okno.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -80,7 +84,12 @@ public class Window implements KeyListener {
 
 			@Override
 			public void run() {
+				long startTime;
+				long lacznyCzas = 0;
+				int odliczanie = 0;
+
 				while (true) {
+					startTime = System.nanoTime();
 
 					if (!pause) {
 
@@ -106,10 +115,25 @@ public class Window implements KeyListener {
 								statek1.strzal();
 						} else
 							endOfGame();
-						try {
-							Thread.sleep(1000 / 60);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
+
+						// wyświetla max potencjał PC
+						if (odliczanie == 60) {
+							lacznyCzas += (1000.0 / ((System.nanoTime() - startTime) / 1000.0 / 1000.0));
+							System.out.println(lacznyCzas / 60);
+							lacznyCzas = 0;
+							odliczanie = 0;
+						} else {
+							lacznyCzas += (1000.0 / ((System.nanoTime() - startTime) / 1000.0 / 1000.0));
+							odliczanie++;
+						}
+
+						while (System.nanoTime() - startTime < 15500 * 1000) // Około 60 FPSa
+						{
+							try {
+								Thread.sleep(0, 100 * 1000);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
 						}
 
 						////////////////////////////
@@ -137,6 +161,7 @@ public class Window implements KeyListener {
 				}
 			}
 		}, "GameWhile");
+
 	}
 
 	void draw() {
@@ -158,6 +183,10 @@ public class Window implements KeyListener {
 		MessageTypingIn.draw(g);
 		if (!ach.usun && EnemyGenerator.stworzonePaszki == 2)
 			ach.drawMe(g);
+
+		if (wyswietlWynik) {
+			ekranKoncowy.drawMe(g);
+		}
 
 		g.dispose();
 		drawklatka();
@@ -210,6 +239,10 @@ public class Window implements KeyListener {
 	}
 
 	void endOfGame() {
+		if (!wyswietlWynik) {
+			wyswietlWynik = true;
+			ekranKoncowy = new Zaliczenie(10000000, 3, 0, 2);
+		}
 		draw();
 		Bullet.motion();
 	}
