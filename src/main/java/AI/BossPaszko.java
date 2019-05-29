@@ -118,11 +118,13 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 				superCiosy++;
 				audio.playNoRepeat(2);
 				int losX, losY;
+
 				for (int i = 0; i < 7; i++) {
 					losX = generator.nextInt(Window.size_x);
 					losY = generator.nextInt(Window.size_y);
 					new BulletPaszkoRownolegly(losX, losY + height / 2);
 				}
+
 			} else if (rodzaj == "BulletPaszkoProstopadly") {
 				superCiosy++;
 				audio.playNoRepeat(1);
@@ -132,6 +134,7 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 					losY = generator.nextInt(Window.size_y / 2) + Window.size_y / 2;
 					new BulletPaszkoProstopadly(losX, losY);
 				}
+
 			} else if (rodzaj == "BulletEyes") {
 				superCiosy++;
 				new BulletEyes(x, y + height / 2, this);
