@@ -17,7 +17,7 @@ public class BulletPlazma extends Bullet {
 
 	public BulletPlazma(int x, int y) {
 		super(x, y);
-		damage = (int) (0.2 * 100*40); // mniej niż 1.0 musi być
+		damage = (int) (0.2 * 100); // mniej niż 1.0 musi być
 	}
 
 	@Override

@@ -3,6 +3,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import Program.Samolotoszczalec;
 import Program.Window;
@@ -16,6 +17,7 @@ public class Bullet extends Collisionable {
 	public float damage = 1*100;
 	public static long delay = 200;
 	protected static Window win = Samolotoszczalec.win;
+	protected Random generator = new Random();
 	public static List<Bullet> bullets = new ArrayList<>();
 
 	/**

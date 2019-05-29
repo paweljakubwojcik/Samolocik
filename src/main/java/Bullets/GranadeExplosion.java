@@ -8,11 +8,12 @@ public class GranadeExplosion extends Bullet {
 	int size2;
 	int opacity = 255;
 	int expantionV = 6;
+	int[][] tab = new int[1][3];
 
 	public GranadeExplosion(int x, int y) {
 		super(x, y);
 		this.size2 = size;
-		damage = 25 * 10;
+		damage = generator.nextInt(60)+100;
 		System.out.println("detonate");
 	}
 
@@ -27,16 +28,23 @@ public class GranadeExplosion extends Bullet {
 	}
 
 	public void MyMotion() {
+		tab[0][0] = x + size2 / 2;
+		tab[0][1] = y + size2 / 2;
+		tab[0][2] = size2 / 2;
 		x -= expantionV / 2;
 		y -= expantionV / 2;
 		size2 += expantionV;
-		opacity -= 10;
+		opacity -= 8;
+
+		if (opacity <= 0)
+			Bullet.bullets.remove(this);
 	}
 
 	@Override
 	public int[][] getPole() {
 
-		int[][] tab = { { x + size2 / 2, y + size2 / 2, size2 / 2 } };
 		return tab;
 	}
+
+
 }
