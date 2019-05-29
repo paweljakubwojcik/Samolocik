@@ -160,6 +160,9 @@ public class Zaliczenie {
 			g.setColor(new Color(0, 0, 0, opacityOcena));
 			g.drawRect(xOcena - 5, yOcena - 80, 140, 90);
 		}
+
+		ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1);
+		g.setComposite(ac);
 	}
 
 	private void alfa() {
