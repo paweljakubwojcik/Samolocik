@@ -18,6 +18,8 @@ import javax.imageio.ImageIO;
  */
 public class Zaliczenie {
 
+	private long delay = 2000, begin = System.currentTimeMillis();
+
 	private int opacity = 0;
 	private int fadeIn = 10, fadeOut = 10;
 
@@ -58,7 +60,8 @@ public class Zaliczenie {
 	/**
 	 * Inicjalizuje standarodwe informacje przez czas czasu
 	 * 
-	 * @param czas - ile ma być wyświetlana informacja
+	 * @param czas
+	 *            - ile ma być wyświetlana informacja
 	 */
 	public Zaliczenie(long czas) {
 		this();
@@ -68,9 +71,12 @@ public class Zaliczenie {
 	/**
 	 * Inicjalizuje standardowe informacje
 	 * 
-	 * @param czas    - ile ma być wyświetlany ekran końcowy
-	 * @param fadeIn  - jak szybko na 1 klatkę ekran ma się rozjaśniać
-	 * @param fadeOut - jak szybko na 1 klatkę ekran ma się ściemniać
+	 * @param czas
+	 *            - ile ma być wyświetlany ekran końcowy
+	 * @param fadeIn
+	 *            - jak szybko na 1 klatkę ekran ma się rozjaśniać
+	 * @param fadeOut
+	 *            - jak szybko na 1 klatkę ekran ma się ściemniać
 	 */
 	public Zaliczenie(long czas, int fadeIn, int fadeOut) {
 		this(czas);
@@ -79,12 +85,17 @@ public class Zaliczenie {
 	}
 
 	/**
-	 * Inicjalizuje ekran końcowy wystawiając ocenę na podstawie uzyskanych punktów
+	 * Inicjalizuje ekran końcowy wystawiając ocenę na podstawie uzyskanych
+	 * punktów
 	 * 
-	 * @param czas    - ile czasu ma być wyświetlany ekran końcowy
-	 * @param fadeIn  - jak szybko na 1 klatkę ekran ma się rozjaśniać
-	 * @param fadeOut - jak szybko na 1 klatkę ekran ma się ściemniać
-	 * @param punkty  - ile punktów uzyskano
+	 * @param czas
+	 *            - ile czasu ma być wyświetlany ekran końcowy
+	 * @param fadeIn
+	 *            - jak szybko na 1 klatkę ekran ma się rozjaśniać
+	 * @param fadeOut
+	 *            - jak szybko na 1 klatkę ekran ma się ściemniać
+	 * @param punkty
+	 *            - ile punktów uzyskano
 	 */
 	public Zaliczenie(long czas, int fadeIn, int fadeOut, int punkty) {
 		this(czas, fadeIn, fadeOut);
@@ -100,10 +111,14 @@ public class Zaliczenie {
 	/**
 	 * Rysuje Ekran Zaliczenia
 	 * 
-	 * @param g - Grafika do rysowania
+	 * @param g
+	 *            - Grafika do rysowania
 	 */
 	public void drawMe(Graphics2D g) {
-		alfa();
+
+		if (System.currentTimeMillis() - begin > delay)
+			alfa();
+
 		ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha);
 		g.setComposite(ac);
 		g.drawImage(wynik, 0, 0, null);

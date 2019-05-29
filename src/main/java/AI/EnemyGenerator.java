@@ -4,7 +4,7 @@ import Program.Window;
 
 public class EnemyGenerator {
 
-	static int stageOfGame = 4; // 0 - brak alienow; 1,2,3 - kolejne fale
+	static int stageOfGame = 1; // 0 - brak alienow; 1,2,3 - kolejne fale
 								// alienow; 4 - walka z bossem; 5 - odrodzenie
 								// bossa; kolejne liczby to kolejne lvl moga byc
 
@@ -38,12 +38,12 @@ public class EnemyGenerator {
 			checkStage();
 
 		} else if (stageOfGame == 4) {
+
 			if (!check(BossPaszko.class) && stworzonePaszki == 0) {
 				win.audio.play(1);
 				new BossPaszko(win, win.size_x / 2 - 50, -100);
 				stworzonePaszki++;
 			}
-
 			checkStage();
 
 		} else if (stageOfGame == 5) {

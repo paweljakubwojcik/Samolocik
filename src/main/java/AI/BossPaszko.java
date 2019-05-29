@@ -184,8 +184,14 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 
 	@Override
 	public int[][] getPole() {
+
 		int[][] tab = { { x + paszko.getWidth() / 2, y + paszko.getWidth() / 2, paszko.getWidth() / 2 } };
-		return tab;
+		int[][] tab1 = { { x + paszko.getWidth() / 2, y + paszko.getWidth() / 2, 0} };
+		
+		if (!majestyWalk)
+			return tab;
+		else
+			return tab1;
 	}
 
 }
