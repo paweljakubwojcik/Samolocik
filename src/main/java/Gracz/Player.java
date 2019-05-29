@@ -260,6 +260,7 @@ public class Player extends Collisionable {
 
 		if (this.health <= 0) {
 			new MessageBox("umarlem bo nie mam zyc");
+			win.audio.przegrana();
 
 		}
 	}

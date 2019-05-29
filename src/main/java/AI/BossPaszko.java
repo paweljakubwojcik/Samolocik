@@ -20,7 +20,8 @@ import Program.Window;
 public class BossPaszko extends Enemy implements IEnemyBoss {
 
 	public BufferedImage paszko, paszko2;
-	private long czasAtak;
+	boolean majestyWalk = true;
+	private long czasAtak, czasRuchu = System.currentTimeMillis();
 	private final int defaultHealth = 150 * 100;
 	String nazwa = "PROF. PASZKOWSKI";
 
@@ -43,6 +44,7 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 		this.velocity_y = 2;
 		health = defaultHealth;
 		czasAtak = System.currentTimeMillis();
+		EnemyGenerator.setAsteroids(false);
 
 		URL[] url = { getClass().getResource("/images/paszko.png"), getClass().getResource("/images/paszko2.png") };
 		try {
@@ -73,35 +75,52 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 		g.fillRect(win.size_x * 79 / 80 - win.size_x / 3 * (int) health / defaultHealth, win.size_y / 10,
 				(win.size_x / 3) * (int) health / defaultHealth, win.size_y / 20);
 
-		g.setFont(new Font(null, Font.PLAIN, 25));
-		g.drawString(nazwa, win.size_x * 50 / 80, win.size_y / 12);
+		if (!majestyWalk) {
+			g.setFont(new Font(null, Font.PLAIN, 25));
+			g.drawString(nazwa, win.size_x * 50 / 80, win.size_y / 12);
+		}
 	}
 
 	@SuppressWarnings("static-access")
 	@Override
 	public void myMotion() {
-		x += velocity_x;
-		if (generator.nextBoolean())
-			y += velocity_y;
-		else
-			y -= velocity_y;
 
-		if (y < 20) {
-			y = 20;
-			velocity_y = -velocity_y;
-		} else if (y > 200) {
-			y = 200;
-			velocity_y = -velocity_y;
+		if (majestyWalk) {
+			if (System.currentTimeMillis() - czasRuchu > 75) {
+				y++;
+				czasRuchu = System.currentTimeMillis();
+			}
+
+			if (y == 100) {
+				majestyWalk = false;
+				EnemyGenerator.setAsteroids(true);
+			}
+
+		} else {
+
+			x += velocity_x;
+			if (generator.nextBoolean())
+				y += velocity_y;
+			else
+				y -= velocity_y;
+
+			if (y < 20) {
+				y = 20;
+				velocity_y = -velocity_y;
+			} else if (y > 200) {
+				y = 200;
+				velocity_y = -velocity_y;
+			}
+
+			if (x < 0) {
+				x = 0;
+				velocity_x = -velocity_x;
+			} else if (x + paszko.getWidth() > win.size_x) {
+				velocity_x = -velocity_x;
+			}
+
+			this.AI();
 		}
-
-		if (x < 0) {
-			x = 0;
-			velocity_x = -velocity_x;
-		} else if (x + paszko.getWidth() > win.size_x) {
-			velocity_x = -velocity_x;
-		}
-
-		this.AI();
 	}
 
 	@Override
@@ -168,4 +187,5 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 		int[][] tab = { { x + paszko.getWidth() / 2, y + paszko.getWidth() / 2, paszko.getWidth() / 2 } };
 		return tab;
 	}
+
 }
