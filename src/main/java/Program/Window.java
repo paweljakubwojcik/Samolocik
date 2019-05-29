@@ -172,6 +172,7 @@ public class Window implements KeyListener {
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, size_x, size_y);
 		g.drawImage(imc, 0, tloY, null);
+		ach.draw(g);
 		Bullet.drawBullets(g);
 		Enemy.draw(g);
 		Drop.draw(g);
@@ -184,7 +185,6 @@ public class Window implements KeyListener {
 		}
 
 		MessageTypingIn.draw(g);
-		ach.draw(g);
 
 		if (wyswietlWynik) {
 			ekranKoncowy.drawMe(g);
