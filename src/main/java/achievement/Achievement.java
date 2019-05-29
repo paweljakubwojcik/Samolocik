@@ -21,7 +21,7 @@ import Program.Window;
 public class Achievement {
 
 	private static BufferedImage[] image = new BufferedImage[15];
-	private int x = Window.size_x, y = 50;
+	private int x = Window.size_x, y = Window.size_y - 55;
 	private long time;
 	private boolean powrot = false;
 
@@ -56,11 +56,11 @@ public class Achievement {
 		punkty[2] = 2;
 
 		nazwyOsiagniec[3][0] = "Niszczyciel";
-		nazwyOsiagniec[3][1] = "Zniszcz 10 asteroid";
+		nazwyOsiagniec[3][1] = "Zniszcz 5 asteroid";
 		punkty[3] = 3;
 
 		nazwyOsiagniec[4][0] = "Farciarz";
-		nazwyOsiagniec[4][1] = "Złap 5 bonusów";
+		nazwyOsiagniec[4][1] = "Złap 3 bonusy";
 		punkty[4] = 3;
 
 		nazwyOsiagniec[5][0] = "Morderca";
@@ -122,7 +122,7 @@ public class Achievement {
 	 */
 	public Achievement(int nrOsiagniecia, Player player) {
 		ustawSlot();
-		y += 55 * slot;
+		y -= 55 * slot;
 		dodajPunkty(nrOsiagniecia, player);
 		osiagniecie = nrOsiagniecia;
 		osiagniecia.add(this);
@@ -132,6 +132,8 @@ public class Achievement {
 		for (int i = 0; i < osiagniecia.size(); i++) {
 			osiagniecia.get(i).drawMe(g);
 		}
+		ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1);
+		g.setComposite(ac);
 	}
 
 	private void drawMe(Graphics2D g) {
@@ -202,6 +204,7 @@ public class Achievement {
 			im.drawString(nazwyOsiagniec[i][0], 60, 20);
 			im.setFont(new Font(null, 0, 15));
 			im.drawString(nazwyOsiagniec[i][1], 60, 45);
+			im.drawRect(0, 0, image[i].getWidth(), image[i].getHeight() - 1);
 
 		}
 
@@ -220,11 +223,11 @@ public class Achievement {
 			zdobyte[2] = true;
 			new Achievement(2, player);
 		}
-		if (Asteroid.ZniszczoneAsteroidy == 10 && !zdobyte[3]) {
+		if (Asteroid.ZniszczoneAsteroidy == 5 && !zdobyte[3]) {
 			zdobyte[3] = true;
 			new Achievement(3, player);
 		}
-		if (player.zlapaneBonusy == 5 && !zdobyte[4]) {
+		if (player.zlapaneBonusy == 3 && !zdobyte[4]) {
 			zdobyte[4] = true;
 			new Achievement(4, player);
 		}
