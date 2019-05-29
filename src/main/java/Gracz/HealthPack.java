@@ -34,7 +34,7 @@ public class HealthPack extends Drop {
 	@Override
 	public void collision(Object o) {
 		if (o.getClass() == Player.class) {
-			new MessageBox("Health +10", 1500, x, y);
+			new MessageBox("Health +1000", 1500, x, y);
 			Player player = (Player) o;
 			player.zlapaneBonusy++;
 			player.health += 10 * 100;
