@@ -14,7 +14,6 @@ import AI.EnemyGenerator;
 import Bullets.Bullet;
 import Bullets.Drop;
 import Gracz.Player;
-import InterFace.Achievement;
 import InterFace.AudioMeneger;
 import InterFace.Intro;
 import InterFace.MessageBox;
@@ -22,6 +21,7 @@ import InterFace.MessageTypingIn;
 import InterFace.Sterowanie;
 import InterFace.Zaliczenie;
 import Rozgrywka.Collisions;
+import achievement.Achievement;
 
 public class Window implements KeyListener {
 
@@ -99,6 +99,7 @@ public class Window implements KeyListener {
 							Enemy.motion();
 							Drop.motion();
 							sprawdzKolizje();
+							ach.sprawdzOsiagniecia(statek1);
 
 							if (!intro && !sterowanie)
 								generator.generate();
@@ -116,10 +117,10 @@ public class Window implements KeyListener {
 						} else
 							endOfGame();
 
-						// wyświetla max potencjał PC
+						// wyświetla max potencjał PC w klatkach na sekunde
 						if (odliczanie == 60) {
 							lacznyCzas += (1000.0 / ((System.nanoTime() - startTime) / 1000.0 / 1000.0));
-							System.out.println(lacznyCzas / 60);
+							// System.out.println(lacznyCzas / 60);
 							lacznyCzas = 0;
 							odliczanie = 0;
 						} else {
@@ -127,7 +128,7 @@ public class Window implements KeyListener {
 							odliczanie++;
 						}
 
-						while (System.nanoTime() - startTime < 1000000000/60) // Około
+						while (System.nanoTime() - startTime < 1000000000 / 60) // Około
 																				// 60
 																				// FPSa
 						{
@@ -183,8 +184,7 @@ public class Window implements KeyListener {
 		}
 
 		MessageTypingIn.draw(g);
-		if (!ach.usun && EnemyGenerator.stworzonePaszki == 2)
-			ach.drawMe(g);
+		ach.draw(g);
 
 		if (wyswietlWynik) {
 			ekranKoncowy.drawMe(g);
@@ -243,7 +243,7 @@ public class Window implements KeyListener {
 	void endOfGame() {
 		if (!wyswietlWynik) {
 			wyswietlWynik = true;
-			ekranKoncowy = new Zaliczenie(10000000, 3, 0, 2);
+			ekranKoncowy = new Zaliczenie(10000000, 3, 0, statek1.punkty);
 		}
 		draw();
 		Bullet.motion();

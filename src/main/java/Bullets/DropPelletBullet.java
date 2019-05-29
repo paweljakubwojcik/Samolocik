@@ -41,6 +41,7 @@ public class DropPelletBullet extends Drop {
 	public void collision(Object o) {
 		if (o.getClass() == Player.class) {
 			Player player = (Player) o;
+			player.zlapaneBonusy++;
 			player.amunition[2] += 15;
 			drops.remove(this);
 		}

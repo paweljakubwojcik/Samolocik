@@ -4,7 +4,7 @@ import Program.Window;
 
 public class EnemyGenerator {
 
-	static int stageOfGame = 1; // 0 - brak alienow; 1,2,3 - kolejne fale
+	static int stageOfGame = 4; // 0 - brak alienow; 1,2,3 - kolejne fale
 								// alienow; 4 - walka z bossem; 5 - odrodzenie
 								// bossa; kolejne liczby to kolejne lvl moga byc
 
@@ -27,49 +27,32 @@ public class EnemyGenerator {
 
 	static int numerAliena = 0;
 
-	@SuppressWarnings("static-access")
 	public void generate() {
 
 		if (stageOfGame == 0)
 			;
-		else if (stageOfGame > 0 && stageOfGame < 4 && generateAliens) {
+		else if (stageOfGame > 0 && stageOfGame < 4) {
 
-			numberOfAliens = 5 * stageOfGame;
-
-			if (System.currentTimeMillis() - time2 > 500) {
-				new Alien(Enemy.generator.nextInt(numberOfAliens) * win.size_x / numberOfAliens + 20, -5, win);
-				numerAliena++;
-				time2 = System.currentTimeMillis();
-			}
-
-			if (numerAliena >= numberOfAliens) {
-				generateAliens = false;
-				numerAliena = 0;
-			}
+			generateAliens(5 * stageOfGame);
 			checkStage();
 
-		} else if (stageOfGame == 4 && !check(BossPaszko.class)) {
+		} else if (stageOfGame == 4) {
 
-			new BossPaszko(win, 400, 20);
-			stworzonePaszki++;
+			if (!check(BossPaszko.class) && stworzonePaszki == 0) {
+				new BossPaszko(win, 400, 20);
+				stworzonePaszki++;
+			}
 			checkStage();
 
 		} else if (stageOfGame == 5) {
 
-			if (!check(BossPaszko.class))
+			if (!check(BossPaszko.class)&& stworzonePaszki == 1) {
 				new BossPaszko(win, 400, 20);
-
-			if (System.currentTimeMillis() - time2 > 500 && generateAliens) {
-				numberOfAliens = 10;
-				new Alien(Enemy.generator.nextInt(numberOfAliens) * win.size_x / numberOfAliens + 20, -5, win);
-				numerAliena++;
-				time2 = System.currentTimeMillis();
+				stworzonePaszki++;
 			}
-			if (numerAliena >= numberOfAliens) {
-				generateAliens = false;
-				numerAliena = 0;
-			}
+			generateAliens(10);
 			checkStage();
+			
 		}
 
 		//////////// generator asteroid////////////////////
@@ -80,13 +63,29 @@ public class EnemyGenerator {
 		}
 	}
 
-	private void checkStage() {
+	private boolean checkStage() {
 		///////////// sprawdzanie czy astepny etap gry ma
 		///////////// wejsc/////////////////////////
 		if (!check(BossPaszko.class) && !check(Alien.class)) {
 			stageOfGame++;
 			generateAliens = true;
 			System.out.println(stageOfGame);
+			return true;
+		} else
+			return false;
+	}
+
+	@SuppressWarnings("static-access")
+	private void generateAliens(int numberOfAliens) {
+		if (System.currentTimeMillis() - time2 > 500 && generateAliens) {
+			new Alien(Enemy.generator.nextInt(numberOfAliens) * win.size_x / numberOfAliens + 20, -5, win);
+			numerAliena++;
+			time2 = System.currentTimeMillis();
+		}
+
+		if (numerAliena >= numberOfAliens) {
+			generateAliens = false;
+			numerAliena = 0;
 		}
 	}
 
@@ -106,6 +105,10 @@ public class EnemyGenerator {
 	public void start() {
 		stageOfGame++;
 		generateAliens = true;
+	}
+
+	public static int getStageOfGame() {
+		return stageOfGame;
 	}
 
 }

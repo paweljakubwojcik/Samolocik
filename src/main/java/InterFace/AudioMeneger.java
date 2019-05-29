@@ -15,10 +15,11 @@ public class AudioMeneger {
 	URL urls;
 	AudioInputStream audioIns;
 	DataLine.Info info;
+
 	Clip[] musicClip = new Clip[1];
 	Clip[] tekstClip = new Clip[1];
 	Clip[] soundsClip = new Clip[2];
-	boolean music = true;
+	boolean music = false;
 
 	AudioInputStream audioInputStream;
 	String musicSource[] = { "music//GameTrack.wav" }; // GameTrack
@@ -71,8 +72,8 @@ public class AudioMeneger {
 	}
 
 	public void readIntroStop() {
-
-		tekstClip[0].stop();
+		if (tekstClip[0] != null)
+			tekstClip[0].stop();
 	}
 
 	/**
@@ -98,20 +99,23 @@ public class AudioMeneger {
 	 *            : 1) "i cyk prostopadła" 2) "i myk równoległa"
 	 */
 	public void playNoRepeat(int i) {
-		try {
-			urls = this.getClass().getClassLoader().getResource(soundSource[i - 1]);
-			audioIns = AudioSystem.getAudioInputStream(urls);
-			info = new DataLine.Info(Clip.class, audioIns.getFormat());
-			soundsClip[i - 1] = (Clip) AudioSystem.getLine(info);
-			soundsClip[i - 1].open(audioIns);
-		} catch (UnsupportedAudioFileException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (LineUnavailableException e) {
-			e.printStackTrace();
+		if (music) {
+			try {
+				urls = this.getClass().getClassLoader().getResource(soundSource[i - 1]);
+				audioIns = AudioSystem.getAudioInputStream(urls);
+				info = new DataLine.Info(Clip.class, audioIns.getFormat());
+				soundsClip[i - 1] = (Clip) AudioSystem.getLine(info);
+				soundsClip[i - 1].open(audioIns);
+			} catch (UnsupportedAudioFileException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (LineUnavailableException e) {
+				e.printStackTrace();
+			}
+			if (soundsClip[i - 1] != null)
+				soundsClip[i - 1].start();
 		}
-		soundsClip[i - 1].start();
 	}
 
 	public void shot() {

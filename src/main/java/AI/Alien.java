@@ -1,4 +1,5 @@
 package AI;
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -11,13 +12,15 @@ import Program.Window;
 
 public class Alien extends Enemy {
 
-	static final int defaultHealth = 10*100;
+	static final int defaultHealth = 10 * 100;
 	private int zakresRuchuX, zakresRuchuY;
 	int velocity;
 	private BufferedImage Image[] = new BufferedImage[4];
 	private int i = 0;
 	long time = System.currentTimeMillis();
-	long czasAtak= System.currentTimeMillis();
+	long czasAtak = System.currentTimeMillis();
+
+	public static int zabiteAlieny = 0;
 
 	/**
 	 * 
@@ -65,7 +68,7 @@ public class Alien extends Enemy {
 		g.setColor(new Color(255, 0, 0, 200));
 		/* g.drawRect(x, y, width, height); */
 		g.drawRect(x, y + win.size_y / 400, win.size_x / 20, win.size_y / 200);
-		g.fillRect(x, y + win.size_y / 400, (win.size_x / 20) * (int)health / defaultHealth, win.size_y / 200);
+		g.fillRect(x, y + win.size_y / 400, (win.size_x / 20) * (int) health / defaultHealth, win.size_y / 200);
 	}
 
 	@SuppressWarnings("static-access")
@@ -86,10 +89,10 @@ public class Alien extends Enemy {
 		}
 		x += velocity_x;
 		y += velocity_y;
-		
-		if(System.currentTimeMillis()-czasAtak>generator.nextInt(3000)+1000){
-			new EnemyBullet(x+width/2,y+height);
-			czasAtak=System.currentTimeMillis();
+
+		if (System.currentTimeMillis() - czasAtak > generator.nextInt(3000) + 1000) {
+			new EnemyBullet(x + width / 2, y + height);
+			czasAtak = System.currentTimeMillis();
 		}
 	}
 
