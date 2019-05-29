@@ -235,11 +235,11 @@ public class Achievement {
 			zdobyte[5] = true;
 			new Achievement(5, player);
 		}
-		if (EnemyGenerator.stworzonePaszki == 2 && !zdobyte[6]) {
+		if (EnemyGenerator.getStageOfGame() == 5 && !zdobyte[6]) {
 			zdobyte[6] = true;
 			new Achievement(6, player);
 		}
-		if (EnemyGenerator.stworzonePaszki == 3 && !zdobyte[7]) {
+		if (EnemyGenerator.getStageOfGame() == 6 && !zdobyte[7]) {
 			zdobyte[7] = true;
 			new Achievement(7, player);
 		}
