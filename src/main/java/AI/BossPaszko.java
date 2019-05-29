@@ -15,6 +15,7 @@ import Bullets.BulletPaszkoProstopadly;
 import Bullets.BulletPaszkoRownolegly;
 import Bullets.EnemyBullet;
 import InterFace.AudioMeneger;
+import InterFace.IntroBoss;
 import Program.Window;
 
 public class BossPaszko extends Enemy implements IEnemyBoss {
@@ -40,7 +41,7 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 		this.win = win;
 		this.x = x;
 		this.y = y;
-		this.velocity_x = 4;
+		this.velocity_x = -4;
 		this.velocity_y = 2;
 		health = defaultHealth;
 		czasAtak = System.currentTimeMillis();
@@ -87,14 +88,18 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 	public void myMotion() {
 
 		if (majestyWalk) {
-			if (System.currentTimeMillis() - czasRuchu > 75) {
-				y++;
-				czasRuchu = System.currentTimeMillis();
-			}
-
-			if (y == 100) {
-				majestyWalk = false;
-				EnemyGenerator.setAsteroids(true);
+			if (y < 120) {
+				if (System.currentTimeMillis() - czasRuchu > 50) {
+					y++;
+					czasRuchu = System.currentTimeMillis();
+				}
+			} else if (IntroBoss.list.size() == 0) {
+				new IntroBoss(10000, 5, 5);
+			} else {
+				if (IntroBoss.end) {
+					majestyWalk = false;
+					EnemyGenerator.setAsteroids(true);
+				}
 			}
 
 		} else {
@@ -187,8 +192,8 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 	public int[][] getPole() {
 
 		int[][] tab = { { x + paszko.getWidth() / 2, y + paszko.getWidth() / 2, paszko.getWidth() / 2 } };
-		int[][] tab1 = { { x + paszko.getWidth() / 2, y + paszko.getWidth() / 2, 0} };
-		
+		int[][] tab1 = { { 0,0, 0 } };
+
 		if (!majestyWalk)
 			return tab;
 		else

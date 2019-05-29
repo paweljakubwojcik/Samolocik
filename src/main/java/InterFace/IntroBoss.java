@@ -4,9 +4,11 @@ import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
+
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
@@ -19,6 +21,8 @@ import Program.Window;
  *
  */
 public class IntroBoss {
+	public static ArrayList<IntroBoss> list = new ArrayList<>();
+	public static boolean end=false;
 
 	private int opacity = 0;
 	private int fadeIn = 10, fadeOut = 10;
@@ -37,7 +41,7 @@ public class IntroBoss {
 
 	private String tytolPaszko = "PROFESOR PASZKOWSKI";
 
-	private String[] Opisy = { "Laserowe Oczy", "Proste Równoległe", "Proste Prostopadłe" };
+	private String[] Opisy = { "Laserowe Oczy", "Proste Rownolegle", "Proste Prostopadle" };
 
 	private int[] obrazkiRuchX = new int[3];
 
@@ -62,6 +66,7 @@ public class IntroBoss {
 		}
 
 		zlozObrazki();
+		list.add(this);
 	}
 
 	/**
@@ -77,8 +82,16 @@ public class IntroBoss {
 		this.fadeIn = fadeIn;
 		this.fadeOut = fadeOut;
 	}
+	
+	public static void draw(Graphics2D g)
+	{
+		for(int i = 0; i<list.size();i++)
+		{
+			list.get(i).drawMe(g);
+		}
+	}
 
-	public void draw(Graphics2D g) {
+	public void drawMe(Graphics2D g) {
 		ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float) (opacity / 255.0));
 		g.setComposite(ac);
 
@@ -94,6 +107,7 @@ public class IntroBoss {
 			opacity -= fadeOut;
 		}
 		if (opacity <= 0) {
+			end=true;
 			opacity = 0;
 			try {
 				alpha = 0;
@@ -103,9 +117,9 @@ public class IntroBoss {
 			}
 		}
 
-		g.setColor(new Color(255, 255, 255));
+		g.setColor(new Color(200, 200, 200));
 		g.fillRect(0, 0, Window.size_x, Window.size_y);
-
+		
 		g.setColor(new Color(0, 0, 0));
 		g.setFont(new Font(null, 0, 50));
 //		g.fillRect(Window.size_x / 2 - g.getFontMetrics().stringWidth(tytolPaszko) / 2, 80 - 50,

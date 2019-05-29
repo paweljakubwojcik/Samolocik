@@ -58,7 +58,6 @@ public class Window implements KeyListener {
 
 	public static boolean wyswietlWynik = false;
 	Zaliczenie ekranKoncowy;
-	IntroBoss introBoss = new IntroBoss(10000, 5, 5);
 
 	Window() {
 		okno = new JFrame("Niewdzieczna przestrzen");
@@ -192,9 +191,7 @@ public class Window implements KeyListener {
 			ekranKoncowy.drawMe(g);
 		}
 
-		if (EnemyGenerator.stworzonePaszki == 1) {
-			introBoss.draw(g);
-		}
+		IntroBoss.draw(g);
 
 		g.dispose();
 		drawklatka();
