@@ -16,53 +16,51 @@ public class AudioMeneger {
 	AudioInputStream audioIns;
 	DataLine.Info info;
 
-	Clip[] musicClip = new Clip[1];
+	Clip[] musicClip = new Clip[3];
 	Clip[] tekstClip = new Clip[1];
 	Clip[] soundsClip = new Clip[2];
-	boolean music = false;
+	boolean music = true;
 
 	AudioInputStream audioInputStream;
-	String musicSource[] = { "music//GameTrack.wav" }; // GameTrack
+	String musicSource[] = { "music//GameTrack.wav", "music//GameTrackPaszko.wav", "music//GameTrackPrzegrana.wav" }; // GameTrack
 	String soundSource[] = { "music//icykprostopadla1.wav", "music//imykrownolegla1.wav" };
 	String readSource = "music//IntroRead.wav";
 
 	public AudioMeneger() {
-		if (music) {
-			try {
-				for (int i = 0; i < musicSource.length; i++) {
-					// Open an audio input stream.
-					urls = this.getClass().getClassLoader().getResource(musicSource[i]);
-					audioIns = AudioSystem.getAudioInputStream(urls);
-					info = new DataLine.Info(Clip.class, audioIns.getFormat());
-					musicClip[i] = (Clip) AudioSystem.getLine(info);
-					musicClip[i].open(audioIns);
-				}
 
-				for (int i = 0; i < soundSource.length; i++) {
-					// Open an audio input stream.
-					urls = this.getClass().getClassLoader().getResource(soundSource[i]);
-					audioIns = AudioSystem.getAudioInputStream(urls);
-					info = new DataLine.Info(Clip.class, audioIns.getFormat());
-					soundsClip[i] = (Clip) AudioSystem.getLine(info);
-					soundsClip[i].open(audioIns);
-				}
-
-				urls = this.getClass().getClassLoader().getResource(readSource);
+		try {
+			for (int i = 0; i < musicSource.length; i++) {
+				// Open an audio input stream.
+				urls = this.getClass().getClassLoader().getResource(musicSource[i]);
 				audioIns = AudioSystem.getAudioInputStream(urls);
 				info = new DataLine.Info(Clip.class, audioIns.getFormat());
-				tekstClip[0] = (Clip) AudioSystem.getLine(info);
-				tekstClip[0].open(audioIns);
-
-			} catch (UnsupportedAudioFileException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			} catch (LineUnavailableException e) {
-				e.printStackTrace();
-
+				musicClip[i] = (Clip) AudioSystem.getLine(info);
+				musicClip[i].open(audioIns);
 			}
-		}
 
+			for (int i = 0; i < soundSource.length; i++) {
+				// Open an audio input stream.
+				urls = this.getClass().getClassLoader().getResource(soundSource[i]);
+				audioIns = AudioSystem.getAudioInputStream(urls);
+				info = new DataLine.Info(Clip.class, audioIns.getFormat());
+				soundsClip[i] = (Clip) AudioSystem.getLine(info);
+				soundsClip[i].open(audioIns);
+			}
+
+			urls = this.getClass().getClassLoader().getResource(readSource);
+			audioIns = AudioSystem.getAudioInputStream(urls);
+			info = new DataLine.Info(Clip.class, audioIns.getFormat());
+			tekstClip[0] = (Clip) AudioSystem.getLine(info);
+			tekstClip[0].open(audioIns);
+
+		} catch (UnsupportedAudioFileException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (LineUnavailableException e) {
+			e.printStackTrace();
+
+		}
 	}
 
 	public void readIntro() {
@@ -88,6 +86,8 @@ public class AudioMeneger {
 			for (int j = 0; j < musicClip.length; j++)
 				musicClip[j].stop();
 
+			// if(i==1)
+			// musicClip[i].setLoopPoints(35*44100,40*44100);
 			musicClip[i].loop(Clip.LOOP_CONTINUOUSLY);
 			musicClip[i].start();
 		}
@@ -115,6 +115,17 @@ public class AudioMeneger {
 			}
 			if (soundsClip[i - 1] != null)
 				soundsClip[i - 1].start();
+		}
+	}
+
+	public void przegrana() {
+		if (music) {
+			// for(int j=0; j<tekstClip.length;j++)
+			// tekstClip[j].stop();
+			for (int j = 0; j < musicClip.length; j++)
+				musicClip[j].stop();
+
+			musicClip[2].start();
 		}
 	}
 

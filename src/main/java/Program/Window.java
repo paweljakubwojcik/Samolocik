@@ -192,7 +192,9 @@ public class Window implements KeyListener {
 			ekranKoncowy.drawMe(g);
 		}
 
-		introBoss.draw(g);
+		if (EnemyGenerator.stworzonePaszki == 1) {
+			introBoss.draw(g);
+		}
 
 		g.dispose();
 		drawklatka();

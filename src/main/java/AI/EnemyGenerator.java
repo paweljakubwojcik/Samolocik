@@ -13,7 +13,7 @@ public class EnemyGenerator {
 	static int maxInterval = 10000;
 	Window win;
 	static int numberOfAliens = 0;
-	static boolean generateAliens = true; // true;
+	private static boolean generateAliens = true, generateAsteroids = true; // true;
 	public static int stworzonePaszki = 0;
 
 	/**
@@ -27,6 +27,7 @@ public class EnemyGenerator {
 
 	static int numerAliena = 0;
 
+	@SuppressWarnings("static-access")
 	public void generate() {
 
 		if (stageOfGame == 0)
@@ -37,11 +38,12 @@ public class EnemyGenerator {
 			checkStage();
 
 		} else if (stageOfGame == 4) {
-
 			if (!check(BossPaszko.class) && stworzonePaszki == 0) {
-				new BossPaszko(win, 400, 20);
+				win.audio.play(1);
+				new BossPaszko(win, win.size_x / 2 - 50, -100);
 				stworzonePaszki++;
 			}
+
 			checkStage();
 
 		} else if (stageOfGame == 5) {
@@ -55,12 +57,8 @@ public class EnemyGenerator {
 
 		}
 
-		//////////// generator asteroid////////////////////
-		if (System.currentTimeMillis() - time > interval) {
-			time = System.currentTimeMillis();
-			interval = (long) Enemy.generator.nextInt(maxInterval);
-			new Asteroid(win);
-		}
+		if (generateAsteroids)
+			generateAsteroids();
 	}
 
 	private boolean checkStage() {
@@ -73,6 +71,16 @@ public class EnemyGenerator {
 			return true;
 		} else
 			return false;
+	}
+
+	private void generateAsteroids() {
+		//////////// generator asteroid////////////////////
+		if (System.currentTimeMillis() - time > interval) {
+			time = System.currentTimeMillis();
+			interval = (long) Enemy.generator.nextInt(maxInterval);
+			new Asteroid(win);
+		}
+
 	}
 
 	@SuppressWarnings("static-access")
@@ -111,4 +119,7 @@ public class EnemyGenerator {
 		return stageOfGame;
 	}
 
+	public static void setAsteroids(boolean b) {
+		generateAsteroids = b;
+	}
 }
