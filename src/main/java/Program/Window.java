@@ -16,6 +16,7 @@ import Bullets.Drop;
 import Gracz.Player;
 import InterFace.AudioMeneger;
 import InterFace.Intro;
+import InterFace.IntroBoss;
 import InterFace.MessageBox;
 import InterFace.MessageTypingIn;
 import InterFace.Sterowanie;
@@ -57,6 +58,7 @@ public class Window implements KeyListener {
 
 	public static boolean wyswietlWynik = false;
 	Zaliczenie ekranKoncowy;
+	IntroBoss introBoss = new IntroBoss(10000, 5, 5);
 
 	Window() {
 		okno = new JFrame("Niewdzieczna przestrzen");
@@ -189,6 +191,8 @@ public class Window implements KeyListener {
 		if (wyswietlWynik) {
 			ekranKoncowy.drawMe(g);
 		}
+
+		introBoss.draw(g);
 
 		g.dispose();
 		drawklatka();

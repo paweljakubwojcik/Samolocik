@@ -46,13 +46,13 @@ public class EnemyGenerator {
 
 		} else if (stageOfGame == 5) {
 
-			if (!check(BossPaszko.class)&& stworzonePaszki == 1) {
+			if (!check(BossPaszko.class) && stworzonePaszki == 1) {
 				new BossPaszko(win, 400, 20);
 				stworzonePaszki++;
 			}
 			generateAliens(10);
 			checkStage();
-			
+
 		}
 
 		//////////// generator asteroid////////////////////

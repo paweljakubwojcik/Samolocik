@@ -44,6 +44,7 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 		health = defaultHealth;
 		czasAtak = System.currentTimeMillis();
 
+		// alternatywne obrazki paszko01.png paszko02.png
 		URL[] url = { getClass().getResource("/images/paszko.png"), getClass().getResource("/images/paszko2.png") };
 		try {
 			paszko = ImageIO.read(url[0]);

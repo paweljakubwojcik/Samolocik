@@ -109,8 +109,8 @@ public class Achievement {
 
 	/**
 	 * -0 Zabójca „Zabij aliena” -1 Survivalowiec „Przetrwaj 1 falę” -2 Gorąca lufa
-	 * „Wystrzel 100 naboi” -3 Niszczyciel „Zniszcz 10 asteroid” -4 Farciarz „Złap 5
-	 * bonusów” -5 Morderca „Zabij 25 alienów” -6 Zabity „Ale czy na pewno?” (tyczy
+	 * „Wystrzel 100 naboi” -3 Niszczyciel „Zniszcz 5 asteroid” -4 Farciarz „Złap 3
+	 * bonusy” -5 Morderca „Zabij 25 alienów” -6 Zabity „Ale czy na pewno?” (tyczy
 	 * 1st śmierci Paszka) -7 To koniec „Pokonaj Paszka” -8 Niezniszczalny „Złap 20
 	 * tarcz” -9 Kosmita „Zniszcz 100 asteroid” -10 Tak jest łatwiej „Złap 100
 	 * bonusów” -11 Bóg „Przeżyj 100 super ciosów” -12 Dewastator „Zniszcz 200
