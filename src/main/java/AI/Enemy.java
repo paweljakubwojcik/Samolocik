@@ -32,6 +32,9 @@ public abstract class Enemy extends Collisionable {
 
 	public abstract void myMotion();
 
+	public boolean obrazenia = false;
+	public int klatkiObrazenia = 0;
+
 	/**
 	 * 
 	 * @param x
@@ -74,6 +77,9 @@ public abstract class Enemy extends Collisionable {
 			Bullet bullet = (Bullet) o;
 			this.health -= bullet.damage;
 			new MessageBox(Integer.toString((int) -bullet.damage), 1000, x, y, "GREEN");
+
+			this.obrazenia = true;
+			this.klatkiObrazenia = 0;
 		}
 
 		if (this.health <= 0) {

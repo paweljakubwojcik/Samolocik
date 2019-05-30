@@ -13,6 +13,7 @@ import Bullets.BulletExtra;
 import Bullets.BulletEyes;
 import Bullets.BulletPaszkoProstopadly;
 import Bullets.BulletPaszkoRownolegly;
+import Bullets.CzerwoneObrazenia;
 import Bullets.EnemyBullet;
 import InterFace.AudioMeneger;
 import InterFace.IntroBoss;
@@ -27,6 +28,9 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 	String nazwa = "PROF. PASZKOWSKI";
 
 	public static int superCiosy = 0;
+
+	private Graphics2D g2d;
+	private BufferedImage im;
 
 	AudioMeneger audio = new AudioMeneger();
 
@@ -81,6 +85,21 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 			g.setFont(new Font(null, Font.PLAIN, 25));
 			g.drawString(nazwa, win.size_x * 50 / 80, win.size_y / 12);
 		}
+
+		if (obrazenia && klatkiObrazenia <= 8) {
+			klatkiObrazenia++;
+			im = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+			g2d = (Graphics2D) im.getGraphics();
+			if (velocity_x < 0)
+				g2d.drawImage(paszko, 0, 0, width, height, null);
+			else
+				g2d.drawImage(paszko2, 0, 0, width, height, null);
+			CzerwoneObrazenia.drawRed(g, im, x, y);
+		} else {
+			klatkiObrazenia = 0;
+			obrazenia = false;
+		}
+
 	}
 
 	@SuppressWarnings("static-access")
@@ -192,7 +211,7 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 	public int[][] getPole() {
 
 		int[][] tab = { { x + paszko.getWidth() / 2, y + paszko.getWidth() / 2, paszko.getWidth() / 2 } };
-		int[][] tab1 = { { 12345,12345, 0 } };
+		int[][] tab1 = { { 12345, 12345, 0 } };
 
 		if (!majestyWalk)
 			return tab;

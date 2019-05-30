@@ -7,6 +7,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import Bullets.CzerwoneObrazenia;
 import Bullets.EnemyBullet;
 import Program.Window;
 
@@ -19,6 +20,9 @@ public class Alien extends Enemy {
 	private int i = 0;
 	long time = System.currentTimeMillis();
 	long czasAtak = System.currentTimeMillis();
+
+	private Graphics2D g2d;
+	private BufferedImage im;
 
 	public static int zabiteAlieny = 0;
 
@@ -69,6 +73,17 @@ public class Alien extends Enemy {
 		/* g.drawRect(x, y, width, height); */
 		g.drawRect(x, y + win.size_y / 400, win.size_x / 20, win.size_y / 200);
 		g.fillRect(x, y + win.size_y / 400, (win.size_x / 20) * (int) health / defaultHealth, win.size_y / 200);
+
+		if (obrazenia && klatkiObrazenia <= 15) {
+			klatkiObrazenia++;
+			im = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+			g2d = (Graphics2D) im.getGraphics();
+			g2d.drawImage(Image[i], 0, 0, width, height, null);
+			CzerwoneObrazenia.drawRed(g, im, x, y);
+		} else {
+			klatkiObrazenia = 0;
+			obrazenia = false;
+		}
 	}
 
 	@SuppressWarnings("static-access")

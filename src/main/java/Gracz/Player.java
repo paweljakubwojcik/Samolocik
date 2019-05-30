@@ -15,6 +15,7 @@ import Bullets.Bullet;
 import Bullets.BulletExtraPlayer;
 import Bullets.BulletPellet;
 import Bullets.BulletPlazma;
+import Bullets.CzerwoneObrazenia;
 import Bullets.Granade;
 import Bullets.Pellet;
 import InterFace.MessageBox;
@@ -32,6 +33,7 @@ public class Player extends Collisionable {
 	long CzasSzczau, CzasAtaku;
 	long delay = 200;
 	public float health;
+	public boolean obrazenia = false;
 
 	public int[] amunition = { 1, 0, 30, 30, 2000 };
 
@@ -58,6 +60,11 @@ public class Player extends Collisionable {
 	private int fadeIn;
 	private boolean fade = true;
 	private long fadeTime;
+
+	private BufferedImage im;
+	private Graphics2D g2d;
+
+	public int klatkiObrazenia = 0;
 
 	public Player(Window win, int x, int y) {
 		this.win = win;
@@ -186,6 +193,18 @@ public class Player extends Collisionable {
 
 			g.drawImage(maloHP, 0, 0, null);
 		}
+
+		if (obrazenia && klatkiObrazenia <= 8) {
+			klatkiObrazenia++;
+			im = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+			g2d = (Graphics2D) im.getGraphics();
+			g2d.drawImage(statek, 0, 0, width, height, null);
+			CzerwoneObrazenia.drawRed(g, im, x, y);
+		} else {
+			klatkiObrazenia = 0;
+			obrazenia = false;
+		}
+
 	}
 
 	public void strzal() {
