@@ -94,7 +94,7 @@ public class Window implements KeyListener {
 
 					if (!pause) {
 
-						if (!statek1.isDead()) {
+						if (!statek1.isDead() && EnemyGenerator.getStageOfGame() != 6) {
 							draw();
 							Bullet.motion();
 							Enemy.motion();
