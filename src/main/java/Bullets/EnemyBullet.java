@@ -38,9 +38,10 @@ public class EnemyBullet extends Bullet {
 
 		if (o.getClass() == Player.class) {
 			Player player = (Player) o;
-			if (!player.shield)
+			if (!player.shield) {
 				player.health -= damage;
-			new MessageBox(Integer.toString((int) -damage), 1000, x, y, "RED");
+				new MessageBox(Integer.toString((int) -damage), 1000, x, y, "RED");
+			}
 			bullets.remove(this);
 		} else if (o.getClass() == Asteroid.class)
 			bullets.remove(this);

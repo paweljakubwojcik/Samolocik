@@ -36,8 +36,8 @@ public class Player extends Collisionable {
 
 	int whichAmunition = 0;
 
-	public boolean shield = false;
-	long timeShield;
+	public boolean shield = false, shrink = false;;
+	long timeShield, timeShrink;
 
 	private boolean ruchL = false, ruchP = false, ruchUP = false, ruchDOWN = false;
 
@@ -75,8 +75,8 @@ public class Player extends Collisionable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		this.height = statek.getHeight() * 8 / 10;
-		this.width = statek.getWidth() * 8 / 10;
+		this.height = statek.getHeight();
+		this.width = statek.getWidth();
 	}
 
 	/**
@@ -85,6 +85,7 @@ public class Player extends Collisionable {
 	 */
 	@SuppressWarnings("static-access")
 	public void draw(Graphics2D g) {
+
 		// actual image
 		drawAnimation(g);
 
@@ -93,6 +94,12 @@ public class Player extends Collisionable {
 		// g.setColor(Color.red);
 		// g.drawRect(getPole()[0][0],getPole()[0][1],getPole()[0][2],getPole()[0][3]);
 		//
+
+		if (shrink && System.currentTimeMillis() - timeShrink > 10000) {
+			this.height = statek.getHeight();
+			this.width = statek.getWidth();
+		}
+
 		if (shield) {
 			long pozostalyCzas = -System.currentTimeMillis() + timeShield + Shield.time;
 			if (pozostalyCzas > 1500)
@@ -101,7 +108,7 @@ public class Player extends Collisionable {
 				g.setColor(new Color(50, 50, 255, 50));
 			else
 				g.setColor(new Color(50, 50, 255, 100));
-			g.fillOval(x, y, statek.getWidth(), statek.getHeight());
+			g.fillOval(x, y, width, height);
 			if (pozostalyCzas < 0)
 				shield = false;
 		}
@@ -138,37 +145,35 @@ public class Player extends Collisionable {
 
 	public void strzal() {
 
-		wystrzeloneNaboje++;
 		switch (whichAmunition) {
 		case 0:
 			if (System.currentTimeMillis() - CzasSzczau > Bullet.delay && amunition[0] != 0) {
-				
-				new Bullet(x + statek.getWidth() / 2 - Bullet.size / 2, y - Bullet.size);
+				wystrzeloneNaboje++;
+				new Bullet(x + width / 2 - Bullet.size / 2, y - Bullet.size);
 				CzasSzczau = System.currentTimeMillis();
 			}
 			break;
 		case 1:
 			if (System.currentTimeMillis() - CzasSzczau > BulletExtraPlayer.delay && amunition[whichAmunition] != 0) {
-				
-				new BulletExtraPlayer(x + statek.getWidth() / 2 - BulletExtraPlayer.size / 2,
-						y - BulletExtraPlayer.size);
+				wystrzeloneNaboje++;
+				new BulletExtraPlayer(x + width / 2 - BulletExtraPlayer.size / 2, y - BulletExtraPlayer.size);
 				amunition[whichAmunition]--;
 				CzasSzczau = System.currentTimeMillis();
 			}
 			break;
 		case 2:
 			if (System.currentTimeMillis() - CzasSzczau > BulletPellet.delay && amunition[whichAmunition] != 0) {
-				
-				new Pellet(x + statek.getWidth() / 2 - BulletPellet.size / 2, y - BulletPellet.size);
+				wystrzeloneNaboje++;
+				new Pellet(x + width / 2 - BulletPellet.size / 2, y - BulletPellet.size);
 				amunition[whichAmunition]--;
 				CzasSzczau = System.currentTimeMillis();
 			}
 			break;
 		case 3:
 			if (System.currentTimeMillis() - CzasSzczau > Granade.delay && amunition[whichAmunition] != 0) {
-				
+				wystrzeloneNaboje++;
 				if (!Bullet.check(Granade.class)) {
-					new Granade(x + statek.getWidth() / 2 - Granade.size / 2, y - Granade.size);
+					new Granade(x + width / 2 - Granade.size / 2, y - Granade.size);
 					amunition[whichAmunition]--;
 					CzasSzczau = System.currentTimeMillis();
 
@@ -177,7 +182,7 @@ public class Player extends Collisionable {
 			break;
 		case 4:
 			if (System.currentTimeMillis() - CzasSzczau > BulletPlazma.delay && amunition[whichAmunition] != 0) {
-				
+				wystrzeloneNaboje++;
 				new BulletPlazma(x + statek.getWidth() / 2 - BulletPlazma.size / 2, y - BulletPlazma.size);
 				amunition[whichAmunition]--;
 				CzasSzczau = System.currentTimeMillis();
@@ -229,7 +234,7 @@ public class Player extends Collisionable {
 
 	@Override
 	public int[][] getPole() {
-		int[][] tab = { { x + statek.getWidth() / 10, y + statek.getHeight() / 10, width, height } };
+		int[][] tab = { { x + statek.getWidth() / 10, y + statek.getHeight() / 10, width * 8 / 10, height * 8 / 10 } };
 		return tab;
 	}
 
@@ -245,9 +250,9 @@ public class Player extends Collisionable {
 			if (shield)
 				;
 			else if (System.currentTimeMillis() - CzasAtaku > delay) {
-				int damage = -((asteroid.width + asteroid.height) / 2 / 50) * 100;
-				this.health -= ((asteroid.width + asteroid.height) / 2 / 50) * 100;
-				new MessageBox(Integer.toString(damage), 1000, x, y, "RED");
+
+				this.health -= asteroid.damage;
+				new MessageBox(Integer.toString((int) -asteroid.damage), 1000, x, y, "RED");
 				CzasAtaku = System.currentTimeMillis();
 			}
 
@@ -281,25 +286,34 @@ public class Player extends Collisionable {
 	 */
 	private void drawAnimation(Graphics2D g) {
 		if (!ruchUP && !ruchDOWN) {
-			g.drawImage(statekRuch, x, y, null);
+			g.drawImage(statekRuch, x, y, width, height, null);
 		} else if (ruchUP) {
-			g.drawImage(statekRuchUp, x, y, null);
+			g.drawImage(statekRuchUp, x, y, width, height, null);
 		} else if (ruchDOWN) {
-			g.drawImage(statekRuchDown, x, y, null);
+			g.drawImage(statekRuchDown, x, y, width, height, null);
 		}
 
 		if (!ruchL && !ruchP) {
-			g.drawImage(statek, x, y, null);
+			g.drawImage(statek, x, y, width, height, null);
 		} else if (ruchL) {
-			g.drawImage(statekLewa, x, y, null);
+			g.drawImage(statekLewa, x, y, width, height, null);
 		} else if (ruchP) {
-			g.drawImage(statekPrawa, x, y, null);
+			g.drawImage(statekPrawa, x, y, width, height, null);
 		}
 
 		ruchDOWN = false;
 		ruchUP = false;
 		ruchL = false;
 		ruchP = false;
+	}
+
+	public void shrink() {
+		if (!shrink) {
+			width = width / 2;
+			height = height / 2;
+		}
+		timeShrink = System.currentTimeMillis();
+		shrink = true;
 	}
 
 }

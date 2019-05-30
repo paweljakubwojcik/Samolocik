@@ -19,7 +19,7 @@ public class BulletPellet extends Bullet {
 	private int polx, poly;
 	private int klatka = 0;
 
-	public static long delay = 1000; // czas ponownego strzalu
+	public static long delay = 700; // czas ponownego strzalu
 
 	public static int size = 12; // kazdy rodzaj kuli musi miec swoj statyczny rozmiars
 
@@ -33,7 +33,7 @@ public class BulletPellet extends Bullet {
 	 */
 	public BulletPellet(int x, int y, float Vx, float Vy) {
 		super(x, y);
-		damage = (int) (0.7 * 100);
+		damage = (int) (0.7 * (generator.nextInt(20)+90));
 		this.ruchBok = Vx;
 		this.ruchPion = Vy;
 		this.polx = x;
