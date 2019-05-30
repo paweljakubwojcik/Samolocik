@@ -43,7 +43,7 @@ public class EnemyGenerator {
 				win.audio.play(1);
 				new BossPaszko(win, win.size_x / 2 - 50, -100);
 				stworzonePaszki++;
-				generateAliens=false;
+				generateAliens = false;
 			}
 			checkStage();
 

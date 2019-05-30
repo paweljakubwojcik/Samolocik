@@ -59,6 +59,8 @@ public class Window implements KeyListener {
 	public static boolean wyswietlWynik = false;
 	Zaliczenie ekranKoncowy;
 
+	private boolean[] skipy = new boolean[2];
+
 	Window() {
 		okno = new JFrame("Niewdzieczna przestrzen");
 		okno.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -81,6 +83,9 @@ public class Window implements KeyListener {
 		losujtlo(im2);
 		scaltla(im1, im2);
 
+		skipy[0] = false;
+		skipy[1] = false;
+
 		Game = new Thread(new Runnable() {
 
 			@Override
@@ -94,7 +99,7 @@ public class Window implements KeyListener {
 
 					if (!pause) {
 
-						if (!statek1.isDead()) {
+						if (!statek1.isDead() && EnemyGenerator.getStageOfGame() != 6) {
 							draw();
 							Bullet.motion();
 							Enemy.motion();
@@ -115,8 +120,10 @@ public class Window implements KeyListener {
 								statek1.moveDown();
 							if (strzal)
 								statek1.strzal();
-						} else
-							endOfGame();
+						} else {
+							ach.sprawdzOsiagniecia(statek1);
+							endOfGame(statek1.isDead());
+						}
 
 						// wyświetla max potencjał PC w klatkach na sekunde
 						if (odliczanie == 60) {
@@ -243,10 +250,10 @@ public class Window implements KeyListener {
 		}
 	}
 
-	void endOfGame() {
+	void endOfGame(boolean win) {
 		if (!wyswietlWynik) {
 			wyswietlWynik = true;
-			ekranKoncowy = new Zaliczenie(10000000, 3, 0, statek1.punkty);
+			ekranKoncowy = new Zaliczenie(10000000, 3, 0, statek1.punkty, !win);
 		}
 		draw();
 		Bullet.motion();
@@ -286,13 +293,14 @@ public class Window implements KeyListener {
 			mute = !mute;
 			Mute(mute);
 		} else if (klucz == KeyEvent.VK_S) {
-			if (intro) {
+			if (intro && !skipy[0]) {
 				MessageTypingIn.skip();
 				audio.readIntroStop();
-			}
-			if (instrukcja) {
+				skipy[0] = true;
+			} else if (instrukcja && !skipy[1]) {
 				instrukcja = false;
 				sterowanie = false;
+				skipy[1] = true;
 				if (!Sterowanie.dropAmmo)
 					Sterowanie.InfoDrop();
 			}
