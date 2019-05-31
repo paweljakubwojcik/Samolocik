@@ -116,6 +116,14 @@ public class EnemyGenerator {
 		generateAliens = true;
 	}
 
+	public void setDefault() {
+		stageOfGame = 1;
+		Enemy.enemies.clear();
+		generateAliens = true;
+		generateAsteroids = true;
+		stworzonePaszki = 0;
+	}
+
 	public static int getStageOfGame() {
 		return stageOfGame;
 	}
@@ -123,4 +131,5 @@ public class EnemyGenerator {
 	public static void setAsteroids(boolean b) {
 		generateAsteroids = b;
 	}
+
 }

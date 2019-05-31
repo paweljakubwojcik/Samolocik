@@ -27,7 +27,7 @@ import achievement.Achievement;
 
 public class Window implements KeyListener {
 
-	JFrame okno;
+	public JFrame okno;
 	public static final int size_x = 800, size_y = 600;
 
 	private int tloY = -size_y, pozycjatla = 0;
@@ -41,6 +41,7 @@ public class Window implements KeyListener {
 
 	Player statek1;
 	Thread Game;
+	EnemyGenerator generator = new EnemyGenerator(this);
 	boolean ruch1L = false;
 	boolean ruch1P = false;
 	boolean ruch1D = false;
@@ -76,7 +77,7 @@ public class Window implements KeyListener {
 
 		statek1 = new Player(this, 400, 500);
 
-		EnemyGenerator generator = new EnemyGenerator(this);
+		
 
 		audio.readIntro();
 
@@ -205,6 +206,7 @@ public class Window implements KeyListener {
 
 		g.dispose();
 		drawklatka();
+
 	}
 
 	void drawklatka() {
@@ -312,6 +314,9 @@ public class Window implements KeyListener {
 			} else if (!IntroBoss.end && !skipy[3] && IntroBoss.czyMoznaPominac) {
 				IntroBoss.wylacz();
 				skipy[3] = true;
+			} else if(klucz == KeyEvent.VK_R && !statek1.isDead())
+			{
+				restart();
 			}
 		}
 
@@ -372,6 +377,14 @@ public class Window implements KeyListener {
 			audio.stop();
 		if (!b && !audio.isRunning())
 			audio.play(0);
+		audio.setMusic(b);
+	}
+	
+	private void restart()
+	{
+		statek1.setDefault();
+		generator.setDefault();
+		
 	}
 
 	public void setIntro(boolean b) {
@@ -390,4 +403,6 @@ public class Window implements KeyListener {
 		this.instrukcja = instrukcja;
 	}
 
+	
+	
 }

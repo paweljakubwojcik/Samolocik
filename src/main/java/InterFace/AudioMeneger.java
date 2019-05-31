@@ -19,7 +19,7 @@ public class AudioMeneger {
 	Clip[] musicClip = new Clip[3];
 	Clip[] tekstClip = new Clip[1];
 	Clip[] soundsClip = new Clip[2];
-	boolean music = true;
+	static boolean music = true;
 
 	AudioInputStream audioInputStream;
 	String musicSource[] = { "music//GameTrack.wav", "music//GameTrackPaszko.wav", "music//GameTrackPrzegrana.wav" }; // GameTrack
@@ -152,6 +152,11 @@ public class AudioMeneger {
 			return false;
 		} else
 			return false;
+	}
+	
+	public void setMusic(boolean b)
+	{
+		music=b;
 	}
 
 }
