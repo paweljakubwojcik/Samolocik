@@ -309,7 +309,8 @@ public class Window implements KeyListener {
 			} else if (!skipy[2] && BossPaszko.czyMoznaPominac) {
 				BossPaszko.wylacz();
 				skipy[2] = true;
-			} else if (!IntroBoss.end && !skipy[3] && IntroBoss.czyMoznaPominac) {
+			}
+			if (!skipy[3] && IntroBoss.czyMoznaPominac) {
 				IntroBoss.wylacz();
 				skipy[3] = true;
 			}
