@@ -97,10 +97,13 @@ public class Player extends Collisionable {
 		this.height2 = statekRuch.getHeight();
 		this.width2 = statekRuch.getWidth();
 	}
-	
-	public void setDefault(){
+
+	public void setDefault() {
 		health = DefaultHealth;
-		//amunition = { 1, 0, 30, 30, 2000 };
+		amunition[0] = 1;
+		for (int i = 1; i > amunition.length; i++)
+			amunition[i] = 0;
+
 	}
 
 	/**
@@ -124,8 +127,8 @@ public class Player extends Collisionable {
 			this.width = statek.getWidth();
 			this.height2 = statekRuch.getHeight();
 			this.width2 = statekRuch.getWidth();
-			shrink=false;
-			
+			shrink = false;
+
 		}
 
 		if (shield) {

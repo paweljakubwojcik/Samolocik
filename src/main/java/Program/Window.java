@@ -77,8 +77,6 @@ public class Window implements KeyListener {
 
 		statek1 = new Player(this, 400, 500);
 
-		
-
 		audio.readIntro();
 
 		losujtlo(im1);
@@ -197,11 +195,7 @@ public class Window implements KeyListener {
 		}
 
 		MessageTypingIn.draw(g);
-
-		if (wyswietlWynik) {
-			ekranKoncowy.drawMe(g);
-		}
-
+		Zaliczenie.draw(g);
 		IntroBoss.draw(g);
 
 		g.dispose();
@@ -315,10 +309,9 @@ public class Window implements KeyListener {
 			if (!skipy[3] && IntroBoss.czyMoznaPominac) {
 				IntroBoss.wylacz();
 				skipy[3] = true;
-			} else if(klucz == KeyEvent.VK_R && !statek1.isDead())
-			{
-				restart();
 			}
+		} else if (klucz == KeyEvent.VK_R && statek1.isDead()) {
+			restart();
 		}
 
 	}
@@ -380,12 +373,17 @@ public class Window implements KeyListener {
 			audio.play(0);
 		audio.setMusic(b);
 	}
-	
-	private void restart()
-	{
+
+	private void restart() {
 		statek1.setDefault();
 		generator.setDefault();
+		System.out.println("restart");
+		skipy[1] = false;
+		skipy[2] = false;
+		Zaliczenie.wylancz();
+		MessageBox.restart();
 		
+		wyswietlWynik = false;
 	}
 
 	public void setIntro(boolean b) {
@@ -404,6 +402,4 @@ public class Window implements KeyListener {
 		this.instrukcja = instrukcja;
 	}
 
-	
-	
 }

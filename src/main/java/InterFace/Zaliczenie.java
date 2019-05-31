@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
@@ -21,6 +22,7 @@ import Program.Window;
  *
  */
 public class Zaliczenie {
+	static ArrayList<Zaliczenie> list = new ArrayList<>();
 
 	private long delay = 2000, begin = System.currentTimeMillis();
 
@@ -64,6 +66,7 @@ public class Zaliczenie {
 
 		punkty = 0;
 		start = 0;
+		list.add(this);
 	}
 
 	/**
@@ -111,7 +114,7 @@ public class Zaliczenie {
 	/**
 	 * Inicjalizuje ekran końcowy wystawiając ocenę na podstawie uzyskanych punktów
 	 * 
-	 * @param czas    - ile czasu ma być wyświetlany ekran końcowy
+	 * @param czas    - ile czasu ma by� wy�wietlany ekran koncowy
 	 * @param fadeIn  - jak szybko na 1 klatkę ekran ma się rozjaśniać
 	 * @param fadeOut - jak szybko na 1 klatkę ekran ma się ściemniać
 	 * @param punkty  - ile punktów uzyskano
@@ -128,6 +131,13 @@ public class Zaliczenie {
 			System.err.println("\nPaszko hack your life");
 		}
 	}
+	
+	public static void draw(Graphics2D g)
+	{
+		for(int i=0; i<list.size(); i ++)
+			list.get(i).drawMe(g);
+	}
+	
 
 	/**
 	 * Rysuje Ekran Zaliczenia
@@ -272,6 +282,11 @@ public class Zaliczenie {
 		if (rand.nextInt(100) > 90)
 			new Granade(rand.nextInt(Window.size_x), rand.nextInt(100) + 500, true);
 
+	}
+	
+	public static void wylancz()
+	{
+	list.clear();
 	}
 
 }
