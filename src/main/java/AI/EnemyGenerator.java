@@ -50,7 +50,7 @@ public class EnemyGenerator {
 		} else if (stageOfGame == 5) {
 
 			if (!check(BossPaszko.class) && stworzonePaszki == 1) {
-				new BossPaszko(win, 400, -100);
+				new BossPaszko(win, 500, -200);
 				stworzonePaszki++;
 			}
 			generateAliens(10);

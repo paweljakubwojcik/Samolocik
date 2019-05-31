@@ -3,7 +3,7 @@ package Bullets;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-public class GranadeExplosion extends Bullet {
+public class GranadeExplosion extends Bullet { 
 
 	int size2;
 	int opacity = 255;
@@ -14,7 +14,6 @@ public class GranadeExplosion extends Bullet {
 		super(x, y);
 		this.size2 = size;
 		damage = generator.nextInt(60)+100;
-		System.out.println("detonate");
 	}
 
 	synchronized void draw(Graphics2D g) {

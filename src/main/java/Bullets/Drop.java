@@ -8,6 +8,7 @@ import java.util.Random;
 import AI.Enemy;
 import Gracz.HealthPack;
 import Gracz.Shield;
+import Gracz.Shrink;
 import Program.Samolotoszczalec;
 import Program.Window;
 import Rozgrywka.Collisionable;
@@ -58,6 +59,8 @@ public abstract class Drop extends Collisionable {
 			new DropPlazmaBullet(e.x, e.y);
 		else if(chance<70)
 			new DropGranade(e.x,e.y);
+		else if(chance<80)
+			new Shrink(e.x,e.y);
 
 	}
 

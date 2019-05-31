@@ -25,6 +25,7 @@ public class Asteroid extends Enemy {
 	private int index = generator.nextInt(4);
 
 	public static int ZniszczoneAsteroidy = 0;
+	public float damage ;
 
 	/**
 	 * @param window
@@ -40,7 +41,7 @@ public class Asteroid extends Enemy {
 		height = generator.nextInt(70) + 60;
 		velocity_x = generator.nextInt(2) + 1;
 		velocity_y = generator.nextInt(2) + 1;
-
+		damage = width + height;
 		loadGraphic();
 
 	}

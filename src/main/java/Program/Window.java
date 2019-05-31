@@ -245,6 +245,7 @@ public class Window implements KeyListener {
 
 	void endOfGame() {
 		if (!wyswietlWynik) {
+			ach.sprawdzOsiagniecia(statek1);
 			wyswietlWynik = true;
 			ekranKoncowy = new Zaliczenie(10000000, 3, 0, statek1.punkty);
 		}
