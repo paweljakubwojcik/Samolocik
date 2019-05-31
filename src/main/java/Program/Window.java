@@ -2,8 +2,13 @@ package Program;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.MouseInfo;
+import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
@@ -25,7 +30,7 @@ import InterFace.Zaliczenie;
 import Rozgrywka.Collisions;
 import achievement.Achievement;
 
-public class Window implements KeyListener {
+public class Window implements KeyListener, MouseListener {
 
 	public JFrame okno;
 	public static final int size_x = 800, size_y = 600;
@@ -59,7 +64,6 @@ public class Window implements KeyListener {
 	Achievement ach = new Achievement();
 
 	public static boolean wyswietlWynik = false;
-	Zaliczenie ekranKoncowy;
 
 	private boolean[] skipy = new boolean[10];
 
@@ -72,6 +76,8 @@ public class Window implements KeyListener {
 		okno.setLayout(null);
 		okno.setVisible(true);
 		okno.addKeyListener(this);
+		okno.addMouseListener(this);
+		okno.setFocusable(true);
 		klatka = new BufferedImage(size_x, size_y, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g3 = (Graphics2D) okno.getGraphics();
 
@@ -200,6 +206,15 @@ public class Window implements KeyListener {
 
 		g.dispose();
 		drawklatka();
+		
+		Point p = MouseInfo.getPointerInfo().getLocation();
+		Rectangle r = okno.getBounds();
+		if (p.x > r.x + Zaliczenie.restartx && p.x < r.x + Zaliczenie.restartsizex + Zaliczenie.restartx
+				&& p.y > r.y + Zaliczenie.restarty && p.y < r.y + Zaliczenie.restartsizey + Zaliczenie.restarty&&!Zaliczenie.isEmpty())
+		{
+			Zaliczenie.hover=true;
+		}else
+			Zaliczenie.hover=false;
 
 	}
 
@@ -252,7 +267,7 @@ public class Window implements KeyListener {
 	void endOfGame(boolean win) {
 		if (!wyswietlWynik) {
 			wyswietlWynik = true;
-			ekranKoncowy = new Zaliczenie(10000000, 3, 0, statek1.punkty, !win);
+			new Zaliczenie(10000000, 3, 0, statek1.punkty, !win);
 		}
 		draw();
 		Bullet.motion();
@@ -382,7 +397,7 @@ public class Window implements KeyListener {
 		skipy[2] = false;
 		Zaliczenie.wylancz();
 		MessageBox.restart();
-		
+
 		wyswietlWynik = false;
 	}
 
@@ -400,6 +415,40 @@ public class Window implements KeyListener {
 
 	public void setInstrukcja(boolean instrukcja) {
 		this.instrukcja = instrukcja;
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
+		Point p = MouseInfo.getPointerInfo().getLocation();
+		Rectangle r = okno.getBounds();
+		if (p.x > r.x + Zaliczenie.restartx && p.x < r.x + Zaliczenie.restartsizex + Zaliczenie.restartx
+				&& p.y > r.y + Zaliczenie.restarty && p.y < r.y + Zaliczenie.restartsizey + Zaliczenie.restarty&&!Zaliczenie.isEmpty())
+			restart();
+		
+
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		
+
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		
+		
 	}
 
 }
