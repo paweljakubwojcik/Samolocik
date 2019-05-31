@@ -1,4 +1,5 @@
 package Bullets;
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ public class Bullet extends Collisionable {
 	protected int x, y;
 	public static int size = 10; // to jest statyczne poniewaz jest wykorzystywane w klasie player
 	protected int velocity = 10;
-	public float damage = 1*100;
+	public float damage = 1 * 100;
 	public static long delay = 200;
 	protected static Window win = Samolotoszczalec.win;
 	protected Random generator = new Random();
@@ -28,6 +29,7 @@ public class Bullet extends Collisionable {
 	public Bullet(int pos_x, int pos_y) {
 		this.x = pos_x;
 		this.y = pos_y;
+		damage = (int) (damage + (generator.nextInt((int) (2 * damage / 10)) - damage / 10));
 		bullets.add(this);
 	}
 
@@ -84,31 +86,30 @@ public class Bullet extends Collisionable {
 		bullets.remove(this);
 
 	}
-	
+
 	/**
 	 * @param Class
 	 * @return true if there is at least 1 object of Class c
 	 */
 	@SuppressWarnings("rawtypes")
-	public
-	static boolean check(Class c) {
+	public static boolean check(Class c) {
 		for (int i = 0; i < Bullet.bullets.size(); i++) {
-			if(i>=Bullet.bullets.size()) break;
-			
+			if (i >= Bullet.bullets.size())
+				break;
+
 			if (Bullet.bullets.get(i).getClass() == c)
 				return true;
 		}
 		return false;
 	}
-	
+
 	@SuppressWarnings("rawtypes")
-	public
-	static int find(Class c) {
+	public static int find(Class c) {
 		for (int i = 0; i < Bullet.bullets.size(); i++) {
 			if (Bullet.bullets.get(i).getClass() == c) {
 				return i;
 			}
-				
+
 		}
 		return 0;
 	}

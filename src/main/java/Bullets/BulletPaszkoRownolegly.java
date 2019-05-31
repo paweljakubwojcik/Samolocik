@@ -17,6 +17,7 @@ public class BulletPaszkoRownolegly extends EnemyBullet {
 	public BulletPaszkoRownolegly(int x, int y) {
 		super(x, y - 2 * Window.size_y);
 		this.damage = 100;
+		this.damage = (int) (damage + (generator.nextInt((int) (2 * damage / 10)) - damage / 10));
 		super.velocity = this.velocity;
 		liczbaKresek += 2;
 

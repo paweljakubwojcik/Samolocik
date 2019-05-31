@@ -119,6 +119,7 @@ public class IntroBoss {
 		}
 		if (opacity <= 0) {
 			end = true;
+			czyMoznaPominac = false;
 			opacity = 0;
 			try {
 				alpha = 0;
