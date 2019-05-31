@@ -394,8 +394,4 @@ public class Player extends Collisionable {
 		return width;
 	}
 
-	public int getHeight() {
-		return height;
-	}
-
 }

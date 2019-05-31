@@ -114,12 +114,14 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 		if (!czyPominWyswietla) {
 			dlugoscInfoPomin = System.currentTimeMillis();
 			czyPominWyswietla = !czyPominWyswietla;
-		} else if (czyPominWyswietla && System.currentTimeMillis() - dlugoscInfoPomin < 3000) {
+		} else if (czyPominWyswietla && System.currentTimeMillis() - dlugoscInfoPomin < 3000
+				&& EnemyGenerator.stworzonePaszki == 1) {
 			przezPomin++;
 			if (przezPomin > 100)
 				przezPomin = 100;
 			pominDraw(g);
-		} else if (czyPominWyswietla && System.currentTimeMillis() - dlugoscInfoPomin < 4500) {
+		} else if (czyPominWyswietla && System.currentTimeMillis() - dlugoscInfoPomin < 4500
+				&& EnemyGenerator.stworzonePaszki == 1) {
 			przezPomin -= 2;
 			if (przezPomin < 0)
 				przezPomin = 0;
@@ -260,6 +262,7 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 	}
 
 	private void wylacz2() {
+		czyMoznaPominac = false;
 		y = 120;
 		dlugoscInfoPomin = 0;
 		new IntroBoss(10000, 5, 5);

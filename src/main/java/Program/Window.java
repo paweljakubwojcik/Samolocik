@@ -120,7 +120,8 @@ public class Window implements KeyListener {
 								statek1.moveUp();
 							if (ruch1D)
 								statek1.moveDown();
-							if (strzal)
+							if (strzal && !IntroBoss.czyMoznaPominac && !BossPaszko.czyMoznaPominac
+									|| strzal && EnemyGenerator.stworzonePaszki == 2)
 								statek1.strzal();
 						} else {
 							ach.sprawdzOsiagniecia(statek1);

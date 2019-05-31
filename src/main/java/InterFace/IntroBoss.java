@@ -234,6 +234,7 @@ public class IntroBoss {
 	}
 
 	public static void wylacz() {
+		czyMoznaPominac = false;
 		wyswietlacPomin = false;
 		opacity = 0;
 		start = 10;
