@@ -213,6 +213,7 @@ public class Player extends Collisionable {
 		case 0:
 			if (System.currentTimeMillis() - CzasSzczau > Bullet.delay && amunition[0] != 0) {
 				wystrzeloneNaboje++;
+				new Bullet(x + width / 2 - Bullet.size / 2, y - Bullet.size);
 				CzasSzczau = System.currentTimeMillis();
 			}
 			break;
@@ -380,9 +381,6 @@ public class Player extends Collisionable {
 		timeShrink = System.currentTimeMillis();
 		shrink = true;
 	}
-	
-	
-	
 
 	public int getX() {
 		return x;

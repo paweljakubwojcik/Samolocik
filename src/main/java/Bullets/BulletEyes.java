@@ -10,7 +10,6 @@ public class BulletEyes extends EnemyBullet {
 	private BossPaszko paszkow;
 	static int size = 13;
 
-	
 	public BulletEyes(int pos_x, int pos_y, BossPaszko paszkow) {
 		super(pos_x, pos_y);
 		this.paszkow = paszkow;
@@ -19,7 +18,8 @@ public class BulletEyes extends EnemyBullet {
 
 		super.velocity = 6;
 
-		this.damage = 10*100;
+		this.damage = 10 * 100;
+		this.damage = (int) (damage + (generator.nextInt((int) (2 * damage / 10)) - damage / 10));
 
 		bullets.add(this);
 	}

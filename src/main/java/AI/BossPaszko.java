@@ -160,6 +160,7 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 			}
 
 		} else {
+			czyMoznaPominac = false;
 
 			x += velocity_x;
 			if (generator.nextBoolean())
@@ -265,7 +266,8 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 		czyMoznaPominac = false;
 		y = 120;
 		dlugoscInfoPomin = 0;
-		new IntroBoss(10000, 5, 5);
+		if (!IntroBoss.czyMoznaPominac)
+			new IntroBoss(10000, 5, 5);
 	}
 
 }

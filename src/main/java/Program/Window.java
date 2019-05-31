@@ -255,7 +255,6 @@ public class Window implements KeyListener {
 
 	void endOfGame(boolean win) {
 		if (!wyswietlWynik) {
-			ach.sprawdzOsiagniecia(statek1);
 			wyswietlWynik = true;
 			ekranKoncowy = new Zaliczenie(10000000, 3, 0, statek1.punkty, !win);
 		}
@@ -310,7 +309,8 @@ public class Window implements KeyListener {
 			} else if (!skipy[2] && BossPaszko.czyMoznaPominac) {
 				BossPaszko.wylacz();
 				skipy[2] = true;
-			} else if (!IntroBoss.end && !skipy[3] && IntroBoss.czyMoznaPominac) {
+			}
+			if (!skipy[3] && IntroBoss.czyMoznaPominac) {
 				IntroBoss.wylacz();
 				skipy[3] = true;
 			}
