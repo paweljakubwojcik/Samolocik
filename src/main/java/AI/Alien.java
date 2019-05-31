@@ -90,7 +90,7 @@ public class Alien extends Enemy {
 	@Override
 	public void myMotion() {
 
-		if ((x >= zakresRuchuX && velocity_x > 0) || (x <= zakresRuchuX && velocity_x < 0)
+		if ((x >= zakresRuchuX-width && velocity_x > 0) || (x <= zakresRuchuX && velocity_x < 0)
 				|| (y >= zakresRuchuY && velocity_y > 0) || (y <= zakresRuchuY && velocity_y < 0)) {
 			losujKierunek();
 			if (velocity_y > 0)

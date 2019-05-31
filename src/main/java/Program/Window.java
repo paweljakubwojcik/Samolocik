@@ -206,15 +206,15 @@ public class Window implements KeyListener, MouseListener {
 
 		g.dispose();
 		drawklatka();
-		
+
 		Point p = MouseInfo.getPointerInfo().getLocation();
 		Rectangle r = okno.getBounds();
 		if (p.x > r.x + Zaliczenie.restartx && p.x < r.x + Zaliczenie.restartsizex + Zaliczenie.restartx
-				&& p.y > r.y + Zaliczenie.restarty && p.y < r.y + Zaliczenie.restartsizey + Zaliczenie.restarty&&!Zaliczenie.isEmpty())
-		{
-			Zaliczenie.hover=true;
-		}else
-			Zaliczenie.hover=false;
+				&& p.y > r.y + Zaliczenie.restarty && p.y < r.y + Zaliczenie.restartsizey + Zaliczenie.restarty
+				&& !Zaliczenie.isEmpty()) {
+			Zaliczenie.hover = true;
+		} else
+			Zaliczenie.hover = false;
 
 	}
 
@@ -298,10 +298,9 @@ public class Window implements KeyListener, MouseListener {
 			statek1.changeAmunition(4);
 		} else if (klucz == KeyEvent.VK_P) {
 			pause = !pause;
-			if (pause)
-				Mute(pause);
-			else
-				Mute(mute);
+			
+			mute = pause;
+			Mute(mute);
 
 		} else if (klucz == KeyEvent.VK_M) {
 			mute = !mute;
@@ -382,11 +381,11 @@ public class Window implements KeyListener, MouseListener {
 	}
 
 	void Mute(boolean b) {
-		if (audio.isRunning() && b)
+		//audio.setMusic(!b);
+		if (b)
 			audio.stop();
 		if (!b && !audio.isRunning())
 			audio.play(0);
-		audio.setMusic(b);
 	}
 
 	private void restart() {
@@ -397,6 +396,8 @@ public class Window implements KeyListener, MouseListener {
 		skipy[2] = false;
 		Zaliczenie.wylancz();
 		MessageBox.restart();
+		audio.setDefault();
+		audio.play(0);
 
 		wyswietlWynik = false;
 	}
@@ -419,18 +420,12 @@ public class Window implements KeyListener, MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
-		Point p = MouseInfo.getPointerInfo().getLocation();
-		Rectangle r = okno.getBounds();
-		if (p.x > r.x + Zaliczenie.restartx && p.x < r.x + Zaliczenie.restartsizex + Zaliczenie.restartx
-				&& p.y > r.y + Zaliczenie.restarty && p.y < r.y + Zaliczenie.restartsizey + Zaliczenie.restarty&&!Zaliczenie.isEmpty())
-			restart();
-		
 
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
-		
+
 	}
 
 	@Override
@@ -441,14 +436,18 @@ public class Window implements KeyListener, MouseListener {
 
 	@Override
 	public void mousePressed(MouseEvent arg0) {
-		
+		Point p = MouseInfo.getPointerInfo().getLocation();
+		Rectangle r = okno.getBounds();
+		if (p.x > r.x + Zaliczenie.restartx && p.x < r.x + Zaliczenie.restartsizex + Zaliczenie.restartx
+				&& p.y > r.y + Zaliczenie.restarty && p.y < r.y + Zaliczenie.restartsizey + Zaliczenie.restarty
+				&& !Zaliczenie.isEmpty())
+			restart();
 
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
-		
-		
+
 	}
 
 }

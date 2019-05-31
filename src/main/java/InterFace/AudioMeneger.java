@@ -135,8 +135,9 @@ public class AudioMeneger {
 
 	public void stop() {
 		if (music) {
-			for (int i = 0; i < musicClip.length; i++)
+			for (int i = 0; i < musicClip.length; i++) {
 				musicClip[i].stop();
+			}
 		}
 	}
 
@@ -153,10 +154,15 @@ public class AudioMeneger {
 		} else
 			return false;
 	}
-	
-	public void setMusic(boolean b)
-	{
-		music=b;
+
+	public void setMusic(boolean b) {
+		music = b;
 	}
 
+	public void setDefault() {
+		for (int i = 0; i < musicClip.length; i++) {
+			musicClip[i].setFramePosition(0);
+		}
+
+	}
 }
