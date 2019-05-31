@@ -9,6 +9,7 @@ import java.util.Random;
 
 import javax.swing.JFrame;
 
+import AI.BossPaszko;
 import AI.Enemy;
 import AI.EnemyGenerator;
 import Bullets.Bullet;
@@ -59,6 +60,8 @@ public class Window implements KeyListener {
 	public static boolean wyswietlWynik = false;
 	Zaliczenie ekranKoncowy;
 
+	private boolean[] skipy = new boolean[10];
+
 	Window() {
 		okno = new JFrame("Niewdzieczna przestrzen");
 		okno.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -80,6 +83,10 @@ public class Window implements KeyListener {
 		losujtlo(im1);
 		losujtlo(im2);
 		scaltla(im1, im2);
+
+		for (int i = 0; i < 10; i++) {
+			skipy[i] = false;
+		}
 
 		Game = new Thread(new Runnable() {
 
@@ -113,10 +120,13 @@ public class Window implements KeyListener {
 								statek1.moveUp();
 							if (ruch1D)
 								statek1.moveDown();
-							if (strzal)
+							if (strzal && !IntroBoss.czyMoznaPominac && !BossPaszko.czyMoznaPominac
+									|| strzal && EnemyGenerator.stworzonePaszki == 2)
 								statek1.strzal();
-						} else
-							endOfGame();
+						} else {
+							ach.sprawdzOsiagniecia(statek1);
+							endOfGame(statek1.isDead());
+						}
 
 						// wyświetla max potencjał PC w klatkach na sekunde
 						if (odliczanie == 60) {
@@ -243,11 +253,11 @@ public class Window implements KeyListener {
 		}
 	}
 
-	void endOfGame() {
+	void endOfGame(boolean win) {
 		if (!wyswietlWynik) {
 			ach.sprawdzOsiagniecia(statek1);
 			wyswietlWynik = true;
-			ekranKoncowy = new Zaliczenie(10000000, 3, 0, statek1.punkty);
+			ekranKoncowy = new Zaliczenie(10000000, 3, 0, statek1.punkty, !win);
 		}
 		draw();
 		Bullet.motion();
@@ -287,15 +297,22 @@ public class Window implements KeyListener {
 			mute = !mute;
 			Mute(mute);
 		} else if (klucz == KeyEvent.VK_S) {
-			if (intro) {
+			if (intro && !skipy[0]) {
 				MessageTypingIn.skip();
 				audio.readIntroStop();
-			}
-			if (instrukcja) {
+				skipy[0] = true;
+			} else if (instrukcja && !skipy[1]) {
 				instrukcja = false;
 				sterowanie = false;
+				skipy[1] = true;
 				if (!Sterowanie.dropAmmo)
 					Sterowanie.InfoDrop();
+			} else if (!skipy[2] && BossPaszko.czyMoznaPominac) {
+				BossPaszko.wylacz();
+				skipy[2] = true;
+			} else if (!IntroBoss.end && !skipy[3] && IntroBoss.czyMoznaPominac) {
+				IntroBoss.wylacz();
+				skipy[3] = true;
 			}
 		}
 

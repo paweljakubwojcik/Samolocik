@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 import Gracz.Player;
+import InterFace.MessageBox;
 import Program.Window;
 
 public class BulletPaszkoRownolegly extends EnemyBullet {
@@ -15,7 +16,7 @@ public class BulletPaszkoRownolegly extends EnemyBullet {
 
 	public BulletPaszkoRownolegly(int x, int y) {
 		super(x, y - 2 * Window.size_y);
-		this.damage = 10000*100;
+		this.damage = 100;
 		super.velocity = this.velocity;
 		liczbaKresek += 2;
 
@@ -31,7 +32,14 @@ public class BulletPaszkoRownolegly extends EnemyBullet {
 
 	@Override
 	public int[][] getPole() {
-		int[][] tab = { { x, y, szerokosc, wysokosc } };
+		// int[][] tab = { { x, y, szerokosc, wysokosc } };
+		int[][] tab = new int[10][4];
+		for (int i = 0; i < 10; i++) {
+			tab[i][0] = x;
+			tab[i][1] = y + i * wysokosc / 10;
+			tab[i][2] = szerokosc;
+			tab[i][3] = wysokosc / 10;
+		}
 		return tab;
 	}
 
@@ -39,8 +47,13 @@ public class BulletPaszkoRownolegly extends EnemyBullet {
 	public void collision(Object o) {
 		if (o.getClass() == Player.class) {
 			Player player = (Player) o;
-			if (!player.shield)
+
+			if (!player.shield) {
 				player.health -= damage;
+				player.obrazenia = true;
+				player.klatkiObrazenia = 0;
+				new MessageBox(Integer.toString((int) -damage), 1000, x - 10, player.getY(), "RED");
+			}
 		}
 	}
 

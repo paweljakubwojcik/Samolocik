@@ -7,8 +7,12 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Random;
 
 import javax.imageio.ImageIO;
+
+import Bullets.Granade;
+import Program.Window;
 
 /**
  * Klasa realizująca wyświetlenie ekranu zaliczenia
@@ -41,6 +45,11 @@ public class Zaliczenie {
 	private float alpha = (float) 0.0;
 	private AlphaComposite ac;
 
+	private boolean fajerwerki = false;
+	private long startFajerwerki;
+	private long jakDlugoFajerwerki = 8000;
+	private boolean win = false;
+
 	/**
 	 * Inicjalizuje standardowe informacje
 	 * 
@@ -60,8 +69,7 @@ public class Zaliczenie {
 	/**
 	 * Inicjalizuje standarodwe informacje przez czas czasu
 	 * 
-	 * @param czas
-	 *            - ile ma być wyświetlana informacja
+	 * @param czas - ile ma być wyświetlana informacja
 	 */
 	public Zaliczenie(long czas) {
 		this();
@@ -71,12 +79,9 @@ public class Zaliczenie {
 	/**
 	 * Inicjalizuje standardowe informacje
 	 * 
-	 * @param czas
-	 *            - ile ma być wyświetlany ekran końcowy
-	 * @param fadeIn
-	 *            - jak szybko na 1 klatkę ekran ma się rozjaśniać
-	 * @param fadeOut
-	 *            - jak szybko na 1 klatkę ekran ma się ściemniać
+	 * @param czas    - ile ma być wyświetlany ekran końcowy
+	 * @param fadeIn  - jak szybko na 1 klatkę ekran ma się rozjaśniać
+	 * @param fadeOut - jak szybko na 1 klatkę ekran ma się ściemniać
 	 */
 	public Zaliczenie(long czas, int fadeIn, int fadeOut) {
 		this(czas);
@@ -85,17 +90,12 @@ public class Zaliczenie {
 	}
 
 	/**
-	 * Inicjalizuje ekran końcowy wystawiając ocenę na podstawie uzyskanych
-	 * punktów
+	 * Inicjalizuje ekran końcowy wystawiając ocenę na podstawie uzyskanych punktów
 	 * 
-	 * @param czas
-	 *            - ile czasu ma być wyświetlany ekran końcowy
-	 * @param fadeIn
-	 *            - jak szybko na 1 klatkę ekran ma się rozjaśniać
-	 * @param fadeOut
-	 *            - jak szybko na 1 klatkę ekran ma się ściemniać
-	 * @param punkty
-	 *            - ile punktów uzyskano
+	 * @param czas    - ile czasu ma być wyświetlany ekran końcowy
+	 * @param fadeIn  - jak szybko na 1 klatkę ekran ma się rozjaśniać
+	 * @param fadeOut - jak szybko na 1 klatkę ekran ma się ściemniać
+	 * @param punkty  - ile punktów uzyskano
 	 */
 	public Zaliczenie(long czas, int fadeIn, int fadeOut, int punkty) {
 		this(czas, fadeIn, fadeOut);
@@ -109,60 +109,93 @@ public class Zaliczenie {
 	}
 
 	/**
+	 * Inicjalizuje ekran końcowy wystawiając ocenę na podstawie uzyskanych punktów
+	 * 
+	 * @param czas    - ile czasu ma być wyświetlany ekran końcowy
+	 * @param fadeIn  - jak szybko na 1 klatkę ekran ma się rozjaśniać
+	 * @param fadeOut - jak szybko na 1 klatkę ekran ma się ściemniać
+	 * @param punkty  - ile punktów uzyskano
+	 */
+	public Zaliczenie(long czas, int fadeIn, int fadeOut, int punkty, boolean win) {
+		this(czas, fadeIn, fadeOut);
+		this.punkty = punkty;
+		this.win = win;
+		this.fajerwerki = win;
+		try {
+			ocena();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println("\nPaszko hack your life");
+		}
+	}
+
+	/**
 	 * Rysuje Ekran Zaliczenia
 	 * 
-	 * @param g
-	 *            - Grafika do rysowania
+	 * @param g - Grafika do rysowania
 	 */
 	public void drawMe(Graphics2D g) {
 
-		if (System.currentTimeMillis() - begin > delay)
-			alfa();
+		if (!fajerwerki) {
+			if (System.currentTimeMillis() - begin > delay)
+				alfa();
 
-		ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha);
-		g.setComposite(ac);
-		g.drawImage(wynik, 0, 0, null);
+			ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha);
+			g.setComposite(ac);
+			g.drawImage(wynik, 0, 0, null);
 
-		if (System.currentTimeMillis() - start > 1000 && start != 0) {
-			g.setFont(new Font(null, 0, 80));
-			opacityOceny();
+			if (System.currentTimeMillis() - start > 1000 && start != 0) {
+				g.setFont(new Font(null, 0, 80));
+				opacityOceny();
 
-			if (opacityPKT > 0) {
-				if (punkty <= 50) {
-					kolor = new Color(0, 0, 0, opacityPKT);
-					bgKolor = new Color(220, 10, 10, opacityPKT * 80 / 255);
-				} else {
-					kolor = new Color(0, 0, 0, opacityPKT);
-					bgKolor = new Color(10, 220, 10, opacityPKT * 80 / 255);
+				if (opacityPKT > 0) {
+					if (punkty <= 50) {
+						kolor = new Color(0, 0, 0, opacityPKT);
+						bgKolor = new Color(220, 10, 10, opacityPKT * 80 / 255);
+					} else {
+						kolor = new Color(0, 0, 0, opacityPKT);
+						bgKolor = new Color(10, 220, 10, opacityPKT * 80 / 255);
+					}
+					g.setColor(bgKolor);
+					g.fillRect(xPunkty - 5, yPunkty - 80, szerPKT, 90);
+					g.setColor(kolor);
+					g.drawString(String.valueOf(punkty), xPunkty, yPunkty);
 				}
-				g.setColor(bgKolor);
-				g.fillRect(xPunkty - 5, yPunkty - 80, szerPKT, 90);
-				g.setColor(kolor);
-				g.drawString(String.valueOf(punkty), xPunkty, yPunkty);
+
+				if (opacityOcena > 0) {
+					if (punkty <= 50) {
+						kolor = new Color(0, 0, 0, opacityOcena);
+						bgKolor = new Color(220, 10, 10, opacityOcena * 80 / 255);
+					} else {
+						kolor = new Color(0, 0, 0, opacityOcena);
+						bgKolor = new Color(10, 220, 10, opacityOcena * 80 / 255);
+					}
+					g.setColor(bgKolor);
+					g.fillRect(xOcena - 5, yOcena - 80, 140, 90);
+					g.setColor(kolor);
+					g.drawString(ocena, xOcena, yOcena);
+				}
+
+				g.setColor(new Color(0, 0, 0, opacityPKT));
+				g.drawRect(xPunkty - 5, yPunkty - 80, szerPKT, 90);
+				g.setColor(new Color(0, 0, 0, opacityOcena));
+				g.drawRect(xOcena - 5, yOcena - 80, 140, 90);
 			}
 
-			if (opacityOcena > 0) {
-				if (punkty <= 50) {
-					kolor = new Color(0, 0, 0, opacityOcena);
-					bgKolor = new Color(220, 10, 10, opacityOcena * 80 / 255);
-				} else {
-					kolor = new Color(0, 0, 0, opacityOcena);
-					bgKolor = new Color(10, 220, 10, opacityOcena * 80 / 255);
-				}
-				g.setColor(bgKolor);
-				g.fillRect(xOcena - 5, yOcena - 80, 140, 90);
-				g.setColor(kolor);
-				g.drawString(ocena, xOcena, yOcena);
-			}
-
-			g.setColor(new Color(0, 0, 0, opacityPKT));
-			g.drawRect(xPunkty - 5, yPunkty - 80, szerPKT, 90);
-			g.setColor(new Color(0, 0, 0, opacityOcena));
-			g.drawRect(xOcena - 5, yOcena - 80, 140, 90);
+			ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1);
+			g.setComposite(ac);
+		} else if (startFajerwerki == 0) {
+			startFajerwerki = System.currentTimeMillis();
 		}
 
-		ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1);
-		g.setComposite(ac);
+		if (fajerwerki && win) {
+			fajerwerki(g);
+		}
+
+		if (System.currentTimeMillis() - startFajerwerki > jakDlugoFajerwerki) {
+			fajerwerki = false;
+		}
+
 	}
 
 	private void alfa() {
@@ -232,6 +265,13 @@ public class Zaliczenie {
 		if (opacityOcena > 255) {
 			opacityOcena = 255;
 		}
+	}
+
+	private void fajerwerki(Graphics2D g) {
+		Random rand = new Random();
+		if (rand.nextInt(100) > 90)
+			new Granade(rand.nextInt(Window.size_x), rand.nextInt(100) + 500, true);
+
 	}
 
 }

@@ -25,7 +25,7 @@ public class Sterowanie {
 	private static final int czas = 2000;
 	private static boolean fadeOut = false;
 	private static short instrukcji = 0;
-	private static int rK = 255, gK = 255, bK = 100;
+	public static int rK = 255, gK = 255, bK = 100;
 	public static boolean dropAmmo = false;
 
 	private static int liczbainstrukcji = 4; // Trzeba ustawić jeśli dodaje się nowe instrukcje

@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import java.util.Random;
 
 import Gracz.Player;
+import InterFace.MessageBox;
 import Program.Window;
 
 public class BulletPaszkoProstopadly extends EnemyBullet {
@@ -17,7 +18,7 @@ public class BulletPaszkoProstopadly extends EnemyBullet {
 
 	public BulletPaszkoProstopadly(int x, int y) {
 		super(x - 2 * Window.size_x, y);
-		this.damage = 10000*100;
+		this.damage = 100; // 10000*100
 		super.velocity = this.velocity;
 		liczbaKresek += 2;
 
@@ -40,7 +41,14 @@ public class BulletPaszkoProstopadly extends EnemyBullet {
 
 	@Override
 	public int[][] getPole() {
-		int[][] tab = { { x, y, szerokosc, wysokosc } };
+		// int[][] tab = { { x, y, szerokosc, wysokosc } };
+		int[][] tab = new int[10][4];
+		for (int i = 0; i < 10; i++) {
+			tab[i][0] = x + i * szerokosc / 10;
+			tab[i][1] = y;
+			tab[i][2] = szerokosc / 10;
+			tab[i][3] = wysokosc;
+		}
 		return tab;
 	}
 
@@ -48,8 +56,17 @@ public class BulletPaszkoProstopadly extends EnemyBullet {
 	public void collision(Object o) {
 		if (o.getClass() == Player.class) {
 			Player player = (Player) o;
-			if (!player.shield)
+
+			if (!player.shield) {
 				player.health -= damage;
+				player.obrazenia = true;
+				player.klatkiObrazenia = 0;
+				if (!strona)
+					new MessageBox(Integer.toString((int) -damage), 1000, player.getX() - 35, y - 10, "RED");
+				else
+					new MessageBox(Integer.toString((int) -damage), 1000, player.getX() + player.getWidth(), y - 10,
+							"RED");
+			}
 		}
 	}
 

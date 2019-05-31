@@ -13,6 +13,7 @@ import Bullets.BulletExtra;
 import Bullets.BulletEyes;
 import Bullets.BulletPaszkoProstopadly;
 import Bullets.BulletPaszkoRownolegly;
+import Bullets.CzerwoneObrazenia;
 import Bullets.EnemyBullet;
 import InterFace.AudioMeneger;
 import InterFace.IntroBoss;
@@ -28,7 +29,18 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 
 	public static int superCiosy = 0;
 
+	private Graphics2D g2d;
+	private BufferedImage im;
+
 	AudioMeneger audio = new AudioMeneger();
+
+	private long dlugoscInfoPomin;
+	private boolean czyPominWyswietla = false;
+	private int przezPomin = 0;
+
+	public static boolean czyMoznaPominac = false;
+
+	private static boolean czasPominac = false;
 
 	/**
 	 * 
@@ -61,6 +73,9 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 
 		Enemy.enemies.add(this);
 		this.AI();
+
+		dlugoscInfoPomin = 0;
+		czyMoznaPominac = true;
 	}
 
 	@SuppressWarnings("static-access")
@@ -81,11 +96,53 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 			g.setFont(new Font(null, Font.PLAIN, 25));
 			g.drawString(nazwa, win.size_x * 50 / 80, win.size_y / 12);
 		}
+
+		if (obrazenia && klatkiObrazenia <= 8) {
+			klatkiObrazenia++;
+			im = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+			g2d = (Graphics2D) im.getGraphics();
+			if (velocity_x < 0)
+				g2d.drawImage(paszko, 0, 0, width, height, null);
+			else
+				g2d.drawImage(paszko2, 0, 0, width, height, null);
+			CzerwoneObrazenia.drawRed(g, im, x, y);
+		} else {
+			klatkiObrazenia = 0;
+			obrazenia = false;
+		}
+
+		if (!czyPominWyswietla) {
+			dlugoscInfoPomin = System.currentTimeMillis();
+			czyPominWyswietla = !czyPominWyswietla;
+		} else if (czyPominWyswietla && System.currentTimeMillis() - dlugoscInfoPomin < 3000
+				&& EnemyGenerator.stworzonePaszki == 1) {
+			przezPomin++;
+			if (przezPomin > 100)
+				przezPomin = 100;
+			pominDraw(g);
+		} else if (czyPominWyswietla && System.currentTimeMillis() - dlugoscInfoPomin < 4500
+				&& EnemyGenerator.stworzonePaszki == 1) {
+			przezPomin -= 2;
+			if (przezPomin < 0)
+				przezPomin = 0;
+			pominDraw(g);
+		}
+	}
+
+	private void pominDraw(Graphics2D g) {
+		g.setColor(new Color(255, 255, 100, przezPomin));
+		g.setFont(new Font(null, 0, 20));
+		g.drawString("Naciśnij 'S' aby pominąć", 50, 570);
+		g.setColor(new Color(255, 255, 100, 255));
 	}
 
 	@SuppressWarnings("static-access")
 	@Override
 	public void myMotion() {
+		if (czasPominac && majestyWalk) {
+			wylacz2();
+			czasPominac = !czasPominac;
+		}
 
 		if (majestyWalk) {
 			if (y < 120) {
@@ -192,12 +249,23 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 	public int[][] getPole() {
 
 		int[][] tab = { { x + paszko.getWidth() / 2, y + paszko.getWidth() / 2, paszko.getWidth() / 2 } };
-		int[][] tab1 = { { 12345,12345, 0 } };
+		int[][] tab1 = { { 12345, 12345, 0 } };
 
 		if (!majestyWalk)
 			return tab;
 		else
 			return tab1;
+	}
+
+	public static void wylacz() {
+		czasPominac = true;
+	}
+
+	private void wylacz2() {
+		czyMoznaPominac = false;
+		y = 120;
+		dlugoscInfoPomin = 0;
+		new IntroBoss(10000, 5, 5);
 	}
 
 }

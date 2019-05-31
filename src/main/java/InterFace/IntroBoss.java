@@ -22,19 +22,23 @@ import Program.Window;
  */
 public class IntroBoss {
 	public static ArrayList<IntroBoss> list = new ArrayList<>();
-	public static boolean end=false;
+	public static boolean end = false;
 
-	private int opacity = 0;
+	private static int opacity = 0;
 	private int fadeIn = 10, fadeOut = 10;
 
 	private BufferedImage paszkoKolor, paszkoBlack;
 	private BufferedImage[] superAtak = new BufferedImage[3];
 	private BufferedImage[] superAtakObraz = new BufferedImage[3];
 	private long czas = 2000;
-	private long start = 0;
+	private static long start = 0;
 
-	private Color kolor;
-	private Color bgKolor;
+	private long dlugoscInfoPomin;
+
+	private boolean czyPominWyswietla = false;
+
+//	private Color kolor;
+//	private Color bgKolor;
 
 	private float alpha = (float) 0.0;
 	private AlphaComposite ac;
@@ -44,6 +48,11 @@ public class IntroBoss {
 	private String[] Opisy = { "Laserowe Oczy", "Proste Rownolegle", "Proste Prostopadle" };
 
 	private int[] obrazkiRuchX = new int[3];
+
+	private int przezPomin = 255;
+
+	public static boolean czyMoznaPominac = false;
+	private static boolean wyswietlacPomin = true;
 
 	/**
 	 * Inicjalizacja podstawowych zmiennych
@@ -67,6 +76,8 @@ public class IntroBoss {
 
 		zlozObrazki();
 		list.add(this);
+
+		czyMoznaPominac = true;
 	}
 
 	/**
@@ -82,18 +93,18 @@ public class IntroBoss {
 		this.fadeIn = fadeIn;
 		this.fadeOut = fadeOut;
 	}
-	
-	public static void draw(Graphics2D g)
-	{
-		for(int i = 0; i<list.size();i++)
-		{
+
+	public static void draw(Graphics2D g) {
+		for (int i = 0; i < list.size(); i++) {
 			list.get(i).drawMe(g);
 		}
 	}
 
 	public void drawMe(Graphics2D g) {
-		ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float) (opacity / 255.0));
-		g.setComposite(ac);
+		if (opacity >= 0) {
+			ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float) (opacity / 255.0));
+			g.setComposite(ac);
+		}
 
 		if (opacity <= 255 && start == 0) {
 			opacity += fadeIn;
@@ -107,7 +118,7 @@ public class IntroBoss {
 			opacity -= fadeOut;
 		}
 		if (opacity <= 0) {
-			end=true;
+			end = true;
 			opacity = 0;
 			try {
 				alpha = 0;
@@ -119,7 +130,7 @@ public class IntroBoss {
 
 		g.setColor(new Color(200, 200, 200));
 		g.fillRect(0, 0, Window.size_x, Window.size_y);
-		
+
 		g.setColor(new Color(0, 0, 0));
 		g.setFont(new Font(null, 0, 50));
 //		g.fillRect(Window.size_x / 2 - g.getFontMetrics().stringWidth(tytolPaszko) / 2, 80 - 50,
@@ -160,6 +171,25 @@ public class IntroBoss {
 //		g.drawRect(20, 320, 240, 250);
 //		g.drawRect(280, 320, 240, 250);
 //		g.drawRect(540, 320, 240, 250);
+
+		if (!czyPominWyswietla) {
+			dlugoscInfoPomin = System.currentTimeMillis();
+			czyPominWyswietla = !czyPominWyswietla;
+		} else if (czyPominWyswietla && System.currentTimeMillis() - dlugoscInfoPomin < 3000 && wyswietlacPomin) {
+			pominDraw(g);
+		} else if (czyPominWyswietla && System.currentTimeMillis() - dlugoscInfoPomin < 4000 && wyswietlacPomin) {
+			przezPomin -= 10;
+			if (przezPomin < 0)
+				przezPomin = 0;
+			pominDraw(g);
+		}
+	}
+
+	private void pominDraw(Graphics2D g) {
+		g.setColor(new Color(0, 0, 10, przezPomin));
+		g.setFont(new Font(null, 0, 20));
+		g.drawString("Naciśnij 'S' aby pominąć", 50, 570);
+		g.setColor(new Color(0, 0, 10, opacity));
 	}
 
 	private void zlozObrazki() {
@@ -201,6 +231,13 @@ public class IntroBoss {
 		if (System.currentTimeMillis() - StartObrazka > 750 && obrazkiRuchX[obrabianyObrazek] <= Xy[obrabianyObrazek]) {
 			obrabianyObrazek++;
 		}
+	}
+
+	public static void wylacz() {
+		czyMoznaPominac = false;
+		wyswietlacPomin = false;
+		opacity = 0;
+		start = 10;
 	}
 
 }

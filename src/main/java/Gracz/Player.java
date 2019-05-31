@@ -1,5 +1,6 @@
 package Gracz;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
@@ -14,6 +15,7 @@ import Bullets.Bullet;
 import Bullets.BulletExtraPlayer;
 import Bullets.BulletPellet;
 import Bullets.BulletPlazma;
+import Bullets.CzerwoneObrazenia;
 import Bullets.Granade;
 import Bullets.Pellet;
 import InterFace.MessageBox;
@@ -27,10 +29,11 @@ public class Player extends Collisionable {
 
 	final int DefaultHealth = 40 * 100;
 	int velocity = 5; // predkosc samolotu
-	int x, y, width, height;
+	int x, y, width, height, width2, height2;
 	long CzasSzczau, CzasAtaku;
 	long delay = 200;
 	public float health;
+	public boolean obrazenia = false;
 
 	public int[] amunition = { 1, 0, 30, 30, 2000 };
 
@@ -48,6 +51,20 @@ public class Player extends Collisionable {
 	public int wystrzeloneNaboje = 0;
 	public int zlapaneBonusy = 0;
 	public int zlapaneTarcze = 0;
+
+	private BufferedImage maloHP = new BufferedImage(Window.size_x, Window.size_y, BufferedImage.TYPE_INT_ARGB);
+	private Graphics2D gHP = (Graphics2D) maloHP.getGraphics();
+	private AlphaComposite ac;
+	private int szerCzerRamki = 20;
+	private float alphaRED = (float) 0.4;
+	private int fadeIn;
+	private boolean fade = true;
+	private long fadeTime;
+
+	private BufferedImage im;
+	private Graphics2D g2d;
+
+	public int klatkiObrazenia = 0;
 
 	public Player(Window win, int x, int y) {
 		this.win = win;
@@ -77,6 +94,8 @@ public class Player extends Collisionable {
 		}
 		this.height = statek.getHeight();
 		this.width = statek.getWidth();
+		this.height2 = statekRuch.getHeight();
+		this.width2 = statekRuch.getWidth();
 	}
 
 	/**
@@ -98,6 +117,8 @@ public class Player extends Collisionable {
 		if (shrink && System.currentTimeMillis() - timeShrink > 10000) {
 			this.height = statek.getHeight();
 			this.width = statek.getWidth();
+			this.height2 = statekRuch.getHeight();
+			this.width2 = statekRuch.getWidth();
 		}
 
 		if (shield) {
@@ -141,6 +162,49 @@ public class Player extends Collisionable {
 
 		// g.drawString(Integer.toString(amunition[whichAmunition]), win.size_x
 		// / 80, win.size_y / 10 + win.size_y / 20 + 30);
+
+		if (health < DefaultHealth / 6) {
+			if (System.currentTimeMillis() - fadeTime > 100) {
+				if (!fade) {
+					alphaRED += 0.02;
+					fadeIn--;
+					szerCzerRamki--;
+				} else if (fade) {
+					alphaRED -= 0.02;
+					fadeIn++;
+					szerCzerRamki++;
+				}
+				fadeTime = System.currentTimeMillis();
+
+				if (fadeIn == 10 || fadeIn == 0) {
+					fade = !fade;
+				}
+			}
+			maloHP = new BufferedImage(Window.size_x, Window.size_y, BufferedImage.TYPE_INT_ARGB);
+			gHP = (Graphics2D) maloHP.getGraphics();
+			gHP.setColor(Color.RED);
+			ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alphaRED);
+			gHP.setComposite(ac);
+			gHP.fillRect(szerCzerRamki, 0, Window.size_x - 2 * szerCzerRamki, 40 + szerCzerRamki);
+			gHP.fillRect(0, 0, szerCzerRamki, Window.size_y);
+			gHP.fillRect(Window.size_x - szerCzerRamki, 0, Window.size_x, Window.size_y);
+			gHP.fillRect(szerCzerRamki, Window.size_y - szerCzerRamki, Window.size_x - 2 * szerCzerRamki,
+					Window.size_y);
+
+			g.drawImage(maloHP, 0, 0, null);
+		}
+
+		if (obrazenia && klatkiObrazenia <= 8) {
+			klatkiObrazenia++;
+			im = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+			g2d = (Graphics2D) im.getGraphics();
+			g2d.drawImage(statek, 0, 0, width, height, null);
+			CzerwoneObrazenia.drawRed(g, im, x, y);
+		} else {
+			klatkiObrazenia = 0;
+			obrazenia = false;
+		}
+
 	}
 
 	public void strzal() {
@@ -285,11 +349,11 @@ public class Player extends Collisionable {
 	 */
 	private void drawAnimation(Graphics2D g) {
 		if (!ruchUP && !ruchDOWN) {
-			g.drawImage(statekRuch, x, y, width, height, null);
+			g.drawImage(statekRuch, x, y, width2, height2, null);
 		} else if (ruchUP) {
-			g.drawImage(statekRuchUp, x, y, width, height, null);
+			g.drawImage(statekRuchUp, x, y, width2, height2, null);
 		} else if (ruchDOWN) {
-			g.drawImage(statekRuchDown, x, y, width, height, null);
+			g.drawImage(statekRuchDown, x, y, width2, height2, null);
 		}
 
 		if (!ruchL && !ruchP) {
@@ -310,6 +374,8 @@ public class Player extends Collisionable {
 		if (!shrink) {
 			width = width / 2;
 			height = height / 2;
+			width2 /= 2;
+			height2 /= 2;
 		}
 		timeShrink = System.currentTimeMillis();
 		shrink = true;
@@ -317,5 +383,17 @@ public class Player extends Collisionable {
 	
 	
 	
+
+	public int getX() {
+		return x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public int getWidth() {
+		return width;
+	}
 
 }

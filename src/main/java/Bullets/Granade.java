@@ -19,15 +19,31 @@ public class Granade extends Bullet {
 	int size2;
 	int i = 1;
 
+	int rk, gk, bk;
+
+	private boolean fajerwerki = false;
+
 	public Granade(int x, int y) {
 		super(x, y);
+	}
 
+	public Granade(int x, int y, boolean fajerwerki) {
+		super(x, y);
+		this.fajerwerki = fajerwerki;
+		Granade.size = generator.nextInt(10) + 1;
+		rk = generator.nextInt(255);
+		gk = generator.nextInt(255);
+		bk = generator.nextInt(255);
 	}
 
 	synchronized void draw(Graphics2D g) {
-		g.setColor(new Color(255, 255, 0, opacity));
-		g.fillOval(x, y, size, size);
-
+		if (!fajerwerki) {
+			g.setColor(new Color(255, 255, 0, opacity));
+			g.fillOval(x, y, size, size);
+		} else {
+			g.setColor(new Color(rk, gk, bk, opacity));
+			g.fillOval(x, y, size, size);
+		}
 	}
 
 	@SuppressWarnings("static-access")
@@ -50,9 +66,14 @@ public class Granade extends Bullet {
 			opacity = 0;
 			if (System.currentTimeMillis() - time > 1000)
 				Bullet.bullets.remove(this);
-			else if (System.currentTimeMillis() - time2 > 100) {
+			else if (System.currentTimeMillis() - time2 > 100 && !fajerwerki) {
 				new GranadeExplosion(x + generator.nextInt(25 * i) - 25 * i / 2,
 						y + generator.nextInt(25 * i) - 25 * i / 2);
+				time2 = System.currentTimeMillis();
+				i++;
+			} else if (System.currentTimeMillis() - time2 > 100 && fajerwerki) {
+				new GranadeExplosion(x + generator.nextInt(25 * i) - 25 * i / 2,
+						y + generator.nextInt(25 * i) - 25 * i / 2, fajerwerki);
 				time2 = System.currentTimeMillis();
 				i++;
 			}

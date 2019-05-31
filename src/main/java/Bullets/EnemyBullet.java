@@ -40,6 +40,10 @@ public class EnemyBullet extends Bullet {
 			Player player = (Player) o;
 			if (!player.shield) {
 				player.health -= damage;
+
+				player.obrazenia = true;
+				player.klatkiObrazenia = 0;
+
 				new MessageBox(Integer.toString((int) -damage), 1000, x, y, "RED");
 			}
 			bullets.remove(this);
