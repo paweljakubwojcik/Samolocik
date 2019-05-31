@@ -52,6 +52,7 @@ public class IntroBoss {
 	private int przezPomin = 255;
 
 	public static boolean czyMoznaPominac = false;
+	private static boolean wyswietlacPomin = true;
 
 	/**
 	 * Inicjalizacja podstawowych zmiennych
@@ -174,9 +175,9 @@ public class IntroBoss {
 		if (!czyPominWyswietla) {
 			dlugoscInfoPomin = System.currentTimeMillis();
 			czyPominWyswietla = !czyPominWyswietla;
-		} else if (czyPominWyswietla && System.currentTimeMillis() - dlugoscInfoPomin < 3000) {
+		} else if (czyPominWyswietla && System.currentTimeMillis() - dlugoscInfoPomin < 3000 && wyswietlacPomin) {
 			pominDraw(g);
-		} else if (czyPominWyswietla && System.currentTimeMillis() - dlugoscInfoPomin < 4000) {
+		} else if (czyPominWyswietla && System.currentTimeMillis() - dlugoscInfoPomin < 4000 && wyswietlacPomin) {
 			przezPomin -= 10;
 			if (przezPomin < 0)
 				przezPomin = 0;
@@ -233,6 +234,7 @@ public class IntroBoss {
 	}
 
 	public static void wylacz() {
+		wyswietlacPomin = false;
 		opacity = 0;
 		start = 10;
 	}

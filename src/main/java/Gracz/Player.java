@@ -163,7 +163,7 @@ public class Player extends Collisionable {
 		// g.drawString(Integer.toString(amunition[whichAmunition]), win.size_x
 		// / 80, win.size_y / 10 + win.size_y / 20 + 30);
 
-		if (health < DefaultHealth / 8) {
+		if (health < DefaultHealth / 6) {
 			if (System.currentTimeMillis() - fadeTime > 100) {
 				if (!fade) {
 					alphaRED += 0.02;
@@ -380,6 +380,22 @@ public class Player extends Collisionable {
 		}
 		timeShrink = System.currentTimeMillis();
 		shrink = true;
+	}
+
+	public int getX() {
+		return x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public int getHeight() {
+		return height;
 	}
 
 }
