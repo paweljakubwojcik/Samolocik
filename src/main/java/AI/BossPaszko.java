@@ -34,6 +34,14 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 
 	AudioMeneger audio = new AudioMeneger();
 
+	private long dlugoscInfoPomin;
+	private boolean czyPominWyswietla = false;
+	private int przezPomin = 0;
+
+	public static boolean czyMoznaPominac = false;
+
+	private static boolean czasPominac = false;
+
 	/**
 	 * 
 	 * @param win
@@ -65,6 +73,9 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 
 		Enemy.enemies.add(this);
 		this.AI();
+
+		dlugoscInfoPomin = 0;
+		czyMoznaPominac = true;
 	}
 
 	@SuppressWarnings("static-access")
@@ -100,11 +111,36 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 			obrazenia = false;
 		}
 
+		if (!czyPominWyswietla) {
+			dlugoscInfoPomin = System.currentTimeMillis();
+			czyPominWyswietla = !czyPominWyswietla;
+		} else if (czyPominWyswietla && System.currentTimeMillis() - dlugoscInfoPomin < 3000) {
+			przezPomin++;
+			if (przezPomin > 100)
+				przezPomin = 100;
+			pominDraw(g);
+		} else if (czyPominWyswietla && System.currentTimeMillis() - dlugoscInfoPomin < 4500) {
+			przezPomin -= 2;
+			if (przezPomin < 0)
+				przezPomin = 0;
+			pominDraw(g);
+		}
+	}
+
+	private void pominDraw(Graphics2D g) {
+		g.setColor(new Color(255, 255, 100, przezPomin));
+		g.setFont(new Font(null, 0, 20));
+		g.drawString("Naciśnij 'S' aby pominąć", 50, 570);
+		g.setColor(new Color(255, 255, 100, 255));
 	}
 
 	@SuppressWarnings("static-access")
 	@Override
 	public void myMotion() {
+		if (czasPominac && majestyWalk) {
+			wylacz2();
+			czasPominac = !czasPominac;
+		}
 
 		if (majestyWalk) {
 			if (y < 120) {
@@ -217,6 +253,16 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 			return tab;
 		else
 			return tab1;
+	}
+
+	public static void wylacz() {
+		czasPominac = true;
+	}
+
+	private void wylacz2() {
+		y = 120;
+		dlugoscInfoPomin = 0;
+		new IntroBoss(10000, 5, 5);
 	}
 
 }

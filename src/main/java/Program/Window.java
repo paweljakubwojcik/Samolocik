@@ -9,6 +9,7 @@ import java.util.Random;
 
 import javax.swing.JFrame;
 
+import AI.BossPaszko;
 import AI.Enemy;
 import AI.EnemyGenerator;
 import Bullets.Bullet;
@@ -59,7 +60,7 @@ public class Window implements KeyListener {
 	public static boolean wyswietlWynik = false;
 	Zaliczenie ekranKoncowy;
 
-	private boolean[] skipy = new boolean[2];
+	private boolean[] skipy = new boolean[10];
 
 	Window() {
 		okno = new JFrame("Niewdzieczna przestrzen");
@@ -83,8 +84,9 @@ public class Window implements KeyListener {
 		losujtlo(im2);
 		scaltla(im1, im2);
 
-		skipy[0] = false;
-		skipy[1] = false;
+		for (int i = 0; i < 10; i++) {
+			skipy[i] = false;
+		}
 
 		Game = new Thread(new Runnable() {
 
@@ -303,6 +305,12 @@ public class Window implements KeyListener {
 				skipy[1] = true;
 				if (!Sterowanie.dropAmmo)
 					Sterowanie.InfoDrop();
+			} else if (!skipy[2] && BossPaszko.czyMoznaPominac) {
+				BossPaszko.wylacz();
+				skipy[2] = true;
+			} else if (!IntroBoss.end && !skipy[3] && IntroBoss.czyMoznaPominac) {
+				IntroBoss.wylacz();
+				skipy[3] = true;
 			}
 		}
 
