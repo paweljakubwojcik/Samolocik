@@ -18,6 +18,7 @@ public class BulletPlazma extends Bullet {
 	public BulletPlazma(int x, int y) {
 		super(x, y);
 		damage = (int) (0.2 * 100) * 40; // mniej niż 1.0 musi być
+		damage = (int) (damage + (generator.nextInt((int) (2 * damage / 10)) - damage / 10));
 	}
 
 	@Override

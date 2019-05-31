@@ -13,6 +13,7 @@ public class BulletExtraPlayer extends Bullet {
 		super(x, y);
 
 		damage = (int) (1.6 * 100);
+		damage = (int) (damage + (generator.nextInt((int) (2 * damage / 10)) - damage / 10));
 
 	}
 
