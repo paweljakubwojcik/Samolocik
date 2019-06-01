@@ -114,7 +114,7 @@ public class Achievement {
 	 * 1st śmierci Paszka) -7 To koniec „Pokonaj Paszka” -8 Niezniszczalny „Złap 20
 	 * tarcz” -9 Kosmita „Zniszcz 100 asteroid” -10 Tak jest łatwiej „Złap 100
 	 * bonusów” -11 Bóg „Przeżyj 100 super ciosów” -12 Dewastator „Zniszcz 200
-	 * asteroid” -13 Rzeźnia „Wystrzel 2500 naboi” -14 Kosmiczny terror „Wystrzel
+	 * asteroid” -13 Rzeźnia „Wystrzel 4000 naboi” -14 Kosmiczny terror „Wystrzel
 	 * 7000 naboi”
 	 * 
 	 * @param nrOsiagniecia - od 0 do 14 opisane w opisie Konstruktora
@@ -271,7 +271,18 @@ public class Achievement {
 			zdobyte[14] = true;
 			new Achievement(14, player);
 		}
+	}
 
+	public void setDefault(Player player) {
+		Alien.zabiteAlieny = 0;
+		player.wystrzeloneNaboje = 0;
+		Asteroid.ZniszczoneAsteroidy = 0;
+		player.zlapaneBonusy = 0;
+		player.zlapaneTarcze = 0;
+		BossPaszko.superCiosy = 0;
+		for (int i = 0; i < 15; i++) {
+			zdobyte[i] = false;
+		}
 	}
 
 }

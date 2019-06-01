@@ -4,11 +4,6 @@ import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
-import java.awt.MouseInfo;
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
@@ -60,6 +55,10 @@ public class Zaliczenie {
 	public static int restartx = 400, restarty = 200, restartsizex = 400, restartsizey = 100;
 	public static boolean hover = false;
 
+	private boolean bylRes = false;
+
+	private boolean graczUmarl = false;;
+
 	/**
 	 * Inicjalizuje standardowe informacje
 	 * 
@@ -73,15 +72,14 @@ public class Zaliczenie {
 		}
 
 		punkty = 0;
-		start = 0;
+		this.start = 0;
 		list.add(this);
 	}
 
 	/**
 	 * Inicjalizuje standarodwe informacje przez czas czasu
 	 * 
-	 * @param czas
-	 *            - ile ma być wyświetlana informacja
+	 * @param czas - ile ma być wyświetlana informacja
 	 */
 	public Zaliczenie(long czas) {
 		this();
@@ -91,12 +89,9 @@ public class Zaliczenie {
 	/**
 	 * Inicjalizuje standardowe informacje
 	 * 
-	 * @param czas
-	 *            - ile ma być wyświetlany ekran końcowy
-	 * @param fadeIn
-	 *            - jak szybko na 1 klatkę ekran ma się rozjaśniać
-	 * @param fadeOut
-	 *            - jak szybko na 1 klatkę ekran ma się ściemniać
+	 * @param czas    - ile ma być wyświetlany ekran końcowy
+	 * @param fadeIn  - jak szybko na 1 klatkę ekran ma się rozjaśniać
+	 * @param fadeOut - jak szybko na 1 klatkę ekran ma się ściemniać
 	 */
 	public Zaliczenie(long czas, int fadeIn, int fadeOut) {
 		this(czas);
@@ -105,17 +100,12 @@ public class Zaliczenie {
 	}
 
 	/**
-	 * Inicjalizuje ekran końcowy wystawiając ocenę na podstawie uzyskanych
-	 * punktów
+	 * Inicjalizuje ekran końcowy wystawiając ocenę na podstawie uzyskanych punktów
 	 * 
-	 * @param czas
-	 *            - ile czasu ma być wyświetlany ekran końcowy
-	 * @param fadeIn
-	 *            - jak szybko na 1 klatkę ekran ma się rozjaśniać
-	 * @param fadeOut
-	 *            - jak szybko na 1 klatkę ekran ma się ściemniać
-	 * @param punkty
-	 *            - ile punktów uzyskano
+	 * @param czas    - ile czasu ma być wyświetlany ekran końcowy
+	 * @param fadeIn  - jak szybko na 1 klatkę ekran ma się rozjaśniać
+	 * @param fadeOut - jak szybko na 1 klatkę ekran ma się ściemniać
+	 * @param punkty  - ile punktów uzyskano
 	 */
 	public Zaliczenie(long czas, int fadeIn, int fadeOut, int punkty) {
 		this(czas, fadeIn, fadeOut);
@@ -129,23 +119,20 @@ public class Zaliczenie {
 	}
 
 	/**
-	 * Inicjalizuje ekran końcowy wystawiając ocenę na podstawie uzyskanych
-	 * punktów
+	 * Inicjalizuje ekran końcowy wystawiając ocenę na podstawie uzyskanych punktów
 	 * 
-	 * @param czas
-	 *            - ile czasu ma by� wy�wietlany ekran koncowy
-	 * @param fadeIn
-	 *            - jak szybko na 1 klatkę ekran ma się rozjaśniać
-	 * @param fadeOut
-	 *            - jak szybko na 1 klatkę ekran ma się ściemniać
-	 * @param punkty
-	 *            - ile punktów uzyskano
+	 * @param czas       - ile czasu ma by� wy�wietlany ekran koncowy
+	 * @param fadeIn     - jak szybko na 1 klatkę ekran ma się rozjaśniać
+	 * @param fadeOut    - jak szybko na 1 klatkę ekran ma się ściemniać
+	 * @param punkty     - ile punktów uzyskano
+	 * @param graczUmarl - Czy gracz zyje?
 	 */
-	public Zaliczenie(long czas, int fadeIn, int fadeOut, int punkty, boolean win) {
+	public Zaliczenie(long czas, int fadeIn, int fadeOut, int punkty, boolean win, boolean graczUmarl) {
 		this(czas, fadeIn, fadeOut);
 		this.punkty = punkty;
 		this.win = win;
 		this.fajerwerki = win;
+		this.graczUmarl = graczUmarl;
 		try {
 			ocena();
 		} catch (Exception e) {
@@ -162,8 +149,7 @@ public class Zaliczenie {
 	/**
 	 * Rysuje Ekran Zaliczenia
 	 * 
-	 * @param g
-	 *            - Grafika do rysowania
+	 * @param g - Grafika do rysowania
 	 */
 	public void drawMe(Graphics2D g) {
 
@@ -176,17 +162,14 @@ public class Zaliczenie {
 			g.drawImage(wynik, 0, 0, null);
 
 			// przycisk restart
-			if (!hover) {
-				g.setColor(Color.black);
-				g.fillRect(restartx, restarty, restartsizex, restartsizey);
-				g.setColor(Color.white);
-				g.drawString("restart", restartx + restartsizex / 2, restarty + restartsizey / 2);
-			} else {
-				g.setColor(Color.white);
-				g.fillRect(restartx, restarty, restartsizex, restartsizey);
-				g.setColor(Color.black);
-				g.drawString("restart", restartx + restartsizex / 2, restarty + restartsizey / 2);
-			}
+			/*
+			 * if (!hover) { g.setColor(Color.black); g.fillRect(restartx, restarty,
+			 * restartsizex, restartsizey); g.setColor(Color.white); g.drawString("restart",
+			 * restartx + restartsizex / 2, restarty + restartsizey / 2); } else {
+			 * g.setColor(Color.white); g.fillRect(restartx, restarty, restartsizex,
+			 * restartsizey); g.setColor(Color.black); g.drawString("restart", restartx +
+			 * restartsizex / 2, restarty + restartsizey / 2); }
+			 */
 
 			if (System.currentTimeMillis() - start > 1000 && start != 0) {
 				g.setFont(new Font(null, 0, 80));
@@ -239,8 +222,6 @@ public class Zaliczenie {
 		if (System.currentTimeMillis() - startFajerwerki > jakDlugoFajerwerki) {
 			fajerwerki = false;
 		}
-		
-		
 
 	}
 
@@ -249,10 +230,14 @@ public class Zaliczenie {
 			opacity += fadeIn;
 			if (opacity > 255)
 				opacity = 255;
-		} else if (opacity == 255 && start == 0) {
+		} else if (opacity >= 255 && start == 0) {
 			opacity = 255;
 			start = System.currentTimeMillis();
 		} else if (System.currentTimeMillis() - start > czas && opacity > 0) {
+			if (!bylRes && graczUmarl) {
+				new Restart("Odmalować?");
+				bylRes = !bylRes;
+			}
 			opacity -= fadeOut;
 			if (opacity < 0)
 				opacity = 0;

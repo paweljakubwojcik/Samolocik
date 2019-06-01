@@ -1,10 +1,13 @@
 package Program;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Graphics2D;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -25,12 +28,13 @@ import InterFace.Intro;
 import InterFace.IntroBoss;
 import InterFace.MessageBox;
 import InterFace.MessageTypingIn;
+import InterFace.Restart;
 import InterFace.Sterowanie;
 import InterFace.Zaliczenie;
 import Rozgrywka.Collisions;
 import achievement.Achievement;
 
-public class Window implements KeyListener, MouseListener {
+public class Window implements KeyListener, MouseListener, FocusListener {
 
 	public JFrame okno;
 	public static final int size_x = 800, size_y = 600;
@@ -69,6 +73,8 @@ public class Window implements KeyListener, MouseListener {
 
 	private boolean YouWon = false;
 
+	private Cursor cursor;
+
 	Window() {
 		okno = new JFrame("Niewdzieczna przestrzen");
 		okno.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -80,6 +86,7 @@ public class Window implements KeyListener, MouseListener {
 		okno.addKeyListener(this);
 		okno.addMouseListener(this);
 		okno.setFocusable(true);
+		okno.addFocusListener(this);
 		klatka = new BufferedImage(size_x, size_y, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g3 = (Graphics2D) okno.getGraphics();
 
@@ -175,6 +182,7 @@ public class Window implements KeyListener, MouseListener {
 							g3.setColor(Color.white);
 							g3.fillRect(size_x / 2 - 30, size_y / 2 - 30, 20, 50);
 							g3.fillRect(size_x / 2 + 20, size_y / 2 - 30, 20, 50);
+							g3.drawString("Press P to unpause", 10, size_y - 10);
 						}
 
 						///////////////////////////////////////////////////////
@@ -208,6 +216,7 @@ public class Window implements KeyListener, MouseListener {
 		}
 
 		MessageTypingIn.draw(g);
+		Restart.draw(g);
 		Zaliczenie.draw(g);
 		IntroBoss.draw(g);
 
@@ -216,12 +225,17 @@ public class Window implements KeyListener, MouseListener {
 
 		Point p = MouseInfo.getPointerInfo().getLocation();
 		Rectangle r = okno.getBounds();
-		if (p.x > r.x + Zaliczenie.restartx && p.x < r.x + Zaliczenie.restartsizex + Zaliczenie.restartx
-				&& p.y > r.y + Zaliczenie.restarty && p.y < r.y + Zaliczenie.restartsizey + Zaliczenie.restarty
-				&& !Zaliczenie.isEmpty()) {
-			Zaliczenie.hover = true;
-		} else
-			Zaliczenie.hover = false;
+		if (p.x > r.x + Restart.restartx && p.x < r.x + Restart.restartsizex + Restart.restartx
+				&& p.y > r.y + Restart.restarty && p.y < r.y + Restart.restartsizey + Restart.restarty
+				&& !Restart.isEmpty()) {
+			Restart.hover = true;
+			cursor = new Cursor(Cursor.HAND_CURSOR);
+			okno.setCursor(cursor);
+		} else {
+			Restart.hover = false;
+			cursor = new Cursor(Cursor.DEFAULT_CURSOR);
+			okno.setCursor(cursor);
+		}
 
 	}
 
@@ -274,7 +288,7 @@ public class Window implements KeyListener, MouseListener {
 	void endOfGame(boolean win) {
 		if (!wyswietlWynik) {
 			wyswietlWynik = true;
-			new Zaliczenie(10000000, 3, 0, statek1.punkty, !win);
+			new Zaliczenie(7000, 3, 2, statek1.punkty, !win, statek1.isDead()); // 100000000
 		}
 		draw();
 		Bullet.motion();
@@ -398,13 +412,17 @@ public class Window implements KeyListener, MouseListener {
 	private void restart() {
 		statek1.setDefault();
 		generator.setDefault();
+		ach.setDefault(statek1);
 		System.out.println("restart");
 		skipy[1] = false;
 		skipy[2] = false;
+		skipy[3] = false;
 		Zaliczenie.wylancz();
+		Restart.wylancz();
 		MessageBox.restart();
 		audio.setDefault();
 		audio.play(0);
+		Sterowanie.InfoDrop();
 
 		wyswietlWynik = false;
 	}
@@ -437,7 +455,6 @@ public class Window implements KeyListener, MouseListener {
 
 	@Override
 	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -445,9 +462,9 @@ public class Window implements KeyListener, MouseListener {
 	public void mousePressed(MouseEvent arg0) {
 		Point p = MouseInfo.getPointerInfo().getLocation();
 		Rectangle r = okno.getBounds();
-		if (p.x > r.x + Zaliczenie.restartx && p.x < r.x + Zaliczenie.restartsizex + Zaliczenie.restartx
-				&& p.y > r.y + Zaliczenie.restarty && p.y < r.y + Zaliczenie.restartsizey + Zaliczenie.restarty
-				&& !Zaliczenie.isEmpty())
+		if (p.x > r.x + Restart.restartx && p.x < r.x + Restart.restartsizex + Restart.restartx
+				&& p.y > r.y + Restart.restarty && p.y < r.y + Restart.restartsizey + Restart.restarty
+				&& !Restart.isEmpty())
 			restart();
 
 	}
@@ -455,6 +472,25 @@ public class Window implements KeyListener, MouseListener {
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
 
+	}
+
+	@Override
+	public void focusGained(FocusEvent f) {
+
+	}
+
+	@Override
+	public void focusLost(FocusEvent f) {
+		Object z = f.getSource();
+		if (z == okno) {
+			System.out.println("Focus LOST");
+			pause = true;
+			strzal = false;
+			ruch1L = false;
+			ruch1P = false;
+			ruch1U = false;
+			ruch1D = false;
+		}
 	}
 
 }

@@ -103,6 +103,7 @@ public class Player extends Collisionable {
 		amunition[0] = 1;
 		for (int i = 1; i < amunition.length; i++)
 			amunition[i] = 0;
+		punkty = 0;
 
 	}
 
@@ -173,7 +174,7 @@ public class Player extends Collisionable {
 		// g.drawString(Integer.toString(amunition[whichAmunition]), win.size_x
 		// / 80, win.size_y / 10 + win.size_y / 20 + 30);
 
-		if (health < DefaultHealth / 6) {
+		if (health < DefaultHealth / 5) {
 			if (System.currentTimeMillis() - fadeTime > 100) {
 				if (!fade) {
 					alphaRED += 0.02;
