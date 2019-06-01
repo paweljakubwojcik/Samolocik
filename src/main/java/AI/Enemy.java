@@ -54,7 +54,8 @@ public abstract class Enemy extends Collisionable {
 	 */
 	public static void draw(Graphics2D g) {
 		for (int i = enemies.size() - 1; i >= 0; i--) {
-			enemies.get(i).drawMe(g);
+			if (enemies.size() != 0)
+				enemies.get(i).drawMe(g);
 		}
 	}
 

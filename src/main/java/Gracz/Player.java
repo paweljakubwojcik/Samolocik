@@ -19,7 +19,6 @@ import Bullets.CzerwoneObrazenia;
 import Bullets.Granade;
 import Bullets.Pellet;
 import InterFace.MessageBox;
-import Program.Samolotoszczalec;
 import Program.Window;
 import Rozgrywka.Collisionable;
 

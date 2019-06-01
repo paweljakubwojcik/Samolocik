@@ -2,10 +2,14 @@ package Program;
 
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.Toolkit;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
@@ -16,6 +20,7 @@ import java.awt.image.BufferedImage;
 import java.util.Random;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import AI.BossPaszko;
 import AI.Enemy;
@@ -38,6 +43,7 @@ public class Window implements KeyListener, MouseListener, FocusListener {
 
 	public JFrame okno;
 	public static final int size_x = 800, size_y = 600;
+	public static int size_xx = 800, size_yy = 600; // (800 * 1.75) (600 * 1.75)
 
 	private int tloY = -size_y, pozycjatla = 0;
 	BufferedImage klatka;
@@ -75,12 +81,17 @@ public class Window implements KeyListener, MouseListener, FocusListener {
 
 	private Cursor cursor;
 
+	private static boolean pelnyekran = false;
+
+	private boolean zmienekran = false;
+
 	Window() {
 		okno = new JFrame("Niewdzieczna przestrzen");
 		okno.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		okno.setResizable(false);
 		okno.setLocationRelativeTo(null);
-		okno.setSize(size_x, size_y);
+		okno.setLocation(0, 0);
+		okno.setSize(size_xx, size_yy);
 		okno.setLayout(null);
 		okno.setVisible(true);
 		okno.addKeyListener(this);
@@ -88,7 +99,6 @@ public class Window implements KeyListener, MouseListener, FocusListener {
 		okno.setFocusable(true);
 		okno.addFocusListener(this);
 		klatka = new BufferedImage(size_x, size_y, BufferedImage.TYPE_INT_ARGB);
-		Graphics2D g3 = (Graphics2D) okno.getGraphics();
 
 		statek1 = new Player(this, 400, 500);
 
@@ -107,10 +117,15 @@ public class Window implements KeyListener, MouseListener, FocusListener {
 			@Override
 			public void run() {
 				long startTime;
+				@SuppressWarnings("unused")
 				long lacznyCzas = 0;
 				int odliczanie = 0;
 
 				while (true) {
+					if (zmienekran) {
+						fullScreen();
+						zmienekran = !zmienekran;
+					}
 					startTime = System.nanoTime();
 
 					if (!pause) {
@@ -179,10 +194,14 @@ public class Window implements KeyListener, MouseListener, FocusListener {
 						if (spanie)
 							drawklatka();
 						else {
-							g3.setColor(Color.white);
-							g3.fillRect(size_x / 2 - 30, size_y / 2 - 30, 20, 50);
-							g3.fillRect(size_x / 2 + 20, size_y / 2 - 30, 20, 50);
-							g3.drawString("Naciśnij P aby wznowić", 10, size_y - 10);
+							Graphics2D g3 = (Graphics2D) okno.getGraphics();
+							BufferedImage pauzen = new BufferedImage(size_x, size_y, BufferedImage.TYPE_INT_ARGB);
+							Graphics2D g2d = (Graphics2D) pauzen.getGraphics();
+							g2d.setColor(Color.white);
+							g2d.fillRect(size_x / 2 - 30, size_y / 2 - 30, 20, 50);
+							g2d.fillRect(size_x / 2 + 20, size_y / 2 - 30, 20, 50);
+							g2d.drawString("Naciśnij P aby wznowić", 10, size_y - 10);
+							g3.drawImage(pauzen, 0, 0, size_xx, size_yy, null);
 						}
 
 						///////////////////////////////////////////////////////
@@ -225,8 +244,12 @@ public class Window implements KeyListener, MouseListener, FocusListener {
 
 		Point p = MouseInfo.getPointerInfo().getLocation();
 		Rectangle r = okno.getBounds();
-		if (p.x > r.x + Restart.restartx && p.x < r.x + Restart.restartsizex + Restart.restartx
-				&& p.y > r.y + Restart.restarty && p.y < r.y + Restart.restartsizey + Restart.restarty
+		if (p.x - r.x > Restart.restartx * ((float) size_xx / size_x)
+				&& p.x - r.x < Restart.restartsizex * ((float) size_xx / size_x)
+						+ Restart.restartx * ((float) size_xx / size_x)
+				&& p.y - r.y > Restart.restarty * ((float) size_yy / size_y)
+				&& p.y - r.y < Restart.restartsizey * ((float) size_yy / size_y)
+						+ Restart.restarty * ((float) size_yy / size_y)
 				&& !Restart.isEmpty()) {
 			Restart.hover = true;
 			cursor = new Cursor(Cursor.HAND_CURSOR);
@@ -241,7 +264,7 @@ public class Window implements KeyListener, MouseListener, FocusListener {
 
 	void drawklatka() {
 		Graphics2D g2d = (Graphics2D) okno.getGraphics();
-		g2d.drawImage(klatka, 0, 0, null);
+		g2d.drawImage(klatka, 0, 0, size_xx, size_yy, null);
 		g2d.dispose();
 	}
 
@@ -292,84 +315,6 @@ public class Window implements KeyListener, MouseListener, FocusListener {
 		}
 		draw();
 		Bullet.motion();
-	}
-
-	@Override
-	public void keyPressed(KeyEvent key) {
-		int klucz = key.getKeyCode();
-		if (klucz == KeyEvent.VK_Z) {
-			strzal = true;
-		} else if (klucz == KeyEvent.VK_LEFT) {
-			ruch1L = true;
-		} else if (klucz == KeyEvent.VK_RIGHT) {
-			ruch1P = true;
-		} else if (klucz == KeyEvent.VK_UP) {
-			ruch1U = true;
-		} else if (klucz == KeyEvent.VK_DOWN) {
-			ruch1D = true;
-		} else if (klucz == KeyEvent.VK_1) {
-			statek1.changeAmunition(0);
-		} else if (klucz == KeyEvent.VK_2) {
-			statek1.changeAmunition(1);
-		} else if (klucz == KeyEvent.VK_3) {
-			statek1.changeAmunition(2);
-		} else if (klucz == KeyEvent.VK_4) {
-			statek1.changeAmunition(3);
-		} else if (klucz == KeyEvent.VK_5) {
-			statek1.changeAmunition(4);
-		} else if (klucz == KeyEvent.VK_P) {
-			pause = !pause;
-
-			mute = pause;
-			Mute(mute);
-
-		} else if (klucz == KeyEvent.VK_M) {
-			mute = !mute;
-			Mute(mute);
-		} else if (klucz == KeyEvent.VK_S) {
-			if (intro && !skipy[0]) {
-				MessageTypingIn.skip();
-				audio.readIntroStop();
-				skipy[0] = true;
-			} else if (instrukcja && !skipy[1]) {
-				instrukcja = false;
-				sterowanie = false;
-				skipy[1] = true;
-				if (!Sterowanie.dropAmmo)
-					Sterowanie.InfoDrop();
-			} else if (!skipy[2] && BossPaszko.czyMoznaPominac) {
-				BossPaszko.wylacz();
-				skipy[2] = true;
-			}
-			if (!skipy[3] && IntroBoss.czyMoznaPominac) {
-				IntroBoss.wylacz();
-				skipy[3] = true;
-			}
-		} else if (klucz == KeyEvent.VK_R && statek1.isDead()) {
-			restart();
-		}
-
-	}
-
-	@Override
-	public void keyReleased(KeyEvent key) {
-		int klucz = key.getKeyCode();
-		if (klucz == KeyEvent.VK_Z) {
-			strzal = false;
-		} else if (klucz == KeyEvent.VK_LEFT) {
-			ruch1L = false;
-		} else if (klucz == KeyEvent.VK_RIGHT) {
-			ruch1P = false;
-		} else if (klucz == KeyEvent.VK_UP) {
-			ruch1U = false;
-		} else if (klucz == KeyEvent.VK_DOWN) {
-			ruch1D = false;
-		}
-	}
-
-	@Override
-	public void keyTyped(KeyEvent key) {
-
 	}
 
 	private void sprawdzKolizje() {
@@ -427,6 +372,122 @@ public class Window implements KeyListener, MouseListener, FocusListener {
 		wyswietlWynik = false;
 	}
 
+	public void fullScreen() {
+		GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
+		GraphicsDevice device = env.getDefaultScreenDevice();
+		if (!device.isFullScreenSupported() && pelnyekran == false) {
+			JOptionPane.showMessageDialog(okno, "Twój komputer nie wspiera pełnego ekranu ;/");
+			okno.requestFocus();
+		} else if (device.isFullScreenSupported() && pelnyekran == false) {
+			Dimension rozmiarekranu = Toolkit.getDefaultToolkit().getScreenSize();
+			okno.setSize(rozmiarekranu.width, rozmiarekranu.height);
+			okno.dispose();
+			okno.setUndecorated(true);
+			okno.setResizable(true);
+			device.setFullScreenWindow(okno);
+			okno.requestFocus();
+
+			pelnyekran = true;
+			aktualizujWymiary();
+		} else {
+			okno.dispose();
+			okno.setUndecorated(false);
+			okno.setSize(size_x, size_y);
+			okno.setVisible(true);
+			okno.requestFocus();
+			okno.setResizable(false);
+			pelnyekran = false;
+			aktualizujWymiary();
+		}
+
+	}
+
+	private void aktualizujWymiary() {
+		size_xx = okno.getWidth();
+		size_yy = okno.getHeight();
+	}
+
+	@Override
+	public void keyPressed(KeyEvent key) {
+		int klucz = key.getKeyCode();
+		if (klucz == KeyEvent.VK_Z) {
+			strzal = true;
+		} else if (klucz == KeyEvent.VK_LEFT) {
+			ruch1L = true;
+		} else if (klucz == KeyEvent.VK_RIGHT) {
+			ruch1P = true;
+		} else if (klucz == KeyEvent.VK_UP) {
+			ruch1U = true;
+		} else if (klucz == KeyEvent.VK_DOWN) {
+			ruch1D = true;
+		} else if (klucz == KeyEvent.VK_1) {
+			statek1.changeAmunition(0);
+		} else if (klucz == KeyEvent.VK_2) {
+			statek1.changeAmunition(1);
+		} else if (klucz == KeyEvent.VK_3) {
+			statek1.changeAmunition(2);
+		} else if (klucz == KeyEvent.VK_4) {
+			statek1.changeAmunition(3);
+		} else if (klucz == KeyEvent.VK_5) {
+			statek1.changeAmunition(4);
+		} else if (klucz == KeyEvent.VK_P) {
+			pause = !pause;
+
+			mute = pause;
+			Mute(mute);
+
+		} else if (klucz == KeyEvent.VK_M) {
+			mute = !mute;
+			Mute(mute);
+		} else if (klucz == KeyEvent.VK_S) {
+			if (intro && !skipy[0]) {
+				MessageTypingIn.skip();
+				audio.readIntroStop();
+				skipy[0] = true;
+			} else if (instrukcja && !skipy[1]) {
+				instrukcja = false;
+				sterowanie = false;
+				skipy[1] = true;
+				if (!Sterowanie.dropAmmo)
+					Sterowanie.InfoDrop();
+			} else if (!skipy[2] && BossPaszko.czyMoznaPominac) {
+				BossPaszko.wylacz();
+				skipy[2] = true;
+			}
+			if (!skipy[3] && IntroBoss.czyMoznaPominac) {
+				IntroBoss.wylacz();
+				skipy[3] = true;
+			}
+		} else if (klucz == KeyEvent.VK_R && statek1.isDead()) {
+			restart();
+		} else if (klucz == KeyEvent.VK_F11) {
+			if (!zmienekran)
+				zmienekran = !zmienekran;
+		}
+
+	}
+
+	@Override
+	public void keyReleased(KeyEvent key) {
+		int klucz = key.getKeyCode();
+		if (klucz == KeyEvent.VK_Z) {
+			strzal = false;
+		} else if (klucz == KeyEvent.VK_LEFT) {
+			ruch1L = false;
+		} else if (klucz == KeyEvent.VK_RIGHT) {
+			ruch1P = false;
+		} else if (klucz == KeyEvent.VK_UP) {
+			ruch1U = false;
+		} else if (klucz == KeyEvent.VK_DOWN) {
+			ruch1D = false;
+		}
+	}
+
+	@Override
+	public void keyTyped(KeyEvent key) {
+
+	}
+
 	public void setIntro(boolean b) {
 		intro = b;
 	}
@@ -462,8 +523,12 @@ public class Window implements KeyListener, MouseListener, FocusListener {
 	public void mousePressed(MouseEvent arg0) {
 		Point p = MouseInfo.getPointerInfo().getLocation();
 		Rectangle r = okno.getBounds();
-		if (p.x > r.x + Restart.restartx && p.x < r.x + Restart.restartsizex + Restart.restartx
-				&& p.y > r.y + Restart.restarty && p.y < r.y + Restart.restartsizey + Restart.restarty
+		if (p.x - r.x > Restart.restartx * ((float) size_xx / size_x)
+				&& p.x - r.x < Restart.restartsizex * ((float) size_xx / size_x)
+						+ Restart.restartx * ((float) size_xx / size_x)
+				&& p.y - r.y > Restart.restarty * ((float) size_yy / size_y)
+				&& p.y - r.y < Restart.restartsizey * ((float) size_yy / size_y)
+						+ Restart.restarty * ((float) size_yy / size_y)
 				&& !Restart.isEmpty())
 			restart();
 

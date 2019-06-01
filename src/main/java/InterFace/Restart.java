@@ -9,6 +9,8 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
+import Program.Window;
+
 /**
  * Okienko Restartu
  * 
@@ -43,13 +45,17 @@ public class Restart {
 	}
 
 	private void drawMe(Graphics2D g) {
-		g.setColor(Color.BLUE);
 		g.setFont(new Font(null, 0, 30));
 		if (!hover) {
+			g.setColor(new Color(58, 58, 58));
+			g.fillRect(0, 0, Window.size_x, 20);
 			g.drawImage(imPrzed, 0, 20, null);
+			g.setColor(Color.BLUE);
 			g.drawString(opis, restartx + restartsizex / 2 - g.getFontMetrics().stringWidth(opis) / 2,
 					restarty + restartsizey / 2);
 		} else if (hover) {
+			g.setColor(new Color(58, 58, 58));
+			g.fillRect(0, 0, Window.size_x, 20);
 			g.drawImage(imPo, 0, 20, null);
 		}
 
