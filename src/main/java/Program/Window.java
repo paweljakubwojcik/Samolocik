@@ -182,7 +182,7 @@ public class Window implements KeyListener, MouseListener, FocusListener {
 							g3.setColor(Color.white);
 							g3.fillRect(size_x / 2 - 30, size_y / 2 - 30, 20, 50);
 							g3.fillRect(size_x / 2 + 20, size_y / 2 - 30, 20, 50);
-							g3.drawString("Press P to unpause", 10, size_y - 10);
+							g3.drawString("Naciśnij P aby wznowić", 10, size_y - 10);
 						}
 
 						///////////////////////////////////////////////////////
@@ -483,7 +483,6 @@ public class Window implements KeyListener, MouseListener, FocusListener {
 	public void focusLost(FocusEvent f) {
 		Object z = f.getSource();
 		if (z == okno) {
-			System.out.println("Focus LOST");
 			pause = true;
 			strzal = false;
 			ruch1L = false;

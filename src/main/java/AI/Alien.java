@@ -16,7 +16,8 @@ public class Alien extends Enemy {
 	static final int defaultHealth = 10 * 100;
 	private int zakresRuchuX, zakresRuchuY;
 	int velocity;
-	private BufferedImage Image[] = new BufferedImage[4];
+	private static BufferedImage Image[] = new BufferedImage[4];
+	private static BufferedImage ImageRozpad[] = new BufferedImage[4];
 	private int i = 0;
 	long time = System.currentTimeMillis();
 	long czasAtak = System.currentTimeMillis();
@@ -25,6 +26,9 @@ public class Alien extends Enemy {
 	private BufferedImage im;
 
 	public static int zabiteAlieny = 0;
+	private static boolean grafika = false;
+
+	private int klatkaRozpadu;
 
 	/**
 	 * 
@@ -45,15 +49,18 @@ public class Alien extends Enemy {
 		velocity_x = 0;
 		zakresRuchuY = y + generator.nextInt(win.size_y / 2 - y);
 
-		try {
-			Image[0] = ImageIO.read(getClass().getResource("/images//Alien2Klatka1.png"));
-			Image[1] = ImageIO.read(getClass().getResource("/images//Alien2Klatka2.png"));
-			Image[2] = ImageIO.read(getClass().getResource("/images//Alien2Klatka3.png"));
-			Image[3] = ImageIO.read(getClass().getResource("/images//Alien2Klatka4.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
+		if (!grafika) {
+			try {
+				for (int i = 1; i <= 4; i++) {
+					Image[i - 1] = ImageIO.read(getClass().getResource("/images//Alien2Klatka" + i + ".png"));
+					ImageRozpad[i - 1] = ImageIO
+							.read(getClass().getResource("/images//Alien2KlatkaRozpad" + i + ".png"));
+				}
+				grafika = true;
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
-
 	}
 
 	@SuppressWarnings("static-access")
@@ -65,32 +72,52 @@ public class Alien extends Enemy {
 				i++;
 			else
 				i = 0;
+			if (super.zacznijSmierc) {
+				if (klatkaRozpadu <= 4) {
+					klatkaRozpadu++;
+					if (klatkaRozpadu == 4) {
+						Enemy.enemies.remove(this);
+						try {
+							this.finalize();
+						} catch (Throwable e) {
+							e.printStackTrace();
+						}
+					}
+				} else {
+					klatkaRozpadu = 0;
+				}
+			}
 			time = System.currentTimeMillis();
 		}
+		if (!super.zacznijSmierc) {
 
-		g.drawImage(Image[i], x, y, width, height, null);
-		g.setColor(new Color(255, 0, 0, 200));
-		/* g.drawRect(x, y, width, height); */
-		g.drawRect(x, y + win.size_y / 400, win.size_x / 20, win.size_y / 200);
-		g.fillRect(x, y + win.size_y / 400, (win.size_x / 20) * (int) health / defaultHealth, win.size_y / 200);
+			g.drawImage(Image[i], x, y, width, height, null);
+			g.setColor(new Color(255, 0, 0, 200));
+			/* g.drawRect(x, y, width, height); */
+			g.drawRect(x, y + win.size_y / 400, win.size_x / 20, win.size_y / 200);
+			g.fillRect(x, y + win.size_y / 400, (win.size_x / 20) * (int) health / defaultHealth, win.size_y / 200);
 
-		if (obrazenia && klatkiObrazenia <= 15) {
-			klatkiObrazenia++;
-			im = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-			g2d = (Graphics2D) im.getGraphics();
-			g2d.drawImage(Image[i], 0, 0, width, height, null);
-			CzerwoneObrazenia.drawRed(g, im, x, y);
-		} else {
-			klatkiObrazenia = 0;
-			obrazenia = false;
+			if (obrazenia && klatkiObrazenia <= 15) {
+				klatkiObrazenia++;
+				im = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+				g2d = (Graphics2D) im.getGraphics();
+				g2d.drawImage(Image[i], 0, 0, width, height, null);
+				CzerwoneObrazenia.drawRed(g, im, x, y);
+			} else {
+				klatkiObrazenia = 0;
+				obrazenia = false;
+			}
+		} else if (klatkaRozpadu != 4) {
+			g.drawImage(ImageRozpad[klatkaRozpadu], x - width, y - height, width * 3, height * 3, null);
 		}
+
 	}
 
 	@SuppressWarnings("static-access")
 	@Override
 	public void myMotion() {
 
-		if ((x >= zakresRuchuX-width && velocity_x > 0) || (x <= zakresRuchuX && velocity_x < 0)
+		if ((x >= zakresRuchuX - width && velocity_x > 0) || (x <= zakresRuchuX && velocity_x < 0)
 				|| (y >= zakresRuchuY && velocity_y > 0) || (y <= zakresRuchuY && velocity_y < 0)) {
 			losujKierunek();
 			if (velocity_y > 0)

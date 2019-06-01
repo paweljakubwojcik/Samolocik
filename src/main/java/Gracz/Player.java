@@ -19,6 +19,7 @@ import Bullets.CzerwoneObrazenia;
 import Bullets.Granade;
 import Bullets.Pellet;
 import InterFace.MessageBox;
+import Program.Samolotoszczalec;
 import Program.Window;
 import Rozgrywka.Collisionable;
 
@@ -26,6 +27,9 @@ public class Player extends Collisionable {
 
 	Window win;
 	BufferedImage statek, statekLewa, statekPrawa, statekRuch, statekRuchUp, statekRuchDown;
+	BufferedImage[] statekRozpad = new BufferedImage[6];
+	BufferedImage[] statekObrazenia = new BufferedImage[3];
+	BufferedImage[] statekOgien = new BufferedImage[3];
 
 	final int DefaultHealth = 40 * 100;
 	int velocity = 5; // predkosc samolotu
@@ -66,6 +70,12 @@ public class Player extends Collisionable {
 
 	public int klatkiObrazenia = 0;
 
+	private long czasRozpad;
+	private int klatkaRozpadu;
+
+	private long czasOgien;
+	private int klatkaOgien;
+
 	public Player(Window win, int x, int y) {
 		this.win = win;
 		this.x = x;
@@ -89,6 +99,14 @@ public class Player extends Collisionable {
 			statekRuch = ImageIO.read(url[3]);
 			statekRuchUp = ImageIO.read(url[4]);
 			statekRuchDown = ImageIO.read(url[5]);
+
+			for (int i = 1; i <= 6; i++) {
+				statekRozpad[i - 1] = ImageIO.read(getClass().getResource("/images/samolotRozpad" + i + ".png"));
+			}
+			for (int i = 1; i <= 3; i++) {
+				statekObrazenia[i - 1] = ImageIO.read(getClass().getResource("/images/samolotObrazenia" + i + ".png"));
+				statekOgien[i - 1] = ImageIO.read(getClass().getResource("/images/samolotOgien" + i + ".png"));
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -105,6 +123,14 @@ public class Player extends Collisionable {
 			amunition[i] = 0;
 		punkty = 0;
 
+		czasRozpad = 0;
+		klatkaRozpadu = 0;
+
+		czasOgien = 0;
+		klatkaOgien = 0;
+
+		x = 400;
+		y = 500;
 	}
 
 	/**
@@ -114,106 +140,118 @@ public class Player extends Collisionable {
 	@SuppressWarnings("static-access")
 	public void draw(Graphics2D g) {
 
-		// actual image
-		drawAnimation(g);
-
-		// kwadrat testowy
-		//
-		// g.setColor(Color.red);
-		// g.drawRect(getPole()[0][0],getPole()[0][1],getPole()[0][2],getPole()[0][3]);
-		//
-
-		if (shrink && System.currentTimeMillis() - timeShrink > 10000) {
-			this.height = statek.getHeight();
-			this.width = statek.getWidth();
-			this.height2 = statekRuch.getHeight();
-			this.width2 = statekRuch.getWidth();
-			shrink = false;
-
-		}
-
-		if (shield) {
-			long pozostalyCzas = -System.currentTimeMillis() + timeShield + Shield.time;
-			if (pozostalyCzas > 1500)
-				g.setColor(new Color(50, 50, 255, 100));
-			else if (pozostalyCzas < 1500 && pozostalyCzas % 400 > 200)
-				g.setColor(new Color(50, 50, 255, 50));
-			else
-				g.setColor(new Color(50, 50, 255, 100));
-			g.fillOval(x, y, width, height);
-			if (pozostalyCzas < 0)
-				shield = false;
-		}
-		// pasek �ycia
-		g.setColor(new Color(255, 0, 0, 150));
-		g.drawRect(win.size_x / 80, win.size_y / 10, win.size_x / 3, win.size_y / 20);
-		g.fillRect(win.size_x / 80, win.size_y / 10, (win.size_x / 3) * (int) health / DefaultHealth, win.size_y / 20);
-
-		// napis player
-		g.setFont(new Font(null, Font.PLAIN, 25));
-		g.drawString(nazwa, win.size_x / 80, win.size_y / 12);
-
-		Color[] kolory = { new Color(255, 0, 0, 200), new Color(0, 255, 0, 200), new Color(0, 0, 255, 200),
-				new Color(0, 255, 255, 200), new Color(255, 0, 255, 200) };
-		g.setFont(new Font(null, Font.PLAIN, 10));
-
-		// rodzaje naboi
-		for (int i = 0; i < kolory.length; i++) {
-			g.setColor(kolory[i]);
-			g.fillOval(10, 100 + 20 * i, 10, 10);
-			if (i == 0)
-				g.drawString("infinite", 30, 110 + 20 * i);
-			else
-				g.drawString(Integer.toString(amunition[i]), 30, 110 + 20 * i);
-			if (whichAmunition == i)
-				g.drawRect(10, 100 + 20 * i, 10, 10);
-		}
-
-		// ilosc naboi
-
-		// g.drawString(Integer.toString(amunition[whichAmunition]), win.size_x
-		// / 80, win.size_y / 10 + win.size_y / 20 + 30);
-
-		if (health < DefaultHealth / 5) {
-			if (System.currentTimeMillis() - fadeTime > 100) {
-				if (!fade) {
-					alphaRED += 0.02;
-					fadeIn--;
-					szerCzerRamki--;
-				} else if (fade) {
-					alphaRED -= 0.02;
-					fadeIn++;
-					szerCzerRamki++;
-				}
-				fadeTime = System.currentTimeMillis();
-
-				if (fadeIn == 10 || fadeIn == 0) {
-					fade = !fade;
-				}
+		if (health <= 0) {
+			if (System.currentTimeMillis() - czasRozpad > 100 && klatkaRozpadu <= 6) {
+				klatkaRozpadu++;
+				czasRozpad = System.currentTimeMillis();
 			}
-			maloHP = new BufferedImage(Window.size_x, Window.size_y, BufferedImage.TYPE_INT_ARGB);
-			gHP = (Graphics2D) maloHP.getGraphics();
-			gHP.setColor(Color.RED);
-			ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alphaRED);
-			gHP.setComposite(ac);
-			gHP.fillRect(szerCzerRamki, 0, Window.size_x - 2 * szerCzerRamki, 40 + szerCzerRamki);
-			gHP.fillRect(0, 0, szerCzerRamki, Window.size_y);
-			gHP.fillRect(Window.size_x - szerCzerRamki, 0, Window.size_x, Window.size_y);
-			gHP.fillRect(szerCzerRamki, Window.size_y - szerCzerRamki, Window.size_x - 2 * szerCzerRamki,
-					Window.size_y);
-
-			g.drawImage(maloHP, 0, 0, null);
-		}
-
-		if (obrazenia && klatkiObrazenia <= 8) {
-			klatkiObrazenia++;
-			im = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-			g2d = (Graphics2D) im.getGraphics();
-			g2d.drawImage(statek, 0, 0, width, height, null);
-			CzerwoneObrazenia.drawRed(g, im, x, y);
+			if (klatkaRozpadu < 6) {
+				g.drawImage(statekRozpad[klatkaRozpadu], x - width, y - height, width * 3, height * 3, null);
+			}
 		} else {
-			klatkiObrazenia = 0;
-			obrazenia = false;
+			// actual image
+			drawAnimation(g);
+
+			// kwadrat testowy
+			//
+			// g.setColor(Color.red);
+			// g.drawRect(getPole()[0][0],getPole()[0][1],getPole()[0][2],getPole()[0][3]);
+			//
+
+			if (shrink && System.currentTimeMillis() - timeShrink > 10000) {
+				this.height = statek.getHeight();
+				this.width = statek.getWidth();
+				this.height2 = statekRuch.getHeight();
+				this.width2 = statekRuch.getWidth();
+				shrink = false;
+
+			}
+
+			if (shield) {
+				long pozostalyCzas = -System.currentTimeMillis() + timeShield + Shield.time;
+				if (pozostalyCzas > 1500)
+					g.setColor(new Color(50, 50, 255, 100));
+				else if (pozostalyCzas < 1500 && pozostalyCzas % 400 > 200)
+					g.setColor(new Color(50, 50, 255, 50));
+				else
+					g.setColor(new Color(50, 50, 255, 100));
+				g.fillOval(x, y, width, height);
+				if (pozostalyCzas < 0)
+					shield = false;
+			}
+			// pasek �ycia
+			g.setColor(new Color(255, 0, 0, 150));
+			g.drawRect(win.size_x / 80, win.size_y / 10, win.size_x / 3, win.size_y / 20);
+			g.fillRect(win.size_x / 80, win.size_y / 10, (win.size_x / 3) * (int) health / DefaultHealth,
+					win.size_y / 20);
+
+			// napis player
+			g.setFont(new Font(null, Font.PLAIN, 25));
+			g.drawString(nazwa, win.size_x / 80, win.size_y / 12);
+
+			Color[] kolory = { new Color(255, 0, 0, 200), new Color(0, 255, 0, 200), new Color(0, 0, 255, 200),
+					new Color(0, 255, 255, 200), new Color(255, 0, 255, 200) };
+			g.setFont(new Font(null, Font.PLAIN, 10));
+
+			// rodzaje naboi
+			for (int i = 0; i < kolory.length; i++) {
+				g.setColor(kolory[i]);
+				g.fillOval(10, 100 + 20 * i, 10, 10);
+				if (i == 0)
+					g.drawString("infinite", 30, 110 + 20 * i);
+				else
+					g.drawString(Integer.toString(amunition[i]), 30, 110 + 20 * i);
+				if (whichAmunition == i)
+					g.drawRect(10, 100 + 20 * i, 10, 10);
+			}
+
+			// ilosc naboi
+
+			// g.drawString(Integer.toString(amunition[whichAmunition]), win.size_x
+			// / 80, win.size_y / 10 + win.size_y / 20 + 30);
+
+			if (health < DefaultHealth / 5) {
+				if (System.currentTimeMillis() - fadeTime > 100) {
+					if (!fade) {
+						alphaRED += 0.02;
+						fadeIn--;
+						szerCzerRamki--;
+					} else if (fade) {
+						alphaRED -= 0.02;
+						fadeIn++;
+						szerCzerRamki++;
+					}
+					fadeTime = System.currentTimeMillis();
+
+					if (fadeIn == 10 || fadeIn == 0) {
+						fade = !fade;
+					}
+				}
+				maloHP = new BufferedImage(Window.size_x, Window.size_y, BufferedImage.TYPE_INT_ARGB);
+				gHP = (Graphics2D) maloHP.getGraphics();
+				gHP.setColor(Color.RED);
+				ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alphaRED);
+				gHP.setComposite(ac);
+				gHP.fillRect(szerCzerRamki, 0, Window.size_x - 2 * szerCzerRamki, 40 + szerCzerRamki);
+				gHP.fillRect(0, 0, szerCzerRamki, Window.size_y);
+				gHP.fillRect(Window.size_x - szerCzerRamki, 0, Window.size_x, Window.size_y);
+				gHP.fillRect(szerCzerRamki, Window.size_y - szerCzerRamki, Window.size_x - 2 * szerCzerRamki,
+						Window.size_y);
+
+				g.drawImage(maloHP, 0, 0, null);
+			}
+
+			if (obrazenia && klatkiObrazenia <= 8) {
+				klatkiObrazenia++;
+				im = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+				g2d = (Graphics2D) im.getGraphics();
+				g2d.drawImage(statek, 0, 0, width, height, null);
+				CzerwoneObrazenia.drawRed(g, im, x, y);
+			} else {
+				klatkiObrazenia = 0;
+				obrazenia = false;
+			}
+
 		}
 
 	}
@@ -374,6 +412,23 @@ public class Player extends Collisionable {
 			g.drawImage(statekLewa, x, y, width, height, null);
 		} else if (ruchP) {
 			g.drawImage(statekPrawa, x, y, width, height, null);
+		}
+
+		if (health <= DefaultHealth * 2 / 5) {
+			g.drawImage(statekObrazenia[2], x, y, width, height, null);
+			if (System.currentTimeMillis() - czasOgien > 50) {
+				if (klatkaOgien < 3)
+					klatkaOgien++;
+				if (klatkaOgien == 3)
+					klatkaOgien = 0;
+				czasOgien = System.currentTimeMillis();
+			}
+			if (health <= DefaultHealth * 1 / 5)
+				g.drawImage(statekOgien[klatkaOgien], x, y, width, height, null);
+		} else if (health <= DefaultHealth * 3 / 5) {
+			g.drawImage(statekObrazenia[1], x, y, width, height, null);
+		} else if (health <= DefaultHealth * 4 / 5) {
+			g.drawImage(statekObrazenia[0], x, y, width, height, null);
 		}
 
 		ruchDOWN = false;

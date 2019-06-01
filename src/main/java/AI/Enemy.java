@@ -35,6 +35,8 @@ public abstract class Enemy extends Collisionable {
 	public boolean obrazenia = false;
 	public int klatkiObrazenia = 0;
 
+	boolean zacznijSmierc = false;
+
 	/**
 	 * 
 	 * @param x
@@ -83,14 +85,19 @@ public abstract class Enemy extends Collisionable {
 		}
 
 		if (this.health <= 0) {
-			Drop.generateDrop(this);
+			if (this.getClass() != AI.Alien.class) {
+				Drop.generateDrop(this);
+			}
 			if (this.getClass() == AI.Alien.class) {
 				Alien.zabiteAlieny++;
+				this.zacznijSmierc = true;
 			}
 			if (this.getClass() == AI.Asteroid.class) {
 				Asteroid.ZniszczoneAsteroidy++;
 			}
-			Enemy.enemies.remove(this);
+			if (this.getClass() != AI.Alien.class) {
+				Enemy.enemies.remove(this);
+			}
 
 			try {
 				this.finalize();
