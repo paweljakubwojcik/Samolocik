@@ -101,7 +101,7 @@ public class Player extends Collisionable {
 	public void setDefault() {
 		health = DefaultHealth;
 		amunition[0] = 1;
-		for (int i = 1; i > amunition.length; i++)
+		for (int i = 1; i < amunition.length; i++)
 			amunition[i] = 0;
 
 	}

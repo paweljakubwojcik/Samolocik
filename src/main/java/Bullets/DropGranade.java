@@ -42,7 +42,7 @@ public class DropGranade extends Drop {
 		if (o.getClass() == Player.class) {
 			Player player = (Player) o;
 			player.zlapaneBonusy++;
-			player.amunition[3] += 10;
+			player.amunition[3] += 5;
 			drops.remove(this);
 		}
 

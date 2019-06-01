@@ -96,7 +96,7 @@ public class Achievement {
 		punkty[12] = 10;
 
 		nazwyOsiagniec[13][0] = "Rzeźnia";
-		nazwyOsiagniec[13][1] = "Wystrzel 2500 naboi";
+		nazwyOsiagniec[13][1] = "Wystrzel 4000 naboi";
 		punkty[13] = 4;
 
 		nazwyOsiagniec[14][0] = "Kosmiczny Terror";
@@ -263,7 +263,7 @@ public class Achievement {
 			zdobyte[12] = true;
 			new Achievement(12, player);
 		}
-		if (player.wystrzeloneNaboje == 2500 && !zdobyte[13]) {
+		if (player.wystrzeloneNaboje == 4000 && !zdobyte[13]) {
 			zdobyte[13] = true;
 			new Achievement(13, player);
 		}

@@ -67,6 +67,8 @@ public class Window implements KeyListener, MouseListener {
 
 	private boolean[] skipy = new boolean[10];
 
+	private boolean YouWon = false;
+
 	Window() {
 		okno = new JFrame("Niewdzieczna przestrzen");
 		okno.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -131,6 +133,11 @@ public class Window implements KeyListener, MouseListener {
 						} else {
 							ach.sprawdzOsiagniecia(statek1);
 							endOfGame(statek1.isDead());
+						}
+
+						if (EnemyGenerator.getStageOfGame() == 6 && !YouWon) {
+							new MessageBox("YOU WON");
+							YouWon = !YouWon;
 						}
 
 						// wyświetla max potencjał PC w klatkach na sekunde
@@ -298,7 +305,7 @@ public class Window implements KeyListener, MouseListener {
 			statek1.changeAmunition(4);
 		} else if (klucz == KeyEvent.VK_P) {
 			pause = !pause;
-			
+
 			mute = pause;
 			Mute(mute);
 
@@ -381,7 +388,7 @@ public class Window implements KeyListener, MouseListener {
 	}
 
 	void Mute(boolean b) {
-		//audio.setMusic(!b);
+		// audio.setMusic(!b);
 		if (b)
 			audio.stop();
 		if (!b && !audio.isRunning())
