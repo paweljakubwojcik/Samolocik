@@ -14,6 +14,7 @@ import javax.imageio.ImageIO;
 
 import Bullets.Granade;
 import Program.Window;
+import napisyKoncowe.Credits;
 
 /**
  * Klasa realizująca wyświetlenie ekranu zaliczenia
@@ -236,6 +237,9 @@ public class Zaliczenie {
 		} else if (System.currentTimeMillis() - start > czas && opacity > 0) {
 			if (!bylRes && graczUmarl) {
 				new Restart("Odmalować?");
+				bylRes = !bylRes;
+			} else if (!bylRes && !graczUmarl) {
+				new Credits();
 				bylRes = !bylRes;
 			}
 			opacity -= fadeOut;

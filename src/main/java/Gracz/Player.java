@@ -169,11 +169,11 @@ public class Player extends Collisionable {
 			if (shield) {
 				long pozostalyCzas = -System.currentTimeMillis() + timeShield + Shield.time;
 				if (pozostalyCzas > 1500)
-					g.setColor(new Color(50, 50, 255, 100));
+					g.setColor(new Color(50, 50, 255, 150));
 				else if (pozostalyCzas < 1500 && pozostalyCzas % 400 > 200)
 					g.setColor(new Color(50, 50, 255, 50));
 				else
-					g.setColor(new Color(50, 50, 255, 100));
+					g.setColor(new Color(50, 50, 255, 150));
 				g.fillOval(x, y, width, height);
 				if (pozostalyCzas < 0)
 					shield = false;

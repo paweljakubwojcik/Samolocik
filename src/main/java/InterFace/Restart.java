@@ -40,8 +40,11 @@ public class Restart {
 	}
 
 	public static void draw(Graphics2D g) {
-		for (int i = 0; i < res.size(); i++)
-			res.get(i).drawMe(g);
+		for (int i = 0; i < res.size(); i++) {
+			if (res.size() != 0) {
+				res.get(i).drawMe(g);
+			}
+		}
 	}
 
 	private void drawMe(Graphics2D g) {

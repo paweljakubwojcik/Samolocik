@@ -1,5 +1,6 @@
 package Program;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -38,6 +39,7 @@ import InterFace.Sterowanie;
 import InterFace.Zaliczenie;
 import Rozgrywka.Collisions;
 import achievement.Achievement;
+import napisyKoncowe.Credits;
 
 public class Window implements KeyListener, MouseListener, FocusListener {
 
@@ -86,7 +88,7 @@ public class Window implements KeyListener, MouseListener, FocusListener {
 	private boolean zmienekran = false;
 
 	Window() {
-		okno = new JFrame("Niewdzieczna przestrzen");
+		okno = new JFrame("Niewdzieczna przestrzen    F11 aby przejść na pełny ekran");
 		okno.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		okno.setResizable(false);
 		okno.setLocationRelativeTo(null);
@@ -219,25 +221,38 @@ public class Window implements KeyListener, MouseListener, FocusListener {
 
 	void draw() {
 		Graphics2D g = (Graphics2D) klatka.getGraphics();
-		g.setColor(Color.BLACK);
-		g.fillRect(0, 0, size_x, size_y);
-		g.drawImage(imc, 0, tloY, null);
-		ach.draw(g);
-		Bullet.drawBullets(g);
-		Enemy.draw(g);
-		Drop.draw(g);
-		statek1.draw(g);
-		MessageBox.draw(g);
-		if (intro)
-			Intro.draw(g);
-		if (instrukcja) {
-			Sterowanie.draw(g);
-		}
+		if (!Credits.isActive()) {
+			g.setColor(Color.BLACK);
+			g.fillRect(0, 0, size_x, size_y);
+			g.drawImage(imc, 0, tloY, null);
+			ach.draw(g);
+			Bullet.drawBullets(g);
+			Enemy.draw(g);
+			Drop.draw(g);
+			statek1.draw(g);
+			MessageBox.draw(g);
+			if (intro)
+				Intro.draw(g);
+			if (instrukcja) {
+				Sterowanie.draw(g);
+			}
+			IntroBoss.draw(g);
 
-		MessageTypingIn.draw(g);
+			MessageTypingIn.draw(g);
+		}
 		Restart.draw(g);
 		Zaliczenie.draw(g);
-		IntroBoss.draw(g);
+
+		if (Credits.isActive()) {
+			AlphaComposite acc = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, Credits.fade);
+			g.setComposite(acc);
+			g.setColor(Color.BLACK);
+			g.fillRect(0, 0, size_x, size_y);
+			g.drawImage(imc, 0, tloY, null);
+			Credits.draw(g);
+			acc = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1);
+			g.setComposite(acc);
+		}
 
 		g.dispose();
 		drawklatka();
@@ -364,10 +379,13 @@ public class Window implements KeyListener, MouseListener, FocusListener {
 		skipy[3] = false;
 		Zaliczenie.wylancz();
 		Restart.wylancz();
+		Drop.wylancz();
 		MessageBox.restart();
 		audio.setDefault();
 		audio.play(0);
 		Sterowanie.InfoDrop();
+		IntroBoss.czyMoznaPominac = false;
+		BossPaszko.czyMoznaPominac = false;
 
 		wyswietlWynik = false;
 	}
