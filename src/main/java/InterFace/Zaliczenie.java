@@ -34,7 +34,7 @@ public class Zaliczenie {
 	private long czas = 2000;
 	private int punkty;
 	private String ocena;
-	private long start;
+	private static long start;
 
 	private Color kolor;
 	private Color bgKolor;
@@ -319,6 +319,10 @@ public class Zaliczenie {
 				return false;
 		}
 		return true;
+	}
+
+	public static void aktualizujCzas(long czasPauzy) {
+		start += czasPauzy;
 	}
 
 }

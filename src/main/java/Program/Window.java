@@ -87,6 +87,8 @@ public class Window implements KeyListener, MouseListener, FocusListener {
 
 	private boolean zmienekran = false;
 
+	public static long PauzaStart, PauzaStop, czasPauzy;
+
 	Window() {
 		okno = new JFrame("Niewdzieczna przestrzen    F11 aby przejść na pełny ekran");
 		okno.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -425,6 +427,11 @@ public class Window implements KeyListener, MouseListener, FocusListener {
 		size_yy = okno.getHeight();
 	}
 
+	private void aktualizujCzasy() {
+		Credits.aktualizujCzas(czasPauzy);
+		Zaliczenie.aktualizujCzas(czasPauzy);
+	}
+
 	@Override
 	public void keyPressed(KeyEvent key) {
 		int klucz = key.getKeyCode();
@@ -449,6 +456,13 @@ public class Window implements KeyListener, MouseListener, FocusListener {
 		} else if (klucz == KeyEvent.VK_5) {
 			statek1.changeAmunition(4);
 		} else if (klucz == KeyEvent.VK_P) {
+			if (!pause) {
+				PauzaStart = System.currentTimeMillis();
+			} else {
+				PauzaStop = System.currentTimeMillis();
+				czasPauzy = PauzaStop - PauzaStart;
+				aktualizujCzasy();
+			}
 			pause = !pause;
 
 			mute = pause;
@@ -565,7 +579,8 @@ public class Window implements KeyListener, MouseListener, FocusListener {
 	@Override
 	public void focusLost(FocusEvent f) {
 		Object z = f.getSource();
-		if (z == okno) {
+		if (z == okno && !pause) {
+			PauzaStart = System.currentTimeMillis();
 			pause = true;
 			strzal = false;
 			ruch1L = false;

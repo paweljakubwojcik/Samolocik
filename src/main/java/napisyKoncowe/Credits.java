@@ -147,4 +147,8 @@ public class Credits {
 		indexWiadomosci++;
 	}
 
+	public static void aktualizujCzas(long time) {
+		czas += time;
+	}
+
 }

@@ -447,6 +447,10 @@ public class Player extends Collisionable {
 		shrink = true;
 	}
 
+	public static void aktualizujCzas(long czasPauzy) {
+
+	}
+
 	public int getX() {
 		return x;
 	}
