@@ -57,10 +57,10 @@ public abstract class Drop extends Collisionable {
 			new DropPelletBullet(e.x, e.y);
 		else if (chance < 60)
 			new DropPlazmaBullet(e.x, e.y);
-		else if(chance<70)
-			new DropGranade(e.x,e.y);
-		else if(chance<80)
-			new Shrink(e.x,e.y);
+		else if (chance < 70)
+			new DropGranade(e.x, e.y);
+		else if (chance < 80)
+			new Shrink(e.x, e.y);
 
 	}
 
@@ -74,6 +74,10 @@ public abstract class Drop extends Collisionable {
 		this.y += velocity;
 		if (this.y > win.size_y)
 			drops.remove(this);
+	}
+
+	public static void wylancz() {
+		drops.clear();
 	}
 
 	protected abstract void drawMe(Graphics2D g);

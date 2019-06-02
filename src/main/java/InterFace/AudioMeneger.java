@@ -16,15 +16,17 @@ public class AudioMeneger {
 	AudioInputStream audioIns;
 	DataLine.Info info;
 
-	Clip[] musicClip = new Clip[3];
-	Clip[] tekstClip = new Clip[1];
+	Clip[] musicClip = new Clip[4];
+	// Clip[] tekstClip = new Clip[1];
 	Clip[] soundsClip = new Clip[2];
-	boolean music = true;
+	static boolean music = true;
+	int previoslyPlayed;
 
 	AudioInputStream audioInputStream;
-	String musicSource[] = { "music//GameTrack.wav", "music//GameTrackPaszko.wav", "music//GameTrackPrzegrana.wav" }; // GameTrack
+	String musicSource[] = { "music//IntroRead.wav", "music//GameTrack.wav", "music//GameTrackPaszko.wav",
+			"music//GameTrackPrzegrana.wav" }; // GameTrack
 	String soundSource[] = { "music//icykprostopadla1.wav", "music//imykrownolegla1.wav" };
-	String readSource = "music//IntroRead.wav";
+	// String readSource = "music//IntroRead.wav";
 
 	public AudioMeneger() {
 
@@ -47,11 +49,11 @@ public class AudioMeneger {
 				soundsClip[i].open(audioIns);
 			}
 
-			urls = this.getClass().getClassLoader().getResource(readSource);
-			audioIns = AudioSystem.getAudioInputStream(urls);
-			info = new DataLine.Info(Clip.class, audioIns.getFormat());
-			tekstClip[0] = (Clip) AudioSystem.getLine(info);
-			tekstClip[0].open(audioIns);
+			// urls = this.getClass().getClassLoader().getResource(readSource);
+			// audioIns = AudioSystem.getAudioInputStream(urls);
+			// info = new DataLine.Info(Clip.class, audioIns.getFormat());
+			// tekstClip[0] = (Clip) AudioSystem.getLine(info);
+			// tekstClip[0].open(audioIns);
 
 		} catch (UnsupportedAudioFileException e) {
 			e.printStackTrace();
@@ -63,21 +65,11 @@ public class AudioMeneger {
 		}
 	}
 
-	public void readIntro() {
-		if (music) {
-			tekstClip[0].start();
-		}
-	}
-
-	public void readIntroStop() {
-		if (tekstClip[0] != null)
-			tekstClip[0].stop();
-	}
-
 	/**
 	 * 
-	 * @param i
-	 *            - number of track
+	 * @param i:
+	 *            0) intro 1) main track 2) boss track 3) przegrana 4)
+	 *            zwyciestwo
 	 */
 	public void play(int i) {
 		if (music) {
@@ -88,8 +80,27 @@ public class AudioMeneger {
 
 			// if(i==1)
 			// musicClip[i].setLoopPoints(35*44100,40*44100);
-			musicClip[i].loop(Clip.LOOP_CONTINUOUSLY);
+			if (i != 0)
+				musicClip[i].loop(Clip.LOOP_CONTINUOUSLY);
 			musicClip[i].start();
+		}
+	}
+
+	/**
+	 * gra sciezke po stopie // powinno byc uzywane gdy przy wychodzeniu z pauzy
+	 */
+	public void play() {
+		if (music) {
+			// for(int j=0; j<tekstClip.length;j++)
+			// tekstClip[j].stop();
+			for (int j = 0; j < musicClip.length; j++)
+				musicClip[j].stop();
+
+			// if(i==1)
+			// musicClip[i].setLoopPoints(35*44100,40*44100);
+			if (previoslyPlayed != 0)
+				musicClip[previoslyPlayed].loop(Clip.LOOP_CONTINUOUSLY);
+			musicClip[previoslyPlayed].start();
 		}
 	}
 
@@ -125,7 +136,7 @@ public class AudioMeneger {
 			for (int j = 0; j < musicClip.length; j++)
 				musicClip[j].stop();
 
-			musicClip[2].start();
+			musicClip[3].start();
 		}
 	}
 
@@ -135,9 +146,20 @@ public class AudioMeneger {
 
 	public void stop() {
 		if (music) {
-			for (int i = 0; i < musicClip.length; i++)
+			for (int i = 0; i < musicClip.length; i++) {
+				if (musicClip[i].isRunning())
+					previoslyPlayed = i;
 				musicClip[i].stop();
+			}
 		}
+	}
+
+	public void Mute(boolean b) {
+		// audio.setMusic(!b);
+		if (b)
+			stop();
+		if (!b && !isRunning())
+			play();
 	}
 
 	/**
@@ -154,4 +176,14 @@ public class AudioMeneger {
 			return false;
 	}
 
+	public void setMusic(boolean b) {
+		music = b;
+	}
+
+	public void setDefault() {
+		for (int i = 0; i < musicClip.length; i++) {
+			musicClip[i].setFramePosition(0);
+		}
+
+	}
 }

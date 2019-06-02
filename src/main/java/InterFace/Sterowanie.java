@@ -22,7 +22,7 @@ public class Sterowanie {
 	private static boolean opacityForPomin = false;
 	static Window win = Samolotoszczalec.win;
 	static long start = 0;
-	private static final int czas = 2000;
+	private static final int czas = 3000;
 	private static boolean fadeOut = false;
 	private static short instrukcji = 0;
 	public static int rK = 255, gK = 255, bK = 100;

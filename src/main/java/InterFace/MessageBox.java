@@ -127,5 +127,10 @@ public class MessageBox {
 		if (opacity <= 0)
 			messages.remove(this);
 	}
+	
+	public static void restart()
+	{
+		messages.clear();
+	}
 
 }

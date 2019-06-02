@@ -7,12 +7,14 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
 
 import Bullets.Granade;
 import Program.Window;
+import napisyKoncowe.Credits;
 
 /**
  * Klasa realizująca wyświetlenie ekranu zaliczenia
@@ -21,6 +23,7 @@ import Program.Window;
  *
  */
 public class Zaliczenie {
+	static ArrayList<Zaliczenie> list = new ArrayList<>();
 
 	private long delay = 2000, begin = System.currentTimeMillis();
 
@@ -31,7 +34,7 @@ public class Zaliczenie {
 	private long czas = 2000;
 	private int punkty;
 	private String ocena;
-	private long start;
+	private static long start;
 
 	private Color kolor;
 	private Color bgKolor;
@@ -50,6 +53,13 @@ public class Zaliczenie {
 	private long jakDlugoFajerwerki = 8000;
 	private boolean win = false;
 
+	public static int restartx = 400, restarty = 200, restartsizex = 400, restartsizey = 100;
+	public static boolean hover = false;
+
+	private boolean bylRes = false;
+
+	private boolean graczUmarl = false;;
+
 	/**
 	 * Inicjalizuje standardowe informacje
 	 * 
@@ -63,7 +73,8 @@ public class Zaliczenie {
 		}
 
 		punkty = 0;
-		start = 0;
+		this.start = 0;
+		list.add(this);
 	}
 
 	/**
@@ -111,22 +122,29 @@ public class Zaliczenie {
 	/**
 	 * Inicjalizuje ekran końcowy wystawiając ocenę na podstawie uzyskanych punktów
 	 * 
-	 * @param czas    - ile czasu ma być wyświetlany ekran końcowy
-	 * @param fadeIn  - jak szybko na 1 klatkę ekran ma się rozjaśniać
-	 * @param fadeOut - jak szybko na 1 klatkę ekran ma się ściemniać
-	 * @param punkty  - ile punktów uzyskano
+	 * @param czas       - ile czasu ma by� wy�wietlany ekran koncowy
+	 * @param fadeIn     - jak szybko na 1 klatkę ekran ma się rozjaśniać
+	 * @param fadeOut    - jak szybko na 1 klatkę ekran ma się ściemniać
+	 * @param punkty     - ile punktów uzyskano
+	 * @param graczUmarl - Czy gracz zyje?
 	 */
-	public Zaliczenie(long czas, int fadeIn, int fadeOut, int punkty, boolean win) {
+	public Zaliczenie(long czas, int fadeIn, int fadeOut, int punkty, boolean win, boolean graczUmarl) {
 		this(czas, fadeIn, fadeOut);
 		this.punkty = punkty;
 		this.win = win;
 		this.fajerwerki = win;
+		this.graczUmarl = graczUmarl;
 		try {
 			ocena();
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.err.println("\nPaszko hack your life");
 		}
+	}
+
+	public static void draw(Graphics2D g) {
+		for (int i = 0; i < list.size(); i++)
+			list.get(i).drawMe(g);
 	}
 
 	/**
@@ -143,6 +161,16 @@ public class Zaliczenie {
 			ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha);
 			g.setComposite(ac);
 			g.drawImage(wynik, 0, 0, null);
+
+			// przycisk restart
+			/*
+			 * if (!hover) { g.setColor(Color.black); g.fillRect(restartx, restarty,
+			 * restartsizex, restartsizey); g.setColor(Color.white); g.drawString("restart",
+			 * restartx + restartsizex / 2, restarty + restartsizey / 2); } else {
+			 * g.setColor(Color.white); g.fillRect(restartx, restarty, restartsizex,
+			 * restartsizey); g.setColor(Color.black); g.drawString("restart", restartx +
+			 * restartsizex / 2, restarty + restartsizey / 2); }
+			 */
 
 			if (System.currentTimeMillis() - start > 1000 && start != 0) {
 				g.setFont(new Font(null, 0, 80));
@@ -203,10 +231,17 @@ public class Zaliczenie {
 			opacity += fadeIn;
 			if (opacity > 255)
 				opacity = 255;
-		} else if (opacity == 255 && start == 0) {
+		} else if (opacity >= 255 && start == 0) {
 			opacity = 255;
 			start = System.currentTimeMillis();
 		} else if (System.currentTimeMillis() - start > czas && opacity > 0) {
+			if (!bylRes && graczUmarl) {
+				new Restart("Odmalować?");
+				bylRes = !bylRes;
+			} else if (!bylRes && !graczUmarl) {
+				new Credits();
+				bylRes = !bylRes;
+			}
 			opacity -= fadeOut;
 			if (opacity < 0)
 				opacity = 0;
@@ -272,6 +307,22 @@ public class Zaliczenie {
 		if (rand.nextInt(100) > 90)
 			new Granade(rand.nextInt(Window.size_x), rand.nextInt(100) + 500, true);
 
+	}
+
+	public static void wylancz() {
+		list.clear();
+	}
+
+	public static boolean isEmpty() {
+		for (int i = 0; i < list.size(); i++) {
+			if (list.get(i).getClass() == Zaliczenie.class)
+				return false;
+		}
+		return true;
+	}
+
+	public static void aktualizujCzas(long czasPauzy) {
+		start += czasPauzy;
 	}
 
 }
