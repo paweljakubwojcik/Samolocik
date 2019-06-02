@@ -40,7 +40,7 @@ public class EnemyGenerator {
 		} else if (stageOfGame == 4) {
 
 			if (!check(BossPaszko.class) && stworzonePaszki == 0) {
-				win.audio.play(1);
+				win.audio.play(2);
 				new BossPaszko(win, win.size_x / 2 - 50, -100);
 				stworzonePaszki++;
 				generateAliens = false;

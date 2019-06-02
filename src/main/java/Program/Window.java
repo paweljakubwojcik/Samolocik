@@ -106,7 +106,7 @@ public class Window implements KeyListener, MouseListener, FocusListener {
 
 		statek1 = new Player(this, 400, 500);
 
-		audio.readIntro();
+		audio.play(0); // to jest intro
 
 		losujtlo(im1);
 		losujtlo(im2);
@@ -363,14 +363,6 @@ public class Window implements KeyListener, MouseListener, FocusListener {
 		}
 	}
 
-	void Mute(boolean b) {
-		// audio.setMusic(!b);
-		if (b)
-			audio.stop();
-		if (!b && !audio.isRunning())
-			audio.play(0);
-	}
-
 	private void restart() {
 		statek1.setDefault();
 		generator.setDefault();
@@ -384,7 +376,7 @@ public class Window implements KeyListener, MouseListener, FocusListener {
 		Drop.wylancz();
 		MessageBox.restart();
 		audio.setDefault();
-		audio.play(0);
+		audio.play(1);
 		Sterowanie.InfoDrop();
 		IntroBoss.czyMoznaPominac = false;
 		BossPaszko.czyMoznaPominac = false;
@@ -466,15 +458,15 @@ public class Window implements KeyListener, MouseListener, FocusListener {
 			pause = !pause;
 
 			mute = pause;
-			Mute(mute);
+			audio.Mute(mute);
 
 		} else if (klucz == KeyEvent.VK_M) {
 			mute = !mute;
-			Mute(mute);
+			audio.Mute(mute);
 		} else if (klucz == KeyEvent.VK_S) {
 			if (intro && !skipy[0]) {
 				MessageTypingIn.skip();
-				audio.readIntroStop();
+				audio.play(1);
 				skipy[0] = true;
 			} else if (instrukcja && !skipy[1]) {
 				instrukcja = false;
@@ -582,6 +574,7 @@ public class Window implements KeyListener, MouseListener, FocusListener {
 		if (z == okno && !pause) {
 			PauzaStart = System.currentTimeMillis();
 			pause = true;
+			audio.Mute(true);
 			strzal = false;
 			ruch1L = false;
 			ruch1P = false;

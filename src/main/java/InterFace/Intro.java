@@ -35,7 +35,7 @@ public class Intro {
 			win.setIntro(false);
 
 		if (m.isFadeOutBegun && !itHappened) {
-			win.audio.play(0);
+			win.audio.play(1);
 			itHappened = true;
 			win.setInstrukcja(true);
 		}
