@@ -407,7 +407,7 @@ public class Window implements KeyListener, MouseListener, FocusListener {
 		Graphics2D g2d = (Graphics2D) im.getGraphics();
 		g2d.setColor(new Color(0, 0, 15, 255));
 		g2d.fillRect(0, 0, size_x, size_y);
-		g2d.setColor(Color.WHITE);
+		g2d.setColor(Color.gray);
 		int wielkosc = 0, xxx = 0, yyy = 0;
 		for (int i = 0; i < 20; i++) { // 20
 			wielkosc = los.nextInt(10); // 10
