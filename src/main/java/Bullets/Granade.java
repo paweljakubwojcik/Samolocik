@@ -32,6 +32,7 @@ public class Granade extends Bullet {
 	public Granade(int x, int y, boolean fajerwerki) {
 		super(x, y);
 		this.fajerwerki = fajerwerki;
+		miejsceWystrzalu = y;
 		Granade.size = generator.nextInt(10) + 1;
 		rk = generator.nextInt(255);
 		gk = generator.nextInt(255);

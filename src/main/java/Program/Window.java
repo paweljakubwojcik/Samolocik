@@ -29,8 +29,15 @@ import AI.BossPaszko;
 import AI.Enemy;
 import AI.EnemyGenerator;
 import Bullets.Bullet;
+import Bullets.BulletExtraPlayer;
+import Bullets.BulletEyes;
+import Bullets.BulletPaszkoProstopadly;
+import Bullets.BulletPaszkoRownolegly;
+import Bullets.BulletPellet;
+import Bullets.BulletPlazma;
 import Bullets.Drop;
 import Bullets.Granade;
+import Gracz.HealthPack;
 import Gracz.Player;
 import InterFace.AudioMeneger;
 import InterFace.Intro;
@@ -93,6 +100,8 @@ public class Window implements KeyListener, MouseListener, FocusListener {
 	private boolean zmienekran = false;
 
 	public static long PauzaStart, PauzaStop, czasPauzy;
+
+	private static int gierek = 0;
 
 	BufferedImage zdjKursora, kurso, kursorLapka;
 	Toolkit toolkit;
@@ -484,11 +493,54 @@ public class Window implements KeyListener, MouseListener, FocusListener {
 		MessageBox.restart();
 		audio.setDefault();
 		audio.play(1);
-		Sterowanie.InfoDrop();
+		if (gierek != 0) {
+			Sterowanie.InfoDrop();
+		}
+		gierek++;
+		Sterowanie.setDefault();
 		IntroBoss.czyMoznaPominac = false;
 		BossPaszko.czyMoznaPominac = false;
 
 		wyswietlWynik = false;
+	}
+
+	private void easy() {
+		restart();
+		statek1.setEasy();
+		BulletPaszkoProstopadly.setEasy();
+		BulletPaszkoRownolegly.setEasy();
+		HealthPack.setEasy();
+		BossPaszko.setEasy();
+		BulletExtraPlayer.setEasy();
+		BulletPellet.setEasy();
+		BulletPlazma.setEasy();
+		BulletEyes.setEasy();
+	}
+
+	private void medium() {
+		restart();
+		statek1.setMedium();
+		BulletPaszkoProstopadly.setMedium();
+		BulletPaszkoRownolegly.setMedium();
+		HealthPack.setMedium();
+		BossPaszko.setMedium();
+		BulletExtraPlayer.setMedium();
+		BulletPellet.setMedium();
+		BulletPlazma.setMedium();
+		BulletEyes.setMedium();
+	}
+
+	private void hard() {
+		restart();
+		statek1.setHard();
+		BulletPaszkoProstopadly.setHard();
+		BulletPaszkoRownolegly.setHard();
+		HealthPack.setHard();
+		BossPaszko.setHard();
+		BulletExtraPlayer.setHard();
+		BulletPellet.setHard();
+		BulletPlazma.setHard();
+		BulletEyes.setHard();
 	}
 
 	public void fullScreen() {
@@ -557,7 +609,7 @@ public class Window implements KeyListener, MouseListener, FocusListener {
 			statek1.changeAmunition(3);
 		} else if (klucz == KeyEvent.VK_5) {
 			statek1.changeAmunition(4);
-		} else if (klucz == KeyEvent.VK_P) {
+		} else if (klucz == KeyEvent.VK_P && !Credits.isActive() && MenuGlowne.isEmpty() && MenuESC.isEmpty()) {
 			if (!pause) {
 				PauzaStart = System.currentTimeMillis();
 			} else {
@@ -600,7 +652,7 @@ public class Window implements KeyListener, MouseListener, FocusListener {
 		} else if (klucz == KeyEvent.VK_F11) {
 			if (!zmienekran)
 				zmienekran = !zmienekran;
-		} else if (klucz == KeyEvent.VK_ESCAPE) {
+		} else if (klucz == KeyEvent.VK_ESCAPE && !Credits.isActive() && MenuGlowne.isEmpty() && !pause) {
 			if (MenuESC.isEmpty()) {
 				new MenuESC();
 			} else {
@@ -687,15 +739,18 @@ public class Window implements KeyListener, MouseListener, FocusListener {
 			Restart.wylancz();
 		}
 		if (Myszka(p, r, MenuGlowne.latwy) && !MenuGlowne.isEmpty()) {
-			restart();
+			Restart.wylancz();
+			easy();
 			MenuGlowne.wylancz();
 		}
 		if (Myszka(p, r, MenuGlowne.sredni) && !MenuGlowne.isEmpty()) {
-			restart();
+			Restart.wylancz();
+			medium();
 			MenuGlowne.wylancz();
 		}
 		if (Myszka(p, r, MenuGlowne.trudny) && !MenuGlowne.isEmpty()) {
-			restart();
+			Restart.wylancz();
+			hard();
 			MenuGlowne.wylancz();
 		}
 		if (Myszka(p, r, MenuESC.menu) && !MenuESC.isEmpty()) {
