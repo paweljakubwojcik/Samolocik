@@ -16,7 +16,7 @@ public class AudioMeneger {
 	AudioInputStream audioIns, strzalAudioIns;
 	DataLine.Info info, infoStrzal;
 
-	Clip[] musicClip = new Clip[4];
+	Clip[] musicClip = new Clip[5];
 	// Clip[] tekstClip = new Clip[1];
 	Clip[] soundsClip = new Clip[3];
 	static boolean music = true;
@@ -24,7 +24,7 @@ public class AudioMeneger {
 
 	AudioInputStream audioInputStream;
 	String musicSource[] = { "music//IntroRead.wav", "music//GameTrack.wav", "music//GameTrackPaszko.wav",
-			"music//GameTrackPrzegrana.wav" }; // GameTrack
+			"music//GameTrackPrzegrana.wav","music//Wygrana.wav" }; // GameTrack
 	String soundSource[] = { "music//icykprostopadla1.wav", "music//imykrownolegla1.wav", "music//strzal.wav" };
 	// String readSource = "music//IntroRead.wav";
 
@@ -88,7 +88,7 @@ public class AudioMeneger {
 
 			// if(i==1)
 			// musicClip[i].setLoopPoints(35*44100,40*44100);
-			if (i != 0)
+			if (i != 0&&i!=4)
 				musicClip[i].loop(Clip.LOOP_CONTINUOUSLY);
 			musicClip[i].start();
 		}
