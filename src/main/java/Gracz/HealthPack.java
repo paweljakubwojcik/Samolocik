@@ -22,7 +22,7 @@ public class HealthPack extends Drop {
 		this.width = 50;
 		this.height = 50;
 		try {
-			URL url = getClass().getResource("/images//apteczka.png");
+			URL url = getClass().getResource("/images/apteczka.png");
 			apteczka = ImageIO.read(url);
 		} catch (IOException e) {
 			e.printStackTrace();

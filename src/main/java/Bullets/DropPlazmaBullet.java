@@ -19,7 +19,7 @@ public class DropPlazmaBullet extends Drop {
 		this.width = 50;
 		this.height = 50;
 		try {
-			URL url = getClass().getResource("/images//magentasuply.png");
+			URL url = getClass().getResource("/images/magentasuply.png");
 			magentaammo = ImageIO.read(url);
 		} catch (IOException e) {
 			e.printStackTrace();

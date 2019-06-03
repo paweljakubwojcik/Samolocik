@@ -101,7 +101,6 @@ public abstract class Enemy extends Collisionable {
 			}
 
 			try {
-				System.out.println(Alien.zabiteAlieny);
 				this.finalize();
 			} catch (Throwable e) {
 				e.printStackTrace();

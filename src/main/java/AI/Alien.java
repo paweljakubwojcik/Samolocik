@@ -52,9 +52,9 @@ public class Alien extends Enemy {
 		if (!grafika) {
 			try {
 				for (int i = 1; i <= 4; i++) {
-					Image[i - 1] = ImageIO.read(getClass().getResource("/images//Alien2Klatka" + i + ".png"));
+					Image[i - 1] = ImageIO.read(getClass().getResource("/images/Alien2Klatka" + i + ".png"));
 					ImageRozpad[i - 1] = ImageIO
-							.read(getClass().getResource("/images//Alien2KlatkaRozpad" + i + ".png"));
+							.read(getClass().getResource("/images/Alien2KlatkaRozpad" + i + ".png"));
 				}
 				grafika = true;
 			} catch (IOException e) {
