@@ -460,13 +460,17 @@ public class Window implements KeyListener, MouseListener, FocusListener {
 				aktualizujCzasy();
 			}
 			pause = !pause;
-
-			mute = pause;
-			audio.Mute(mute);
+			if (pause) {
+				audio.Mute(true);
+			}else if(!mute)
+			{
+				audio.Mute(false);
+			}
 
 		} else if (klucz == KeyEvent.VK_M) {
 			mute = !mute;
-			audio.Mute(mute);
+			if (!pause)
+				audio.Mute(mute);
 		} else if (klucz == KeyEvent.VK_S) {
 			if (intro && !skipy[0]) {
 				MessageTypingIn.skip();
