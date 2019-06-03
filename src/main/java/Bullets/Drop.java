@@ -61,6 +61,8 @@ public abstract class Drop extends Collisionable {
 			new DropGranade(e.x, e.y);
 		else if (chance < 80)
 			new Shrink(e.x, e.y);
+		
+		
 
 	}
 
