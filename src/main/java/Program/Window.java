@@ -451,7 +451,7 @@ public class Window implements KeyListener, MouseListener, FocusListener {
 			statek1.changeAmunition(3);
 		} else if (klucz == KeyEvent.VK_5) {
 			statek1.changeAmunition(4);
-		} else if (klucz == KeyEvent.VK_P) {
+		} else if (klucz == KeyEvent.VK_P || klucz == KeyEvent.VK_ESCAPE) {
 			if (!pause) {
 				PauzaStart = System.currentTimeMillis();
 			} else {
@@ -470,7 +470,7 @@ public class Window implements KeyListener, MouseListener, FocusListener {
 		} else if (klucz == KeyEvent.VK_S) {
 			if (intro && !skipy[0]) {
 				MessageTypingIn.skip();
-				audio.play(1);
+				//audio.play(1);
 				skipy[0] = true;
 			} else if (instrukcja && !skipy[1]) {
 				instrukcja = false;
