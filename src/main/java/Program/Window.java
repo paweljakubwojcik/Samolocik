@@ -28,6 +28,7 @@ import AI.Enemy;
 import AI.EnemyGenerator;
 import Bullets.Bullet;
 import Bullets.Drop;
+import Bullets.Granade;
 import Gracz.Player;
 import InterFace.AudioMeneger;
 import InterFace.Intro;
@@ -422,6 +423,9 @@ public class Window implements KeyListener, MouseListener, FocusListener {
 	private void aktualizujCzasy() {
 		Credits.aktualizujCzas(czasPauzy);
 		Zaliczenie.aktualizujCzas(czasPauzy);
+		statek1.aktualizujCzas(czasPauzy);
+		MessageBox.aktualizujeCzasy(czasPauzy);
+		Granade.aktualizujCzasy(czasPauzy);
 	}
 
 	@Override
