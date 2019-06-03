@@ -25,7 +25,7 @@ public class AudioMeneger {
 	AudioInputStream audioInputStream;
 	String musicSource[] = { "music//IntroRead.wav", "music//GameTrack.wav", "music//GameTrackPaszko.wav",
 			"music//GameTrackPrzegrana.wav" }; // GameTrack
-	String soundSource[] = { "music//icykprostopadla1.wav", "music//imykrownolegla1.wav", "music//strzal.wav" };
+	String soundSource[] = { "music//icykprostopadla1.wav", "music//imykrownolegla1.wav", "music//Strzal.wav" };
 	// String readSource = "music//IntroRead.wav";
 
 	public AudioMeneger() {
