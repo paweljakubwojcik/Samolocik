@@ -195,6 +195,7 @@ public class Window implements KeyListener, MouseListener, FocusListener {
 						if (EnemyGenerator.getStageOfGame() == 6 && !YouWon) {
 							new MessageBox("YOU WON");
 							YouWon = !YouWon;
+							audio.play(4);
 						}
 
 						// wyświetla max potencjał PC w klatkach na sekunde
