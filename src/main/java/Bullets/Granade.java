@@ -11,6 +11,7 @@ public class Granade extends Bullet {
 	long time = System.currentTimeMillis();
 	long time2 = System.currentTimeMillis();
 	Random generator = new Random();
+	int miejsceWystrzalu;
 
 	public static long delay = 400;
 
@@ -25,6 +26,7 @@ public class Granade extends Bullet {
 
 	public Granade(int x, int y) {
 		super(x, y);
+		miejsceWystrzalu = y;
 	}
 
 	public Granade(int x, int y, boolean fajerwerki) {
@@ -50,7 +52,7 @@ public class Granade extends Bullet {
 	@Override
 	void MyMotion() {
 
-		if (System.currentTimeMillis() - time < 600) {
+		if (y > miejsceWystrzalu - generator.nextInt(200) - win.size_y / 3) {
 			if (y > 0 && y < win.size_y)
 				y -= velocity;
 			else
@@ -90,5 +92,18 @@ public class Granade extends Bullet {
 
 	public void detonate() {
 		bang = true;
+	}
+
+	public void aktualizujCzas(long t) {
+		time += t;
+	}
+
+	public static void aktualizujCzasy(long t) {
+		for (int i = 0; i < bullets.size(); i++)
+			if (bullets.get(i).getClass() == Granade.class) {
+				Granade o = (Granade) bullets.get(i);
+				o.aktualizujCzas(t);
+			}
+
 	}
 }
