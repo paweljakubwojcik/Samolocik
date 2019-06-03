@@ -463,8 +463,7 @@ public class Window implements KeyListener, MouseListener, FocusListener {
 			pause = !pause;
 			if (pause) {
 				audio.Mute(true);
-			}else if(!mute)
-			{
+			} else if (!mute) {
 				audio.Mute(false);
 			}
 
@@ -475,7 +474,7 @@ public class Window implements KeyListener, MouseListener, FocusListener {
 		} else if (klucz == KeyEvent.VK_S) {
 			if (intro && !skipy[0]) {
 				MessageTypingIn.skip();
-				audio.play(1);
+				// audio.play(1);
 				skipy[0] = true;
 			} else if (instrukcja && !skipy[1]) {
 				instrukcja = false;
