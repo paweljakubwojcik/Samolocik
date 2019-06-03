@@ -118,7 +118,7 @@ public class AudioMeneger {
 	 *            : 1) "i cyk prostopadła" 2) "i myk równoległa"
 	 */
 	public void playNoRepeat(int i) {
-		previoslyPlayed=i-1;
+		previoslyPlayed = i - 1;
 		if (music) {
 			try {
 				urls = this.getClass().getClassLoader().getResource(soundSource[i - 1]);
@@ -174,19 +174,23 @@ public class AudioMeneger {
 
 		for (int i = 0; i < musicClip.length; i++) {
 			if (musicClip[i].isRunning())
-				
-			musicClip[i].stop();
+
+				musicClip[i].stop();
 
 		}
 	}
 
 	public void Mute(boolean b) {
 		// audio.setMusic(!b);
-		music=!b;
-		if (b)
+		music = !b;
+		if (b) {
+			new MessageBox("mute", 1000, 20, 550);
 			stop();
-		if (!b && !isRunning())
+		}
+		if (!b && !isRunning()) {
 			play();
+			new MessageBox("unmute", 1000, 20,550);
+		}
 	}
 
 	/**
