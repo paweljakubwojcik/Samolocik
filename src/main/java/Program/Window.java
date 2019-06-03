@@ -18,8 +18,10 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.Random;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -40,6 +42,8 @@ import InterFace.Sterowanie;
 import InterFace.Zaliczenie;
 import Rozgrywka.Collisions;
 import achievement.Achievement;
+import menu.MenuESC;
+import menu.MenuGlowne;
 import napisyKoncowe.Credits;
 
 public class Window implements KeyListener, MouseListener, FocusListener {
@@ -90,6 +94,9 @@ public class Window implements KeyListener, MouseListener, FocusListener {
 
 	public static long PauzaStart, PauzaStop, czasPauzy;
 
+	BufferedImage zdjKursora, kurso, kursorLapka;
+	Toolkit toolkit;
+
 	Window() {
 		okno = new JFrame("Niewdzieczna przestrzen    F11 aby przejść na pełny ekran");
 		okno.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -117,6 +124,20 @@ public class Window implements KeyListener, MouseListener, FocusListener {
 			skipy[i] = false;
 		}
 
+		toolkit = Toolkit.getDefaultToolkit();
+		zdjKursora = new BufferedImage(42, 44, BufferedImage.TYPE_INT_ARGB);
+		try {
+			zdjKursora = ImageIO.read(this.getClass().getResource("/menu/kursor.png"));
+			kurso = ImageIO.read(this.getClass().getResource("/menu/dot.png"));
+			kursorLapka = ImageIO.read(this.getClass().getResource("/menu/kursorLapka.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		cursor = toolkit.createCustomCursor(kurso, new Point(okno.getX(), okno.getY()), "Default Kursor");
+		okno.setCursor(cursor);
+
+		new MenuGlowne();
+
 		Game = new Thread(new Runnable() {
 
 			@Override
@@ -133,7 +154,7 @@ public class Window implements KeyListener, MouseListener, FocusListener {
 					}
 					startTime = System.nanoTime();
 
-					if (!pause) {
+					if (!pause && MenuGlowne.isEmpty() && MenuESC.isEmpty()) {
 
 						if (!statek1.isDead() && EnemyGenerator.getStageOfGame() != 6) {
 							draw();
@@ -193,6 +214,13 @@ public class Window implements KeyListener, MouseListener, FocusListener {
 						ruchTla();
 						///////////////////////////////
 
+					} else if (!MenuGlowne.isEmpty() || !MenuESC.isEmpty()) {
+						draw();
+						try {
+							Thread.sleep(16);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
 					} else {
 						////////// rysowanie znaku zatrzymania//////////////
 						spanie = !spanie;
@@ -224,60 +252,138 @@ public class Window implements KeyListener, MouseListener, FocusListener {
 
 	void draw() {
 		Graphics2D g = (Graphics2D) klatka.getGraphics();
-		if (!Credits.isActive()) {
-			g.setColor(Color.BLACK);
-			g.fillRect(0, 0, size_x, size_y);
-			g.drawImage(imc, 0, tloY, null);
-			ach.draw(g);
-			Bullet.drawBullets(g);
-			Enemy.draw(g);
-			Drop.draw(g);
-			statek1.draw(g);
-			MessageBox.draw(g);
-			if (intro)
-				Intro.draw(g);
-			if (instrukcja) {
-				Sterowanie.draw(g);
+		if (MenuGlowne.isEmpty() && MenuESC.isEmpty()) {
+			if (!Credits.isActive()) {
+				g.setColor(Color.BLACK);
+				g.fillRect(0, 0, size_x, size_y);
+				g.drawImage(imc, 0, tloY, null);
+				ach.draw(g);
+				Bullet.drawBullets(g);
+				Enemy.draw(g);
+				Drop.draw(g);
+				statek1.draw(g);
+				MessageBox.draw(g);
+				if (intro)
+					Intro.draw(g);
+				if (instrukcja) {
+					Sterowanie.draw(g);
+				}
+				IntroBoss.draw(g);
+
+				MessageTypingIn.draw(g);
 			}
-			IntroBoss.draw(g);
+			Restart.draw(g);
+			Zaliczenie.draw(g);
 
-			MessageTypingIn.draw(g);
+			if (Credits.isActive()) {
+				AlphaComposite acc = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, Credits.fade);
+				g.setComposite(acc);
+				g.setColor(Color.BLACK);
+				g.fillRect(0, 0, size_x, size_y);
+				g.drawImage(imc, 0, tloY, null);
+				Credits.draw(g);
+				acc = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1);
+				g.setComposite(acc);
+			}
 		}
-		Restart.draw(g);
-		Zaliczenie.draw(g);
 
-		if (Credits.isActive()) {
-			AlphaComposite acc = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, Credits.fade);
-			g.setComposite(acc);
-			g.setColor(Color.BLACK);
-			g.fillRect(0, 0, size_x, size_y);
-			g.drawImage(imc, 0, tloY, null);
-			Credits.draw(g);
-			acc = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1);
-			g.setComposite(acc);
+		MenuGlowne.draw(g);
+		MenuESC.draw(g);
+		Point p = MouseInfo.getPointerInfo().getLocation();
+		Rectangle r = okno.getBounds();
+		if (!Restart.isEmpty()) {
+			if ((Myszka(p, r, Restart.restart) || Myszka(p, r, Restart.restart2))) {
+				Restart.hoverRestart = true;
+				Restart.hoverRestart2 = true;
+				Restart.hoverMenu = false;
+
+				drawLapka(p, r, g);
+			} else if (Myszka(p, r, Restart.Menu)) {
+				Restart.hoverMenu = true;
+				Restart.hoverRestart = false;
+				Restart.hoverRestart2 = false;
+
+				drawLapka(p, r, g);
+			} else {
+				Restart.hoverRestart = false;
+				Restart.hoverRestart2 = false;
+				Restart.hoverMenu = false;
+
+				drawKursor(p, r, g);
+			}
+		}
+		if (!MenuGlowne.isEmpty()) {
+			if (Myszka(p, r, MenuGlowne.start)) {
+				MenuGlowne.hoverStart = true;
+				MenuGlowne.hoverWyjscie = false;
+				MenuGlowne.hoverLatwy = false;
+				MenuGlowne.hoverSredni = false;
+				MenuGlowne.hoverTrudny = false;
+
+				if (Myszka(p, r, MenuGlowne.latwy)) {
+					MenuGlowne.hoverLatwy = true;
+					MenuGlowne.hoverSredni = false;
+					MenuGlowne.hoverTrudny = false;
+				} else if (Myszka(p, r, MenuGlowne.sredni)) {
+					MenuGlowne.hoverLatwy = false;
+					MenuGlowne.hoverSredni = true;
+					MenuGlowne.hoverTrudny = false;
+				} else if (Myszka(p, r, MenuGlowne.trudny)) {
+					MenuGlowne.hoverLatwy = false;
+					MenuGlowne.hoverSredni = false;
+					MenuGlowne.hoverTrudny = true;
+				}
+
+				drawLapka(p, r, g);
+			} else if (Myszka(p, r, MenuGlowne.wyjscie)) {
+				MenuGlowne.hoverWyjscie = true;
+				MenuGlowne.hoverStart = false;
+
+				drawLapka(p, r, g);
+			} else {
+				MenuGlowne.hoverStart = false;
+				MenuGlowne.hoverWyjscie = false;
+
+				drawKursor(p, r, g);
+			}
+		}
+		if (!MenuESC.isEmpty()) {
+			if (Myszka(p, r, MenuESC.menu)) {
+				MenuESC.hovermenu = true;
+				MenuESC.hoverWroc = false;
+				drawLapka(p, r, g);
+			} else if (Myszka(p, r, MenuESC.wroc)) {
+				MenuESC.hovermenu = false;
+				MenuESC.hoverWroc = true;
+				drawLapka(p, r, g);
+			} else {
+				MenuESC.hovermenu = false;
+				MenuESC.hoverWroc = false;
+				drawKursor(p, r, g);
+			}
 		}
 
 		g.dispose();
 		drawklatka();
 
-		Point p = MouseInfo.getPointerInfo().getLocation();
-		Rectangle r = okno.getBounds();
-		if (p.x - r.x > Restart.restartx * ((float) size_xx / size_x)
-				&& p.x - r.x < Restart.restartsizex * ((float) size_xx / size_x)
-						+ Restart.restartx * ((float) size_xx / size_x)
-				&& p.y - r.y > Restart.restarty * ((float) size_yy / size_y)
-				&& p.y - r.y < Restart.restartsizey * ((float) size_yy / size_y)
-						+ Restart.restarty * ((float) size_yy / size_y)
-				&& !Restart.isEmpty()) {
-			Restart.hover = true;
-			cursor = new Cursor(Cursor.HAND_CURSOR);
-			okno.setCursor(cursor);
-		} else {
-			Restart.hover = false;
-			cursor = new Cursor(Cursor.DEFAULT_CURSOR);
-			okno.setCursor(cursor);
-		}
+	}
 
+	private void drawLapka(Point p, Rectangle r, Graphics2D g) {
+		g.drawImage(kursorLapka, (int) ((p.x - r.x) * ((float) size_x / size_xx)),
+				(int) ((p.y - r.y - 38 * ((float) size_yy / size_y)) * ((float) size_y / size_yy)), null);
+	}
+
+	private void drawKursor(Point p, Rectangle r, Graphics2D g) {
+		g.drawImage(zdjKursora, (int) ((p.x - r.x) * ((float) size_x / size_xx)),
+				(int) ((p.y - r.y) * ((float) size_y / size_yy)), null);
+	}
+
+	boolean Myszka(Point p, Rectangle r, Rectangle przycisk) {
+
+		return p.x - r.x > przycisk.x * ((float) size_xx / size_x)
+				&& p.x - r.x < przycisk.width * ((float) size_xx / size_x) + przycisk.x * ((float) size_xx / size_x)
+				&& p.y - r.y > przycisk.y * ((float) size_yy / size_y)
+				&& p.y - r.y < przycisk.height * ((float) size_yy / size_y) + przycisk.y * ((float) size_yy / size_y);
 	}
 
 	void drawklatka() {
@@ -462,8 +568,7 @@ public class Window implements KeyListener, MouseListener, FocusListener {
 			pause = !pause;
 			if (pause) {
 				audio.Mute(true);
-			}else if(!mute)
-			{
+			} else if (!mute) {
 				audio.Mute(false);
 			}
 
@@ -474,7 +579,7 @@ public class Window implements KeyListener, MouseListener, FocusListener {
 		} else if (klucz == KeyEvent.VK_S) {
 			if (intro && !skipy[0]) {
 				MessageTypingIn.skip();
-				//audio.play(1);
+				// audio.play(1);
 				skipy[0] = true;
 			} else if (instrukcja && !skipy[1]) {
 				instrukcja = false;
@@ -495,6 +600,12 @@ public class Window implements KeyListener, MouseListener, FocusListener {
 		} else if (klucz == KeyEvent.VK_F11) {
 			if (!zmienekran)
 				zmienekran = !zmienekran;
+		} else if (klucz == KeyEvent.VK_ESCAPE) {
+			if (MenuESC.isEmpty()) {
+				new MenuESC();
+			} else {
+				MenuESC.wylancz();
+			}
 		}
 
 	}
@@ -553,27 +664,68 @@ public class Window implements KeyListener, MouseListener, FocusListener {
 
 	@Override
 	public void mousePressed(MouseEvent arg0) {
-		Point p = MouseInfo.getPointerInfo().getLocation();
-		Rectangle r = okno.getBounds();
-		if (p.x - r.x > Restart.restartx * ((float) size_xx / size_x)
-				&& p.x - r.x < Restart.restartsizex * ((float) size_xx / size_x)
-						+ Restart.restartx * ((float) size_xx / size_x)
-				&& p.y - r.y > Restart.restarty * ((float) size_yy / size_y)
-				&& p.y - r.y < Restart.restartsizey * ((float) size_yy / size_y)
-						+ Restart.restarty * ((float) size_yy / size_y)
-				&& !Restart.isEmpty())
-			restart();
 
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
+		Point p = MouseInfo.getPointerInfo().getLocation();
+		Rectangle r = okno.getBounds();
+		if ((Myszka(p, r, Restart.restart) || Myszka(p, r, Restart.restart2)) && !Restart.isEmpty()) {
+			restart();
+			Restart.wylancz();
+		}
+		if (Myszka(p, r, MenuGlowne.wyjscie) && !MenuGlowne.isEmpty()) {
+			try {
+				System.exit(0);
+			} catch (Throwable e) {
+				e.printStackTrace();
+			}
+		}
+		if (Myszka(p, r, Restart.Menu) && !Restart.isEmpty()) {
+			new MenuGlowne();
+			Restart.wylancz();
+		}
+		if (Myszka(p, r, MenuGlowne.latwy) && !MenuGlowne.isEmpty()) {
+			restart();
+			MenuGlowne.wylancz();
+		}
+		if (Myszka(p, r, MenuGlowne.sredni) && !MenuGlowne.isEmpty()) {
+			restart();
+			MenuGlowne.wylancz();
+		}
+		if (Myszka(p, r, MenuGlowne.trudny) && !MenuGlowne.isEmpty()) {
+			restart();
+			MenuGlowne.wylancz();
+		}
+		if (Myszka(p, r, MenuESC.menu) && !MenuESC.isEmpty()) {
+			new MenuGlowne();
+			MenuESC.wylancz();
+		}
+		if (Myszka(p, r, MenuESC.wroc) && !MenuESC.isEmpty()) {
+			MenuESC.wylancz();
+		}
 
 	}
 
 	@Override
 	public void focusGained(FocusEvent f) {
-
+		Object z = f.getSource();
+		if (z == okno && pause) {
+			if (!pause) {
+				PauzaStart = System.currentTimeMillis();
+			} else {
+				PauzaStop = System.currentTimeMillis();
+				czasPauzy = PauzaStop - PauzaStart;
+				aktualizujCzasy();
+			}
+			pause = !pause;
+			if (pause) {
+				audio.Mute(true);
+			} else if (!mute) {
+				audio.Mute(false);
+			}
+		}
 	}
 
 	@Override

@@ -19,7 +19,7 @@ public class AudioMeneger {
 	Clip[] musicClip = new Clip[4];
 	// Clip[] tekstClip = new Clip[1];
 	Clip[] soundsClip = new Clip[3];
-	static boolean music = true;
+	static boolean music = !true;
 	int previoslyPlayed;
 
 	AudioInputStream audioInputStream;
