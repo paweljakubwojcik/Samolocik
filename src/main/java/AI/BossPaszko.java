@@ -273,17 +273,17 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 	}
 
 	public static void setEasy() {
-		zycia = defaultHealth / 2;
+		zycia = defaultHealth2 / 2;
 		defaultHealth = zycia;
 	}
 
 	public static void setMedium() {
-		zycia = defaultHealth * 4 / 5;
+		zycia = defaultHealth2 * 4 / 5;
 		defaultHealth = zycia;
 	}
 
 	public static void setHard() {
-		zycia = defaultHealth;
+		zycia = defaultHealth2;
 		defaultHealth = zycia;
 	}
 
