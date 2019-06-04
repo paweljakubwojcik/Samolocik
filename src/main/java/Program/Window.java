@@ -137,7 +137,7 @@ public class Window implements KeyListener, MouseListener, FocusListener {
 		zdjKursora = new BufferedImage(42, 44, BufferedImage.TYPE_INT_ARGB);
 		try {
 			zdjKursora = ImageIO.read(this.getClass().getResource("/menu/kursor.png"));
-			kurso = ImageIO.read(this.getClass().getResource("/menu/dot.png"));
+			kurso = ImageIO.read(this.getClass().getResource("/menu/nic.png")); // dot.png
 			kursorLapka = ImageIO.read(this.getClass().getResource("/menu/kursorLapka.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
