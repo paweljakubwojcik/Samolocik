@@ -37,7 +37,6 @@ public class MenuESC {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 		meniESC.add(this);
 	}
 

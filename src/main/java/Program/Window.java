@@ -123,7 +123,7 @@ public class Window implements KeyListener, MouseListener, FocusListener {
 
 		statek1 = new Player(this, 400, 500);
 
-		audio.play(0); // to jest intro
+		
 
 		losujtlo(im1);
 		losujtlo(im2);
@@ -656,8 +656,10 @@ public class Window implements KeyListener, MouseListener, FocusListener {
 		} else if (klucz == KeyEvent.VK_ESCAPE && !Credits.isActive() && MenuGlowne.isEmpty() && !pause) {
 			if (MenuESC.isEmpty()) {
 				new MenuESC();
+				audio.stop();
 			} else {
 				MenuESC.wylancz();
+				audio.play();
 			}
 		}
 
@@ -757,9 +759,11 @@ public class Window implements KeyListener, MouseListener, FocusListener {
 		if (Myszka(p, r, MenuESC.menu) && !MenuESC.isEmpty()) {
 			new MenuGlowne();
 			MenuESC.wylancz();
+			audio.play();
 		}
 		if (Myszka(p, r, MenuESC.wroc) && !MenuESC.isEmpty()) {
 			MenuESC.wylancz();
+			audio.play();
 		}
 
 	}
