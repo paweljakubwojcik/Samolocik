@@ -51,11 +51,11 @@ public class AudioMeneger {
 			// soundsClip[i].open(audioIns);
 			// }
 
-			urls = this.getClass().getClassLoader().getResource(soundSource[2]);
-			strzalAudioIns = AudioSystem.getAudioInputStream(urls);
-			infoStrzal = new DataLine.Info(Clip.class, audioIns.getFormat());
-			soundsClip[2] = (Clip) AudioSystem.getLine(infoStrzal);
-			soundsClip[2].open(strzalAudioIns);
+//			urls = this.getClass().getClassLoader().getResource(soundSource[2]);
+//			strzalAudioIns = AudioSystem.getAudioInputStream(urls);
+//			infoStrzal = new DataLine.Info(Clip.class, audioIns.getFormat());
+//			soundsClip[2] = (Clip) AudioSystem.getLine(infoStrzal);
+//			soundsClip[2].open(strzalAudioIns);
 
 			// urls = this.getClass().getClassLoader().getResource(readSource);
 			// audioIns = AudioSystem.getAudioInputStream(urls);
