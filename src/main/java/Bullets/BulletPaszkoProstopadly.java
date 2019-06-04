@@ -15,10 +15,12 @@ public class BulletPaszkoProstopadly extends EnemyBullet {
 	static int wysokosc = 5;
 	public static int liczbaKresek = 0;
 	boolean strona = false;
+	private static final int DomyslnyDamage = 100;
+	private static int obrazenia = 100;
 
 	public BulletPaszkoProstopadly(int x, int y) {
 		super(x - 2 * Window.size_x, y);
-		this.damage = 100; // 10000*100
+		this.damage = obrazenia; // 10000*100
 		this.damage = (int) (damage + (generator.nextInt((int) (2 * damage / 10)) - damage / 10));
 		super.velocity = this.velocity;
 		liczbaKresek += 2;
@@ -85,6 +87,18 @@ public class BulletPaszkoProstopadly extends EnemyBullet {
 			} catch (Throwable e) {
 				e.printStackTrace();
 			}
+	}
+
+	public static void setEasy() {
+		obrazenia = DomyslnyDamage / 4;
+	}
+
+	public static void setMedium() {
+		obrazenia = DomyslnyDamage * 2 / 3;
+	}
+
+	public static void setHard() {
+		obrazenia = DomyslnyDamage;
 	}
 
 }

@@ -189,4 +189,8 @@ public class Sterowanie {
 		new DropExtraBullet(Window.size_x / 2, Window.size_y / 2);
 	}
 
+	public static void setDefault() {
+		dropAmmo = false;
+	}
+
 }

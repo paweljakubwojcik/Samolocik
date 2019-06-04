@@ -73,7 +73,7 @@ public class Zaliczenie {
 		}
 
 		punkty = 0;
-		this.start = 0;
+		start = 0;
 		list.add(this);
 	}
 

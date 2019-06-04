@@ -4,8 +4,8 @@ import java.awt.Graphics2D;
 import java.util.Random;
 
 import Bullets.Bullet;
-import InterFace.Restart;
 import Program.Window;
+import menu.MenuGlowne;
 
 public class Credits {
 	// static ArrayList<Credits> credits = new ArrayList<Credits>();
@@ -29,8 +29,11 @@ public class Credits {
 
 	public static Random rand = new Random();
 
+	private static boolean powrotDoMenu;
+
 	public Credits() {
 		czas = System.currentTimeMillis();
+		powrotDoMenu = false;
 		active = true;
 		bylMax = false;
 		fade = 0;
@@ -117,8 +120,9 @@ public class Credits {
 			if (fade < 0.0) {
 				fade = 0;
 				active = false;
-			} else if (fade < 0.5) {
-				new Restart("Odmalować?");
+			} else if (fade < 0.5 && !powrotDoMenu) {
+				powrotDoMenu = true;
+				new MenuGlowne();
 			}
 		}
 

@@ -30,7 +30,8 @@ public class Player extends Collisionable {
 	BufferedImage[] statekObrazenia = new BufferedImage[3];
 	BufferedImage[] statekOgien = new BufferedImage[3];
 
-	final int DefaultHealth = 40 * 100;
+	final int DomyslneZdrowie = 40 * 100;
+	int DefaultHealth = 40 * 100;
 	int velocity = 5; // predkosc samolotu
 	int x, y, width, height, width2, height2;
 	long CzasSzczau, CzasAtaku;
@@ -130,6 +131,22 @@ public class Player extends Collisionable {
 
 		x = 400;
 		y = 500;
+	}
+
+	public void setEasy() {
+		DefaultHealth = 2 * DomyslneZdrowie;
+		health = DefaultHealth;
+
+	}
+
+	public void setMedium() {
+		DefaultHealth = 3 * DomyslneZdrowie / 2;
+		health = DefaultHealth;
+
+	}
+
+	public void setHard() {
+		health = DefaultHealth;
 	}
 
 	/**
@@ -449,7 +466,7 @@ public class Player extends Collisionable {
 	}
 
 	public void aktualizujCzas(long czasPauzy) {
-		timeShield +=  czasPauzy;
+		timeShield += czasPauzy;
 		timeShrink += czasPauzy;
 	}
 

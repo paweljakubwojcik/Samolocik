@@ -14,18 +14,18 @@ public class Asteroid extends Enemy {
 	static final int defaultHealth = 4 * 100;
 	private BufferedImage Image;
 	static String obrazy[][] = {
-			{ "/images//Asteroida1.png", "/images//Asteroida1Damage1.png", "/images//Asteroida1Damage2.png",
-					"/images//Asteroida1Damage3.png" },
-			{ "/images//Asteroida2.png", "/images//Asteroida2Damage1.png", "/images//Asteroida2Damage2.png",
-					"/images//Asteroida2Damage3.png" },
-			{ "/images//Asteroida3.png", "/images//Asteroida3Damage1.png", "/images//Asteroida3Damage2.png",
-					"/images//Asteroida3Damage3.png" },
-			{ "/images//Asteroida4.png", "/images//Asteroida4Damage1.png", "/images//Asteroida4Damage2.png",
-					"/images//Asteroida4Damage3.png" } };
+			{ "/images/Asteroida1.png", "/images/Asteroida1Damage1.png", "/images/Asteroida1Damage2.png",
+					"/images/Asteroida1Damage3.png" },
+			{ "/images/Asteroida2.png", "/images/Asteroida2Damage1.png", "/images/Asteroida2Damage2.png",
+					"/images/Asteroida2Damage3.png" },
+			{ "/images/Asteroida3.png", "/images/Asteroida3Damage1.png", "/images/Asteroida3Damage2.png",
+					"/images/Asteroida3Damage3.png" },
+			{ "/images/Asteroida4.png", "/images/Asteroida4Damage1.png", "/images/Asteroida4Damage2.png",
+					"/images/Asteroida4Damage3.png" } };
 	private int index = generator.nextInt(4);
 
 	public static int ZniszczoneAsteroidy = 0;
-	public float damage ;
+	public float damage;
 
 	/**
 	 * @param window

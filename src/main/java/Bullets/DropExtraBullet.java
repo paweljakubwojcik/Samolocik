@@ -19,7 +19,7 @@ public class DropExtraBullet extends Drop {
 		this.width = 50;
 		this.height = 50;
 		try {
-			URL url = getClass().getResource("/images//greensuply.png");
+			URL url = getClass().getResource("/images/greensuply.png");
 			greenammo = ImageIO.read(url);
 		} catch (IOException e) {
 			e.printStackTrace();

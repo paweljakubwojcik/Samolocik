@@ -23,9 +23,9 @@ public class AudioMeneger {
 	int previoslyPlayed;
 
 	AudioInputStream audioInputStream;
-	String musicSource[] = { "music//IntroRead.wav", "music//GameTrack.wav", "music//GameTrackPaszko.wav",
-			"music//GameTrackPrzegrana.wav", "music//Wygrana.wav" }; // GameTrack
-	String soundSource[] = { "music//icykprostopadla1.wav", "music//imykrownolegla1.wav" };
+	String musicSource[] = { "music/IntroRead.wav", "music/GameTrack.wav", "music/GameTrackPaszko.wav",
+			"music/GameTrackPrzegrana.wav", "music/Wygrana.wav" }; // GameTrack
+	String soundSource[] = { "music/icykprostopadla1.wav", "music/imykrownolegla1.wav" };
 
 	// String readSource = "music//IntroRead.wav";
 
@@ -41,27 +41,6 @@ public class AudioMeneger {
 				musicClip[i].open(audioIns);
 			}
 
-			// for (int i = 0; i < soundSource.length; i++) {
-			// // Open an audio input stream.
-			// urls =
-			// this.getClass().getClassLoader().getResource(soundSource[i]);
-			// audioIns = AudioSystem.getAudioInputStream(urls);
-			// info = new DataLine.Info(Clip.class, audioIns.getFormat());
-			// soundsClip[i] = (Clip) AudioSystem.getLine(info);
-			// soundsClip[i].open(audioIns);
-			// }
-
-//			urls = this.getClass().getClassLoader().getResource(soundSource[2]);
-//			strzalAudioIns = AudioSystem.getAudioInputStream(urls);
-//			infoStrzal = new DataLine.Info(Clip.class, audioIns.getFormat());
-//			soundsClip[2] = (Clip) AudioSystem.getLine(infoStrzal);
-//			soundsClip[2].open(strzalAudioIns);
-
-			// urls = this.getClass().getClassLoader().getResource(readSource);
-			// audioIns = AudioSystem.getAudioInputStream(urls);
-			// info = new DataLine.Info(Clip.class, audioIns.getFormat());
-			// tekstClip[0] = (Clip) AudioSystem.getLine(info);
-			// tekstClip[0].open(audioIns);
 
 		} catch (UnsupportedAudioFileException e) {
 			e.printStackTrace();
@@ -75,9 +54,7 @@ public class AudioMeneger {
 
 	/**
 	 * 
-	 * @param i:
-	 *            0) intro 1) main track 2) boss track 3) przegrana 4)
-	 *            zwyciestwo
+	 * @param i: 0) intro 1) main track 2) boss track 3) przegrana 4) zwyciestwo
 	 */
 	public void play(int i) {
 		previoslyPlayed = i;
@@ -115,8 +92,7 @@ public class AudioMeneger {
 
 	/**
 	 * 
-	 * @param i
-	 *            : 1) "i cyk prostopadła" 2) "i myk równoległa"
+	 * @param i : 1) "i cyk prostopadła" 2) "i myk równoległa"
 	 */
 	public void playNoRepeat(int i) {
 		previoslyPlayed = i - 1;
