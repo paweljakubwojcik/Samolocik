@@ -117,7 +117,7 @@ public class EnemyGenerator {
 	}
 
 	public void setDefault() {
-		stageOfGame = 4;
+		stageOfGame = 1;
 		Enemy.enemies.clear();
 		generateAliens = true;
 		generateAsteroids = true;
