@@ -14,7 +14,8 @@ public class Credits {
 	private static long czas;
 	public static float fade = 0;
 
-	private static final int tyleJest = 100; // ta liczba musi być równa liczbie wiadomości
+	private static final int tyleJest = 100; // ta liczba musi byÄ‡ rĂłwna
+												// liczbie wiadomoĹ›ci
 	private static String[] wiadomosci = new String[tyleJest];
 	private static long[] czasWejscia = new long[tyleJest];
 	private static boolean[] czyTytul = new boolean[tyleJest];
@@ -75,9 +76,9 @@ public class Credits {
 		wpiszDane("Interakcja z samolotem", czasPomiedzy, true);
 		wpiszDane("Paweł Wójcik", czasPoLinijce, false);
 		wpiszDane("Kolizje", czasPomiedzy, true);
-		wpiszDane("Opracował", czasPoLinijce, true);
+		wpiszDane("Opracował‚", czasPoLinijce, true);
 		wpiszDane("Adrian Burakowski", czasPoLinijce, false);
-		wpiszDane("Zaprogramował", czasPoLinijce, true);
+		wpiszDane("Zaprogramował‚", czasPoLinijce, true);
 		wpiszDane("Paweł Wójcik", czasPoLinijce, false);
 
 		wpiszDane("Testerzy", czasOdstepu, true);

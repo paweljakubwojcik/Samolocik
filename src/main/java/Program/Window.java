@@ -107,7 +107,7 @@ public class Window implements KeyListener, MouseListener, FocusListener {
 	Toolkit toolkit;
 
 	Window() {
-		okno = new JFrame("Niewdzieczna przestrzen    F11 aby przejść na pełny ekran");
+		okno = new JFrame("Niewdzięczna przestrzeń    F11 aby przejść na pełny ekran");
 		okno.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		okno.setResizable(false);
 		okno.setLocationRelativeTo(null);

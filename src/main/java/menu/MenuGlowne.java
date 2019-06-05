@@ -30,12 +30,12 @@ public class MenuGlowne {
 	public static Rectangle sredni = new Rectangle(285, 430, 250, 40);
 	public static Rectangle trudny = new Rectangle(285, 480, 250, 40);
 
-	private static final String WYJSCIE = "WYJĹšCIE";
+	private static final String WYJSCIE = "WYJŚCIE";
 	private static final String GRAJ = "G R A J";
-	private static final String WYJSCIEINFO1 = "NaprawdÄ™ chcesz";
-	private static final String WYJSCIEINFO2 = "wyjĹ›Ä‡? :'(";
-	private static final String LATWY = "Ĺ�ATWY";
-	private static final String SREDNI = "ĹšREDNI";
+	private static final String WYJSCIEINFO1 = "Naprawde chcesz";
+	private static final String WYJSCIEINFO2 = "wyjść? :'(";
+	private static final String LATWY = "ŁATWY";
+	private static final String SREDNI = "ŚREDNI";
 	private static final String TRUDNY = "TRUDNY";
 
 	public MenuGlowne() {

@@ -27,39 +27,39 @@ public class AudioMeneger {
 	String musicSource[] = { "music/czytanieIntro.wav", "music/GameTrack.wav", "music/GameTrackPaszko.wav",
 			"music/GameTrackPrzegrana.wav", "music/Wygrana.wav" }; // GameTrack
 	String soundSource[] = { "music/icykprostopadlanowa.wav", "music/imykrownoleglanowa.wav",
-			"music/ohshitherewegoagain.wav" };
+			"music/ohshiherewegoagain.wav" };
 
 	// String readSource = "music//IntroRead.wav";
 
 	public AudioMeneger() {
-///////////////////////check if audio is avalible/////////////////////
-		for (int i = 0; i < musicSource.length; i++) {
-			// Open an audio input stream.
-			urls = this.getClass().getClassLoader().getResource(musicSource[i]);
-			try {
-				audioIns = AudioSystem.getAudioInputStream(urls);
-			} catch (UnsupportedAudioFileException | IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			info = new DataLine.Info(Clip.class, audioIns.getFormat());
-			if (!AudioSystem.isLineSupported(info))
-				music = true;
-			else {
-				music = false;
-				break;
-			}
-		}
-
-		////////////////geting mixer info////////////////
-		Mixer.Info[] infom = AudioSystem.getMixerInfo();
-		int j = 0;
-		for (Mixer.Info print : infom) {
-
-			System.out.println("Name: " + j + " " + print.getName());
-			j++;
-		}
-		////////////////////////////
+		/////////////////////// check if audio is avalible/////////////////////
+//		for (int i = 0; i < musicSource.length; i++) {
+//			// Open an audio input stream.
+//			urls = this.getClass().getClassLoader().getResource(musicSource[i]);
+//			try {
+//				audioIns = AudioSystem.getAudioInputStream(urls);
+//			} catch (UnsupportedAudioFileException | IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			info = new DataLine.Info(Clip.class, audioIns.getFormat());
+//			if (!AudioSystem.isLineSupported(info))
+//				music = true;
+//			else {
+//				music = false;
+//				break;
+//			}
+//		}
+//
+//		//////////////// geting mixer info////////////////
+//		Mixer.Info[] infom = AudioSystem.getMixerInfo();
+//		int j = 0;
+//		for (Mixer.Info print : infom) {
+//
+//			System.out.println("Name: " + j + " " + print.getName());
+//			j++;
+//		}
+//		////////////////////////////
 
 		if (music) {
 			try {
@@ -182,13 +182,13 @@ public class AudioMeneger {
 	}
 
 	public void stop() {
+		
+			for (int i = 0; i < musicClip.length; i++) {
+				if (musicClip[i].isRunning())
 
-		for (int i = 0; i < musicClip.length; i++) {
-			if (musicClip[i].isRunning())
+					musicClip[i].stop();
 
-				musicClip[i].stop();
-
-		}
+			}
 	}
 
 	public void Mute(boolean b) {
