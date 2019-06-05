@@ -39,13 +39,14 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 
 	private long dlugoscInfoPomin;
 	private boolean czyPominWyswietla = false;
+	private boolean oshit;
 	private int przezPomin = 0;
 
 	public static boolean czyMoznaPominac = false;
 
 	private static boolean czasPominac = false;
 	
-	// wersja dla ³opatki
+	// wersja dla ï¿½opatki
 	//private static BufferedImage Image[] = new BufferedImage[3];
 	//long time = System.currentTimeMillis();
 	//int i=0;
@@ -63,6 +64,7 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 		this.y = y;
 		this.velocity_x = -4;
 		this.velocity_y = 2;
+		oshit = true;
 		health = zycia;
 		czasAtak = System.currentTimeMillis();
 		EnemyGenerator.setAsteroids(false);
@@ -89,7 +91,7 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 	@SuppressWarnings("static-access")
 	@Override
 	public void drawMe(Graphics2D g) {
-		//wersja dla ³opatki
+		//wersja dla ï¿½opatki
 		// animacja
 //				if (System.currentTimeMillis() - time > 1000 / 20) {
 //					if (i < 2)
@@ -167,6 +169,11 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 				if (System.currentTimeMillis() - czasRuchu > 50) {
 					y++;
 					czasRuchu = System.currentTimeMillis();
+					
+					if(y>30&&oshit&&EnemyGenerator.stworzonePaszki==2){
+						win.audio.playNoRepeat(3);
+						oshit=false;
+					}
 				}
 			} else if (IntroBoss.list.size() == 0) {
 				new IntroBoss(10000, 5, 5);
@@ -178,6 +185,8 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 			}
 
 		} else {
+			
+			
 			czyMoznaPominac = false;
 
 			x += velocity_x;

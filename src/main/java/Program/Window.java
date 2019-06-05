@@ -758,7 +758,7 @@ public class Window implements KeyListener, MouseListener, FocusListener {
 		if (Myszka(p, r, MenuESC.menu) && !MenuESC.isEmpty()) {
 			new MenuGlowne();
 			MenuESC.wylancz();
-			audio.play();
+//			audio.play();
 		}
 		if (Myszka(p, r, MenuESC.wroc) && !MenuESC.isEmpty()) {
 			MenuESC.wylancz();

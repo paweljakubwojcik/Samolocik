@@ -28,7 +28,7 @@ public class MenuESC {
 	private static final String MENUINFO1 = "UTRACISZ";
 	private static final String MENUINFO2 = "OBECNY";
 	private static final String MENUINFO3 = "STAN GRY";
-	private static final String WROC = "POWRÓT";
+	private static final String WROC = "POWRÃ“T";
 
 	public MenuESC() {
 		try {
