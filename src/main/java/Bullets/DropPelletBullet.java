@@ -18,7 +18,7 @@ public class DropPelletBullet extends Drop {
 		this.width = 50;
 		this.height = 50;
 		try {
-			URL url = getClass().getResource("/images//bluesuply.png");
+			URL url = getClass().getResource("/images/bluesuply.png");
 			blueammo = ImageIO.read(url);
 		} catch (IOException e) {
 			e.printStackTrace();

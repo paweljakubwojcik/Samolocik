@@ -9,6 +9,7 @@ public class GranadeExplosion extends Bullet {
 	int opacity = 255;
 	int expantionV = 6;
 	int[][] tab = new int[1][3];
+	private boolean kolizja = false;
 
 	private boolean fajerwerki = false;
 	private int rk;
@@ -35,12 +36,18 @@ public class GranadeExplosion extends Bullet {
 
 		if (opacity > 0 && !fajerwerki) {
 			for (int i = 0; i < 10; i++) {
-				g.setColor(new Color(255, 255 - 25 * i, 0, opacity)); // 255, 255 - 25 * i, 0, opacity
+				g.setColor(new Color(255, 255 - 25 * i, 0, opacity)); // 255,
+																		// 255 -
+																		// 25 *
+																		// i, 0,
+																		// opacity
 				g.drawOval(x + 2 * i, y + 2 * i, size2 - 2 * i, size2 - 2 * i);
 			}
 		} else {
 			for (int i = 0; i < 10; i++) {
-				g.setColor(new Color(rk, gk - 5 * i, bk, opacity)); // 255, 255 - 25 * i, 0,
+				g.setColor(new Color(rk, gk - 5 * i, bk, opacity)); // 255, 255
+																	// - 25 * i,
+																	// 0,
 																	// opacity
 				g.drawOval(x + 2 * i, y + 2 * i, size2 - 2 * i, size2 - 2 * i);
 			}
@@ -49,16 +56,28 @@ public class GranadeExplosion extends Bullet {
 	}
 
 	public void MyMotion() {
-		tab[0][0] = x + size2 / 2;
-		tab[0][1] = y + size2 / 2;
-		tab[0][2] = size2 / 2;
+		if (!kolizja) {
+			tab[0][0] = x + size2 / 2;
+			tab[0][1] = y + size2 / 2;
+			tab[0][2] = size2 / 2;
+		}
 		x -= expantionV / 2;
 		y -= expantionV / 2;
 		size2 += expantionV;
-		opacity -= 8;
+		opacity -= 10;
 
 		if (opacity <= 0)
 			Bullet.bullets.remove(this);
+	}
+
+	@Override
+	public void collision(Object o) {
+		kolizja = true;
+
+		tab[0][0] = 1000000000;
+		tab[0][1] = 100000000;
+		tab[0][2] = 0;
+
 	}
 
 	@Override
@@ -66,5 +85,7 @@ public class GranadeExplosion extends Bullet {
 
 		return tab;
 	}
+	
+	
 
 }

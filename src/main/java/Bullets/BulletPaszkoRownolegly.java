@@ -13,10 +13,12 @@ public class BulletPaszkoRownolegly extends EnemyBullet {
 	static int szerokosc = 5;
 	static int wysokosc = Window.size_y * 2 / 3;
 	public static int liczbaKresek = 0;
+	private static final int DomyslnyDamage = 100;
+	private static int obrazenia = 100;
 
 	public BulletPaszkoRownolegly(int x, int y) {
 		super(x, y - 2 * Window.size_y);
-		this.damage = 100;
+		this.damage = obrazenia;
 		this.damage = (int) (damage + (generator.nextInt((int) (2 * damage / 10)) - damage / 10));
 		super.velocity = this.velocity;
 		liczbaKresek += 2;
@@ -70,6 +72,18 @@ public class BulletPaszkoRownolegly extends EnemyBullet {
 			} catch (Throwable e) {
 				e.printStackTrace();
 			}
+	}
+
+	public static void setEasy() {
+		obrazenia = DomyslnyDamage / 4;
+	}
+
+	public static void setMedium() {
+		obrazenia = DomyslnyDamage * 2 / 3;
+	}
+
+	public static void setHard() {
+		obrazenia = DomyslnyDamage;
 	}
 
 }

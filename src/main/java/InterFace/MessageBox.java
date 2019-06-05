@@ -132,5 +132,15 @@ public class MessageBox {
 	{
 		messages.clear();
 	}
-
+	
+	void aktualizujCzas(long t)
+	{
+		time+=t;
+	}
+	
+	public static void aktualizujeCzasy(long t)
+	{
+		for(int i=0;i<messages.size();i++)
+			messages.get(i).aktualizujCzas(t);
+	}
 }

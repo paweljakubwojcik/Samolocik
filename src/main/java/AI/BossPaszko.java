@@ -24,7 +24,9 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 	public BufferedImage paszko, paszko2;
 	boolean majestyWalk = true;
 	private long czasAtak, czasRuchu = System.currentTimeMillis();
-	private final int defaultHealth = 150 * 100;
+	private static final int defaultHealth2 = 150 * 100;
+	private static int defaultHealth = defaultHealth2;
+	private static int zycia = defaultHealth2;
 	String nazwa = "PROF. PASZKOWSKI";
 
 	public static int superCiosy = 0;
@@ -55,7 +57,7 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 		this.y = y;
 		this.velocity_x = -4;
 		this.velocity_y = 2;
-		health = defaultHealth;
+		health = zycia;
 		czasAtak = System.currentTimeMillis();
 		EnemyGenerator.setAsteroids(false);
 
@@ -268,6 +270,21 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 		dlugoscInfoPomin = 0;
 		if (!IntroBoss.czyMoznaPominac)
 			new IntroBoss(10000, 5, 5);
+	}
+
+	public static void setEasy() {
+		zycia = defaultHealth2 / 2;
+		defaultHealth = zycia;
+	}
+
+	public static void setMedium() {
+		zycia = defaultHealth2 * 4 / 5;
+		defaultHealth = zycia;
+	}
+
+	public static void setHard() {
+		zycia = defaultHealth2;
+		defaultHealth = zycia;
 	}
 
 }

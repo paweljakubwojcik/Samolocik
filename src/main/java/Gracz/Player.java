@@ -30,7 +30,8 @@ public class Player extends Collisionable {
 	BufferedImage[] statekObrazenia = new BufferedImage[3];
 	BufferedImage[] statekOgien = new BufferedImage[3];
 
-	final int DefaultHealth = 40 * 100;
+	final int DomyslneZdrowie = 40 * 100;
+	int DefaultHealth = 40 * 100;
 	int velocity = 5; // predkosc samolotu
 	int x, y, width, height, width2, height2;
 	long CzasSzczau, CzasAtaku;
@@ -42,7 +43,7 @@ public class Player extends Collisionable {
 
 	int whichAmunition = 0;
 
-	public boolean shield = false, shrink = false;;
+	public boolean shield = false, shrink = false;
 	long timeShield, timeShrink;
 
 	private boolean ruchL = false, ruchP = false, ruchUP = false, ruchDOWN = false;
@@ -132,6 +133,22 @@ public class Player extends Collisionable {
 		y = 500;
 	}
 
+	public void setEasy() {
+		DefaultHealth = 2 * DomyslneZdrowie;
+		health = DefaultHealth;
+
+	}
+
+	public void setMedium() {
+		DefaultHealth = 3 * DomyslneZdrowie / 2;
+		health = DefaultHealth;
+
+	}
+
+	public void setHard() {
+		health = DefaultHealth;
+	}
+
 	/**
 	 * 
 	 * @param Graphics2D
@@ -206,7 +223,8 @@ public class Player extends Collisionable {
 
 			// ilosc naboi
 
-			// g.drawString(Integer.toString(amunition[whichAmunition]), win.size_x
+			// g.drawString(Integer.toString(amunition[whichAmunition]),
+			// win.size_x
 			// / 80, win.size_y / 10 + win.size_y / 20 + 30);
 
 			if (health < DefaultHealth / 5) {
@@ -314,7 +332,7 @@ public class Player extends Collisionable {
 
 	@SuppressWarnings("static-access")
 	public void moveRight() {
-		if (x + statek.getWidth() < win.size_x) {
+		if (x + width < win.size_x) {
 			x += velocity;
 			ruchP = true;
 		}
@@ -338,7 +356,7 @@ public class Player extends Collisionable {
 	// do predkosci odjac lub dodac predkosc planszy gdy bedzie
 	@SuppressWarnings("static-access")
 	public void moveDown() {
-		if (y + statek.getHeight() < win.size_y) {
+		if (y + height < win.size_y) {
 			y += velocity;
 			ruchDOWN = true;
 		}
@@ -447,8 +465,9 @@ public class Player extends Collisionable {
 		shrink = true;
 	}
 
-	public static void aktualizujCzas(long czasPauzy) {
-
+	public void aktualizujCzas(long czasPauzy) {
+		timeShield += czasPauzy;
+		timeShrink += czasPauzy;
 	}
 
 	public int getX() {

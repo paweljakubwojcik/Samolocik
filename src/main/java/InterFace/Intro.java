@@ -23,6 +23,7 @@ public class Intro {
 																// java docu
 
 	static boolean itHappened = false;
+	static boolean introAudio = false;
 
 	@SuppressWarnings("static-access")
 	public static void draw(Graphics2D g) {
@@ -31,6 +32,11 @@ public class Intro {
 			g.fillRect(0, 0, win.size_x, win.size_y);
 			Sterowanie.PominDraw(g);
 			// m.draw(g); jest wykonywane w Window
+			if(!introAudio)
+			{
+				win.audio.play(0); // to jest intro
+				introAudio=true;
+			}
 		} else
 			win.setIntro(false);
 

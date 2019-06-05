@@ -13,19 +13,20 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 public class AudioMeneger {
 
 	URL urls;
-	AudioInputStream audioIns;
-	DataLine.Info info;
+	AudioInputStream audioIns, strzalAudioIns;
+	DataLine.Info info, infoStrzal;
 
-	Clip[] musicClip = new Clip[4];
+	Clip[] musicClip = new Clip[5];
 	// Clip[] tekstClip = new Clip[1];
 	Clip[] soundsClip = new Clip[2];
 	static boolean music = true;
 	int previoslyPlayed;
 
 	AudioInputStream audioInputStream;
-	String musicSource[] = { "music//IntroRead.wav", "music//GameTrack.wav", "music//GameTrackPaszko.wav",
-			"music//GameTrackPrzegrana.wav" }; // GameTrack
-	String soundSource[] = { "music//icykprostopadla1.wav", "music//imykrownolegla1.wav" };
+	String musicSource[] = { "music/IntroRead.wav", "music/GameTrack.wav", "music/GameTrackPaszko.wav",
+			"music/GameTrackPrzegrana.wav", "music/Wygrana.wav" }; // GameTrack
+	String soundSource[] = { "music/icykprostopadla1.wav", "music/imykrownolegla1.wav" };
+
 	// String readSource = "music//IntroRead.wav";
 
 	public AudioMeneger() {
@@ -40,20 +41,6 @@ public class AudioMeneger {
 				musicClip[i].open(audioIns);
 			}
 
-			for (int i = 0; i < soundSource.length; i++) {
-				// Open an audio input stream.
-				urls = this.getClass().getClassLoader().getResource(soundSource[i]);
-				audioIns = AudioSystem.getAudioInputStream(urls);
-				info = new DataLine.Info(Clip.class, audioIns.getFormat());
-				soundsClip[i] = (Clip) AudioSystem.getLine(info);
-				soundsClip[i].open(audioIns);
-			}
-
-			// urls = this.getClass().getClassLoader().getResource(readSource);
-			// audioIns = AudioSystem.getAudioInputStream(urls);
-			// info = new DataLine.Info(Clip.class, audioIns.getFormat());
-			// tekstClip[0] = (Clip) AudioSystem.getLine(info);
-			// tekstClip[0].open(audioIns);
 
 		} catch (UnsupportedAudioFileException e) {
 			e.printStackTrace();
@@ -67,11 +54,10 @@ public class AudioMeneger {
 
 	/**
 	 * 
-	 * @param i:
-	 *            0) intro 1) main track 2) boss track 3) przegrana 4)
-	 *            zwyciestwo
+	 * @param i: 0) intro 1) main track 2) boss track 3) przegrana 4) zwyciestwo
 	 */
 	public void play(int i) {
+		previoslyPlayed = i;
 		if (music) {
 			// for(int j=0; j<tekstClip.length;j++)
 			// tekstClip[j].stop();
@@ -80,7 +66,7 @@ public class AudioMeneger {
 
 			// if(i==1)
 			// musicClip[i].setLoopPoints(35*44100,40*44100);
-			if (i != 0)
+			if (i != 0 && i != 4)
 				musicClip[i].loop(Clip.LOOP_CONTINUOUSLY);
 			musicClip[i].start();
 		}
@@ -106,10 +92,10 @@ public class AudioMeneger {
 
 	/**
 	 * 
-	 * @param i
-	 *            : 1) "i cyk prostopadła" 2) "i myk równoległa"
+	 * @param i : 1) "i cyk prostopadła" 2) "i myk równoległa"
 	 */
 	public void playNoRepeat(int i) {
+		previoslyPlayed = i - 1;
 		if (music) {
 			try {
 				urls = this.getClass().getClassLoader().getResource(soundSource[i - 1]);
@@ -141,25 +127,47 @@ public class AudioMeneger {
 	}
 
 	public void shot() {
-
+		if (music && !soundsClip[2].isRunning()) {
+			try {
+				urls = this.getClass().getClassLoader().getResource(soundSource[2]);
+				strzalAudioIns = AudioSystem.getAudioInputStream(urls);
+				infoStrzal = new DataLine.Info(Clip.class, audioIns.getFormat());
+				soundsClip[2] = (Clip) AudioSystem.getLine(infoStrzal);
+				soundsClip[2].open(strzalAudioIns);
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (LineUnavailableException e) {
+				e.printStackTrace();
+			} catch (UnsupportedAudioFileException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if (soundsClip[2] != null)
+				soundsClip[2].start();
+		}
 	}
 
 	public void stop() {
-		if (music) {
-			for (int i = 0; i < musicClip.length; i++) {
-				if (musicClip[i].isRunning())
-					previoslyPlayed = i;
+
+		for (int i = 0; i < musicClip.length; i++) {
+			if (musicClip[i].isRunning())
+
 				musicClip[i].stop();
-			}
+
 		}
 	}
 
 	public void Mute(boolean b) {
 		// audio.setMusic(!b);
-		if (b)
+		music = !b;
+		if (b) {
+			new MessageBox("mute", 1000, 20, 550);
 			stop();
-		if (!b && !isRunning())
+		}
+		if (!b && !isRunning()) {
 			play();
+			new MessageBox("unmute", 1000, 20, 550);
+		}
 	}
 
 	/**

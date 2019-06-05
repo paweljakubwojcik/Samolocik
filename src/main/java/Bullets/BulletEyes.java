@@ -10,6 +10,9 @@ public class BulletEyes extends EnemyBullet {
 	private BossPaszko paszkow;
 	static int size = 13;
 
+	public static final int DefaultDamage = 1000;
+	private static int obrazenia = DefaultDamage;
+
 	public BulletEyes(int pos_x, int pos_y, BossPaszko paszkow) {
 		super(pos_x, pos_y);
 		this.paszkow = paszkow;
@@ -18,7 +21,7 @@ public class BulletEyes extends EnemyBullet {
 
 		super.velocity = 6;
 
-		this.damage = 10 * 100;
+		this.damage = obrazenia;
 		this.damage = (int) (damage + (generator.nextInt((int) (2 * damage / 10)) - damage / 10));
 
 		bullets.add(this);
@@ -36,5 +39,17 @@ public class BulletEyes extends EnemyBullet {
 		int[][] tab = { { x + paszkow.paszko.getWidth() / 2 - size / 2, y, size / 3, size * 5 },
 				{ x + paszkow.paszko.getWidth() / 2 + 5 * size / 2, y, size / 3, size * 5 } };
 		return tab;
+	}
+
+	public static void setEasy() {
+		obrazenia = DefaultDamage / 2;
+	}
+
+	public static void setMedium() {
+		obrazenia = 2 * DefaultDamage / 3;
+	}
+
+	public static void setHard() {
+		obrazenia = DefaultDamage;
 	}
 }

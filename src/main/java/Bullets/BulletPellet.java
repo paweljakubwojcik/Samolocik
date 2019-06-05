@@ -23,6 +23,9 @@ public class BulletPellet extends Bullet {
 
 	public static int size = 12; // kazdy rodzaj kuli musi miec swoj statyczny rozmiars
 
+	public static final int DefaultDamage = 90;
+	private static int obrazenia = DefaultDamage;
+
 	/**
 	 * Tworzenie naboi srotów
 	 * 
@@ -33,7 +36,7 @@ public class BulletPellet extends Bullet {
 	 */
 	public BulletPellet(int x, int y, float Vx, float Vy) {
 		super(x, y);
-		damage = (int) (0.7 * (generator.nextInt(20)+90));
+		damage = (int) (0.7 * (generator.nextInt(20) + obrazenia));
 		this.ruchBok = Vx;
 		this.ruchPion = Vy;
 		this.polx = x;
@@ -63,6 +66,18 @@ public class BulletPellet extends Bullet {
 			} catch (Throwable e) {
 				e.printStackTrace();
 			}
+	}
+
+	public static void setEasy() {
+		obrazenia = 2 * DefaultDamage;
+	}
+
+	public static void setMedium() {
+		obrazenia = 3 * DefaultDamage / 2;
+	}
+
+	public static void setHard() {
+		obrazenia = DefaultDamage;
 	}
 
 }
