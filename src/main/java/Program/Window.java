@@ -107,7 +107,7 @@ public class Window implements KeyListener, MouseListener, FocusListener {
 	Toolkit toolkit;
 
 	Window() {
-		okno = new JFrame("Niewdzieczna przestrzen    F11 aby przejść na pełny ekran");
+		okno = new JFrame("Niewdzięczna przestrzeń    F11 aby przejść na pełny ekran");
 		okno.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		okno.setResizable(false);
 		okno.setLocationRelativeTo(null);
@@ -122,8 +122,6 @@ public class Window implements KeyListener, MouseListener, FocusListener {
 		klatka = new BufferedImage(size_x, size_y, BufferedImage.TYPE_INT_ARGB);
 
 		statek1 = new Player(this, 400, 500);
-
-		
 
 		losujtlo(im1);
 		losujtlo(im2);
@@ -142,7 +140,8 @@ public class Window implements KeyListener, MouseListener, FocusListener {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		cursor = toolkit.createCustomCursor(kurso, new Point(okno.getX(), okno.getY()), "Default Kursor");
+
+		cursor = toolkit.createCustomCursor(kurso, new Point(0, 0), "Default Kursor");
 		okno.setCursor(cursor);
 
 		new MenuGlowne();
@@ -493,9 +492,9 @@ public class Window implements KeyListener, MouseListener, FocusListener {
 		Drop.wylancz();
 		MessageBox.restart();
 		audio.setDefault();
-		audio.play(1);
 		if (gierek != 0) {
 			Sterowanie.InfoDrop();
+			audio.play(1);
 		}
 		gierek++;
 		Sterowanie.setDefault();
@@ -759,7 +758,7 @@ public class Window implements KeyListener, MouseListener, FocusListener {
 		if (Myszka(p, r, MenuESC.menu) && !MenuESC.isEmpty()) {
 			new MenuGlowne();
 			MenuESC.wylancz();
-			audio.play();
+//			audio.play();
 		}
 		if (Myszka(p, r, MenuESC.wroc) && !MenuESC.isEmpty()) {
 			MenuESC.wylancz();

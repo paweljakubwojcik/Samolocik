@@ -17,7 +17,7 @@ public class Intro {
 	static Window win = Samolotoszczalec.win;
 
 	// po znaku % podany jest czas czekania w milisekundach,
-	static String message = "Data:%1000 dawno dawnotemu/nMiejsce: PW GG 226/nMisja:%1000 zda�%2000/nza wszelka cene";
+	static String message = "Data:%1000 dawno dawnotemu/nMiejsce: PW GG 226/nMisja:%1000 zdać%2000/nza wszelką cene";
 	static MessageTypingIn m = new MessageTypingIn(message); // zasady pisania
 																// wiadomosci w
 																// java docu
@@ -32,10 +32,9 @@ public class Intro {
 			g.fillRect(0, 0, win.size_x, win.size_y);
 			Sterowanie.PominDraw(g);
 			// m.draw(g); jest wykonywane w Window
-			if(!introAudio)
-			{
+			if (!introAudio) {
 				win.audio.play(0); // to jest intro
-				introAudio=true;
+				introAudio = true;
 			}
 		} else
 			win.setIntro(false);
