@@ -24,9 +24,17 @@ public class Intro {
 
 	static boolean itHappened = false;
 	static boolean introAudio = false;
+	static boolean zmienna = true;
 
 	@SuppressWarnings("static-access")
 	public static void draw(Graphics2D g) {
+
+		if (zmienna) {
+			new MessageBox("Gra powstała w celach humorystycznych", 3000, 300, 500, "red");
+			new MessageBox("Nie ma na celu oczerniać osób trzecich ", 3000, 300, 600, "red");
+			zmienna = false;
+		}
+
 		if (m.opacity > 0) {
 			g.setColor(new Color(0, 0, 0, m.opacity));
 			g.fillRect(0, 0, win.size_x, win.size_y);
@@ -35,9 +43,12 @@ public class Intro {
 			if (!introAudio) {
 				win.audio.play(0); // to jest intro
 				introAudio = true;
+
 			}
-		} else
+		} else {
 			win.setIntro(false);
+			new MessageBox("Enjoy ", 5000, 300, 600, "red");
+		}
 
 		if (m.isFadeOutBegun && !itHappened) {
 			win.audio.play(1);

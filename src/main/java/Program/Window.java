@@ -271,7 +271,7 @@ public class Window implements KeyListener, MouseListener, FocusListener {
 				Enemy.draw(g);
 				Drop.draw(g);
 				statek1.draw(g);
-				MessageBox.draw(g);
+				
 				if (intro)
 					Intro.draw(g);
 				if (instrukcja) {
@@ -280,6 +280,7 @@ public class Window implements KeyListener, MouseListener, FocusListener {
 				IntroBoss.draw(g);
 
 				MessageTypingIn.draw(g);
+				MessageBox.draw(g);
 			}
 			Restart.draw(g);
 			Zaliczenie.draw(g);
