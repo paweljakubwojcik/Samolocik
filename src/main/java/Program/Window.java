@@ -647,7 +647,7 @@ public class Window implements KeyListener, MouseListener, FocusListener {
 				IntroBoss.wylacz();
 				skipy[3] = true;
 			}
-		} else if (klucz == KeyEvent.VK_R && statek1.isDead()) {
+		} else if (klucz == KeyEvent.VK_R && statek1.isDead() && MenuGlowne.isEmpty()) {
 			restart();
 		} else if (klucz == KeyEvent.VK_F11) {
 			if (!zmienekran)
@@ -758,7 +758,7 @@ public class Window implements KeyListener, MouseListener, FocusListener {
 		if (Myszka(p, r, MenuESC.menu) && !MenuESC.isEmpty()) {
 			new MenuGlowne();
 			MenuESC.wylancz();
-//			audio.play();
+			// audio.play();
 		}
 		if (Myszka(p, r, MenuESC.wroc) && !MenuESC.isEmpty()) {
 			MenuESC.wylancz();
