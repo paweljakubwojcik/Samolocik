@@ -17,6 +17,7 @@ import Bullets.CzerwoneObrazenia;
 import Bullets.EnemyBullet;
 import InterFace.AudioMeneger;
 import InterFace.IntroBoss;
+import InterFace.MessageBox;
 import Program.Window;
 
 public class BossPaszko extends Enemy implements IEnemyBoss {
@@ -25,6 +26,7 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 
 	boolean majestyWalk = true;
 	private long czasAtak, czasRuchu = System.currentTimeMillis();
+	private long czasHaHa = System.currentTimeMillis();
 	private static final int defaultHealth2 = 150 * 100;
 	private static int defaultHealth = defaultHealth2;
 	private static int zycia = defaultHealth2;
@@ -168,9 +170,15 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 					y++;
 					czasRuchu = System.currentTimeMillis();
 
+					if (System.currentTimeMillis() - czasHaHa > generator.nextInt(1000) + 500&& EnemyGenerator.stworzonePaszki == 2) {
+						new MessageBox("HA", 1000, generator.nextInt(150) + x - 25, generator.nextInt(100) + y - 25);
+						czasHaHa = System.currentTimeMillis();
+					}
+
 					if (y > 30 && oshit && EnemyGenerator.stworzonePaszki == 2) {
 						win.audio.playNoRepeat(3);
 						oshit = false;
+						new MessageBox("oh shit", 3000, 350, 300);
 					}
 				}
 			} else if (IntroBoss.list.size() == 0) {

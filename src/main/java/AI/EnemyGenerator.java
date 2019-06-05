@@ -4,9 +4,9 @@ import Program.Window;
 
 public class EnemyGenerator {
 
-	static int stageOfGame = 1; // 0 - brak alienow; 1,2,3 - kolejne fale
-								// alienow; 4 - walka z bossem; 5 - odrodzenie
-								// bossa; kolejne liczby to kolejne lvl moga byc
+	static int stageOfGame; // 0 - brak alienow; 1,2,3 - kolejne fale
+							// alienow; 4 - walka z bossem; 5 - odrodzenie
+							// bossa; kolejne liczby to kolejne lvl moga byc
 
 	static long time, time2;
 	static long interval = 5000;
@@ -117,7 +117,7 @@ public class EnemyGenerator {
 	}
 
 	public void setDefault() {
-		stageOfGame = 1;
+		stageOfGame = 4;
 		Enemy.enemies.clear();
 		generateAliens = true;
 		generateAsteroids = true;
