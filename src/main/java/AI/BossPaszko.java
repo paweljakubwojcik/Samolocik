@@ -22,6 +22,7 @@ import Program.Window;
 public class BossPaszko extends Enemy implements IEnemyBoss {
 
 	public BufferedImage paszko, paszko2;
+	
 	boolean majestyWalk = true;
 	private long czasAtak, czasRuchu = System.currentTimeMillis();
 	private static final int defaultHealth2 = 150 * 100;
@@ -43,6 +44,11 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 	public static boolean czyMoznaPominac = false;
 
 	private static boolean czasPominac = false;
+	
+	// wersja dla ³opatki
+	//private static BufferedImage Image[] = new BufferedImage[3];
+	//long time = System.currentTimeMillis();
+	//int i=0;
 
 	/**
 	 * 
@@ -83,6 +89,16 @@ public class BossPaszko extends Enemy implements IEnemyBoss {
 	@SuppressWarnings("static-access")
 	@Override
 	public void drawMe(Graphics2D g) {
+		//wersja dla ³opatki
+		// animacja
+//				if (System.currentTimeMillis() - time > 1000 / 20) {
+//					if (i < 2)
+//						i++;
+//					else
+//						i = 0;}
+		
+		
+		
 		if (velocity_x < 0) {
 			g.drawImage(paszko, x, y, null);
 		} else {

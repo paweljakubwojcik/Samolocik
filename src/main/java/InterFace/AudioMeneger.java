@@ -8,6 +8,7 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.DataLine;
 import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.Mixer;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class AudioMeneger {
@@ -18,43 +19,75 @@ public class AudioMeneger {
 
 	Clip[] musicClip = new Clip[5];
 	// Clip[] tekstClip = new Clip[1];
-	Clip[] soundsClip = new Clip[2];
+	Clip[] soundsClip = new Clip[3];
 	static boolean music = true;
 	int previoslyPlayed;
 
 	AudioInputStream audioInputStream;
-	String musicSource[] = { "music/IntroRead.wav", "music/GameTrack.wav", "music/GameTrackPaszko.wav",
+	String musicSource[] = { "music/czytanieIntro.wav", "music/GameTrack.wav", "music/GameTrackPaszko.wav",
 			"music/GameTrackPrzegrana.wav", "music/Wygrana.wav" }; // GameTrack
-	String soundSource[] = { "music/icykprostopadla1.wav", "music/imykrownolegla1.wav" };
+	String soundSource[] = { "music/icykprostopadlanowa.wav", "music/imykrownoleglanowa.wav",
+			"music/ohshitherewegoagain.wav" };
 
 	// String readSource = "music//IntroRead.wav";
 
 	public AudioMeneger() {
-
-		try {
-			for (int i = 0; i < musicSource.length; i++) {
-				// Open an audio input stream.
-				urls = this.getClass().getClassLoader().getResource(musicSource[i]);
+///////////////////////check if audio is avalible/////////////////////
+		for (int i = 0; i < musicSource.length; i++) {
+			// Open an audio input stream.
+			urls = this.getClass().getClassLoader().getResource(musicSource[i]);
+			try {
 				audioIns = AudioSystem.getAudioInputStream(urls);
-				info = new DataLine.Info(Clip.class, audioIns.getFormat());
-				musicClip[i] = (Clip) AudioSystem.getLine(info);
-				musicClip[i].open(audioIns);
+			} catch (UnsupportedAudioFileException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
+			info = new DataLine.Info(Clip.class, audioIns.getFormat());
+			if (!AudioSystem.isLineSupported(info))
+				music = true;
+			else {
+				music = false;
+				break;
+			}
+		}
 
+		////////////////geting mixer info////////////////
+		Mixer.Info[] infom = AudioSystem.getMixerInfo();
+		int j = 0;
+		for (Mixer.Info print : infom) {
 
-		} catch (UnsupportedAudioFileException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (LineUnavailableException e) {
-			e.printStackTrace();
+			System.out.println("Name: " + j + " " + print.getName());
+			j++;
+		}
+		////////////////////////////
 
+		if (music) {
+			try {
+				for (int i = 0; i < musicSource.length; i++) {
+					// Open an audio input stream.
+					urls = this.getClass().getClassLoader().getResource(musicSource[i]);
+					audioIns = AudioSystem.getAudioInputStream(urls);
+					info = new DataLine.Info(Clip.class, audioIns.getFormat());
+					musicClip[i] = (Clip) AudioSystem.getLine(info);
+					musicClip[i].open(audioIns);
+				}
+
+			} catch (UnsupportedAudioFileException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (LineUnavailableException e) {
+				e.printStackTrace();
+
+			}
 		}
 	}
 
 	/**
 	 * 
-	 * @param i: 0) intro 1) main track 2) boss track 3) przegrana 4) zwyciestwo
+	 * @param i:
+	 *            0) intro 1) main track 2) boss track 3) przegrana 4)
+	 *            zwyciestwo
 	 */
 	public void play(int i) {
 		previoslyPlayed = i;
@@ -92,7 +125,8 @@ public class AudioMeneger {
 
 	/**
 	 * 
-	 * @param i : 1) "i cyk prostopadła" 2) "i myk równoległa"
+	 * @param i
+	 *            : 1) "i cyk prostopadła" 2) "i myk równoległa" 3) oh shit
 	 */
 	public void playNoRepeat(int i) {
 		previoslyPlayed = i - 1;

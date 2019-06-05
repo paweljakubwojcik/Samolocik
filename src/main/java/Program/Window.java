@@ -123,8 +123,6 @@ public class Window implements KeyListener, MouseListener, FocusListener {
 
 		statek1 = new Player(this, 400, 500);
 
-		
-
 		losujtlo(im1);
 		losujtlo(im2);
 		scaltla(im1, im2);
@@ -142,7 +140,8 @@ public class Window implements KeyListener, MouseListener, FocusListener {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		cursor = toolkit.createCustomCursor(kurso, new Point(okno.getX(), okno.getY()), "Default Kursor");
+
+		cursor = toolkit.createCustomCursor(kurso, new Point(0, 0), "Default Kursor");
 		okno.setCursor(cursor);
 
 		new MenuGlowne();
@@ -493,9 +492,9 @@ public class Window implements KeyListener, MouseListener, FocusListener {
 		Drop.wylancz();
 		MessageBox.restart();
 		audio.setDefault();
-		audio.play(1);
 		if (gierek != 0) {
 			Sterowanie.InfoDrop();
+			audio.play(1);
 		}
 		gierek++;
 		Sterowanie.setDefault();

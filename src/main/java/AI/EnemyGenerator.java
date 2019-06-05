@@ -51,6 +51,7 @@ public class EnemyGenerator {
 
 			if (!check(BossPaszko.class) && stworzonePaszki == 1) {
 				new BossPaszko(win, 500, -200);
+				win.audio.playNoRepeat(3);
 				stworzonePaszki++;
 			}
 			generateAliens(10);
