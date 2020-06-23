@@ -1,6 +1,6 @@
 # Samolocik
 Silly game a'la 'space invaidor' written in collaboration with Adrian7.
-Inspiration for game came in during a really boring lecture on our university. It contains numerous easter eggs about my studies.
+Inspiration for game came in during a really boring lecture at our university. The game contains numerous easter eggs about my studies.
 
 # What I've learnt trough this project:
 - wielowątkowość
