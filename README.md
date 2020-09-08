@@ -1,9 +1,10 @@
 # Samolocik
 Silly game a'la 'space invaidor' written in collaboration with Adrian7.
 Inspiration for game came in during a really boring lecture at our university. The game contains numerous easter eggs about my studies.
+[Click here to download .jar and play! :D](https://github.com/paweljakubwojcik/Samolocik/releases/download/v1.0/NiewdziecznaPrzestrzen.jar)
 
 # What I've learnt trough this project:
-- wielowątkowość
+- multi - thread programming
 - dealing with audio in Java
 - Object oriented programming in general
 - Lots of Java libriares
@@ -17,4 +18,3 @@ Inspiration for game came in during a really boring lecture at our university. T
 # What I am proud of: 
 - mechanics of collisions
 - music
-- whoole project in general
